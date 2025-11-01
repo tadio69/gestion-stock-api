@@ -1,0 +1,33 @@
+package chijouProjects.gestion_stock_api.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.Instant;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "mvtstock")
+public class MvtStock extends AbstractEntity {
+    @Column(name = "datemvt")
+    private Instant datemvt;
+
+    @ManyToOne
+    @JoinColumn(name = "idarticle")
+    private Article article;
+
+    @Column(name = "quantite")
+    private BigDecimal quantite;
+
+    @Column(name = "typemvt")
+    private TypeMvtStock typemvt;
+
+    @Column(name = "identreprise")
+    private Integer identreprise;
+}
