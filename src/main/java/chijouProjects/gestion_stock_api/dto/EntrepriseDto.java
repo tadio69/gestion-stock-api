@@ -3,6 +3,7 @@ package chijouProjects.gestion_stock_api.dto;
 import chijouProjects.gestion_stock_api.model.CommandeClient;
 import chijouProjects.gestion_stock_api.model.CommandeFournisseur;
 import chijouProjects.gestion_stock_api.model.Entreprise;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 
@@ -29,6 +30,7 @@ public class EntrepriseDto {
 
     private String siteweb;
 
+    @JsonIgnore
     private List<UtilisateurDto> utilisateurs;
 
     public static EntrepriseDto fromEntity(Entreprise entreprise) {

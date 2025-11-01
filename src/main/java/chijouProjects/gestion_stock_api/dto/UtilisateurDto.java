@@ -2,6 +2,7 @@ package chijouProjects.gestion_stock_api.dto;
 
 import chijouProjects.gestion_stock_api.model.Role;
 import chijouProjects.gestion_stock_api.model.Utilisateur;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 
@@ -30,6 +31,7 @@ public class UtilisateurDto {
 
     private EntrepriseDto entreprise;
 
+    @JsonIgnore
     private List<RoleDto> roles;
 
     public static UtilisateurDto fromEntity(Utilisateur utilisateur) {
