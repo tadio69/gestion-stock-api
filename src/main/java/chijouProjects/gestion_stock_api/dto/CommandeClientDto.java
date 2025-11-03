@@ -20,7 +20,6 @@ public class CommandeClientDto {
 
     private ClientDto client;
 
-    @JsonIgnore
     private List<LigneCdeCltDto> lignecdeclts;
 
     public static CommandeClientDto fromEntity(CommandeClient commandeclient) {
