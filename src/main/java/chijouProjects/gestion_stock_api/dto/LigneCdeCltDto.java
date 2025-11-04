@@ -20,6 +20,8 @@ public class LigneCdeCltDto {
 
     private BigDecimal prixunitaire;
 
+    private Integer identreprise;
+
     public static LigneCdeCltDto fromEntity(LigneCdeClt lignecdeclt) {
         if (lignecdeclt == null) return null;
 
@@ -27,6 +29,7 @@ public class LigneCdeCltDto {
                 .id(lignecdeclt.getId())
                 .quantite(lignecdeclt.getQuantite())
                 .prixunitaire(lignecdeclt.getPrixunitaire())
+                .identreprise(lignecdeclt.getIdentreprise())
                 .build();
     }
 
@@ -36,6 +39,7 @@ public class LigneCdeCltDto {
         lignecdeclt.setId(lignecdecltdto.getId());
         lignecdeclt.setQuantite(lignecdecltdto.getQuantite());
         lignecdeclt.setPrixunitaire(lignecdecltdto.getPrixunitaire());
+        lignecdeclt.setIdentreprise(lignecdecltdto.getIdentreprise());
         return lignecdeclt;
     }
 }

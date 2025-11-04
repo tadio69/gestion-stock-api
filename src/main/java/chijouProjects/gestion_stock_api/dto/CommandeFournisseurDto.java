@@ -20,15 +20,18 @@ public class CommandeFournisseurDto {
 
     private FournisseurDto fournisseur;
 
+    private Integer identreprise;
+
     private List<LigneCdeFournisseurDto> lignecdefournisseurs;
 
-    public static CommandeFournisseurDto fromEntity(CommandeClient commandeclient) {
-        if (commandeclient == null) return null;
+    public static CommandeFournisseurDto fromEntity(CommandeFournisseur commandefournissur) {
+        if (commandefournissur == null) return null;
 
         return CommandeFournisseurDto.builder()
-                .id(commandeclient.getId())
-                .code(commandeclient.getCode())
-                .datecommande(commandeclient.getDatecommande())
+                .id(commandefournissur.getId())
+                .code(commandefournissur.getCode())
+                .datecommande(commandefournissur.getDatecommande())
+                .identreprise(commandefournissur.getIdentreprise())
                 .build();
     }
 
@@ -38,6 +41,7 @@ public class CommandeFournisseurDto {
         commandefournisseur.setId(Commandefournisseurdto.getId());
         commandefournisseur.setCode(Commandefournisseurdto.getCode());
         commandefournisseur.setDatecommande(Commandefournisseurdto.getDatecommande());
+        commandefournisseur.setIdentreprise(Commandefournisseurdto.getIdentreprise());
         return commandefournisseur;
     }
 }

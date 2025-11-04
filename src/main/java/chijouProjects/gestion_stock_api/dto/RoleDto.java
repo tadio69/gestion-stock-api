@@ -14,12 +14,15 @@ public class RoleDto {
 
     private UtilisateurDto utilisateur;
 
+    private Integer identreprise;
+
     public static RoleDto fromEntity(Role role) {
         if (role == null) return null;
 
         return RoleDto.builder()
                 .id(role.getId())
                 .rolename(role.getRolename())
+                .identreprise(role.getIdentreprise())
                 .build();
     }
 
@@ -28,6 +31,7 @@ public class RoleDto {
         Role role = new Role();
         role.setId(roledto.getId());
         role.setRolename(roledto.getRolename());
+        role.setIdentreprise(roledto.getIdentreprise());
         return role;
     }
 }

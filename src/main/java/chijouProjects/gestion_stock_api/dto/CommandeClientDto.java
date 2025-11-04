@@ -20,6 +20,8 @@ public class CommandeClientDto {
 
     private ClientDto client;
 
+    private Integer identreprise;
+
     private List<LigneCdeCltDto> lignecdeclts;
 
     public static CommandeClientDto fromEntity(CommandeClient commandeclient) {
@@ -29,6 +31,7 @@ public class CommandeClientDto {
                 .id(commandeclient.getId())
                 .code(commandeclient.getCode())
                 .datecommande(commandeclient.getDatecommande())
+                .identreprise(commandeclient.getIdentreprise())
                 .build();
     }
 
@@ -38,6 +41,7 @@ public class CommandeClientDto {
         commandeclient.setId(commandeclientdto.getId());
         commandeclient.setCode(commandeclientdto.getCode());
         commandeclient.setDatecommande(commandeclientdto.getDatecommande());
+        commandeclient.setIdentreprise(commandeclientdto.getIdentreprise());
         return commandeclient;
     }
 }

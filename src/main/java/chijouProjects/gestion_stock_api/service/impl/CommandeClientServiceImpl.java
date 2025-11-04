@@ -46,7 +46,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         List<String> errors = CommandeClientValidator.validate(commandeClientDto);;
         if(!errors.isEmpty()) {
             log.error("Commande Client is not valid: {}", commandeClientDto);
-            throw new InvalidEntityException("Commande Client n'est pas valide", ErrorCodes.LIGNE_COMMANE_CLIENT_NOT_VALID, errors);
+            throw new InvalidEntityException("Commande Client n'est pas valide", ErrorCodes.COMMANDE_CLIENT_NOT_VALID, errors);
         }
         Optional<Client> client = clientRepository.findById(commandeClientDto.getClient().getId());
 
@@ -71,7 +71,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         }
 
         if(!articleErrors.isEmpty()) {
-            log.warn("CommandeClient is not valid: {}", commandeClientDto);
+            log.warn("Commande Client is not valid: {}", commandeClientDto);
             throw new InvalidEntityException("Au moins un des articles n'existe pas dans la BDD ", ErrorCodes.ARTICLE_NOT_FOUND, articleErrors);
         }
 
@@ -106,8 +106,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public CommandeClientDto findByCode(String code) {
         if (!StringUtils.hasLength(code)) {
-            log.error("Le code de commandeClient est null ou vide");
-            throw new IllegalArgumentException("Le code de commandeClient ne peut pas être vide");
+            log.error("Le code de commande Client est null ou vide");
+            throw new IllegalArgumentException("Le code de commande Client ne peut pas être vide");
         }
 
         CommandeClient commandeClient = commandeClientRepository.findByCode(code)
@@ -130,16 +130,16 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public void delete(Integer id) {
         if (id == null) {
-            log.error("CommandeClient ID is null");
+            log.error("Commande Client ID is null");
             return;
         }
 
         if (!commandeClientRepository.existsById(id)) {
-            log.warn("Attempted to delete non-existent commandeClient with ID: {}", id);
+            log.warn("Attempted to delete non-existent commande Client with ID: {}", id);
             return;
         }
 
         commandeClientRepository.deleteById(id);
-        log.info("CommandeClient with ID {} successfully deleted.", id);
+        log.info("Commande Client with ID {} successfully deleted.", id);
     }
 }

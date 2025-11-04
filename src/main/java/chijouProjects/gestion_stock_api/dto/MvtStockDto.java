@@ -22,6 +22,8 @@ public class MvtStockDto {
 
     private TypeMvtStock typemvt;
 
+    private Integer identreprise;
+
     public static MvtStockDto fromEntity(MvtStock mvtdtock) {
         if (mvtdtock == null) return null;
 
@@ -30,6 +32,7 @@ public class MvtStockDto {
                 .datemvt(mvtdtock.getDatemvt())
                 .quantite(mvtdtock.getQuantite())
                 .typemvt(mvtdtock.getTypemvt())
+                .identreprise(mvtdtock.getIdentreprise())
                 .build();
     }
 
@@ -40,6 +43,7 @@ public class MvtStockDto {
         mvtstock.setDatemvt(mvtstockdto.getDatemvt());
         mvtstock.setQuantite(mvtstockdto.getQuantite());
         mvtstock.setTypemvt(mvtstockdto.getTypemvt());
+        mvtstock.setIdentreprise(mvtstockdto.getIdentreprise());
         return mvtstock;
     }
 }

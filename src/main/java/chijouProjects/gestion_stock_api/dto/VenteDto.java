@@ -18,6 +18,8 @@ public class VenteDto {
 
     private String commentaire;
 
+    private Integer identreprise;
+
     public static VenteDto fromEntity(Vente vente) {
         if (vente == null) return null;
 
@@ -26,6 +28,7 @@ public class VenteDto {
                 .code(vente.getCode())
                 .datevente(vente.getDatevente())
                 .commentaire(vente.getCommentaire())
+                .identreprise(vente.getIdentreprise())
                 .build();
     }
 
@@ -36,6 +39,7 @@ public class VenteDto {
         vente.setCode(ventedto.getCode());
         vente.setDatevente(ventedto.getDatevente());
         vente.setCommentaire(ventedto.getCommentaire());
+        vente.setIdentreprise(ventedto.getIdentreprise());
         return vente;
     }
 }

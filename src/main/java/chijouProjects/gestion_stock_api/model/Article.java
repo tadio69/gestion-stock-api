@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Entity
@@ -38,4 +39,16 @@ public class Article extends AbstractEntity {
 
     @Column(name = "identreprise")
     private Integer identreprise;
+
+    @OneToMany(mappedBy = "article")
+    private List<LigneVente> lignevente;
+
+    @OneToMany(mappedBy = "article")
+    private List<LigneCdeClt> lignecdeclt;
+
+    @OneToMany(mappedBy = "article")
+    private List<LigneCdeFournisseur> lignecdefournisseur;
+
+    @OneToMany(mappedBy = "article")
+    private List<MvtStock> mvtstock;
 }

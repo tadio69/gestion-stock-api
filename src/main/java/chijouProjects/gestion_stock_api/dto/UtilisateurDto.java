@@ -29,8 +29,6 @@ public class UtilisateurDto {
 
     private String photo;
 
-    private EntrepriseDto entreprise;
-
     @JsonIgnore
     private List<RoleDto> roles;
 
@@ -45,7 +43,6 @@ public class UtilisateurDto {
                 .datenaissance(utilisateur.getDatenaissance())
                 .motdepasse(utilisateur.getMotdepasse())
                 .adresse(AdresseDto.fromEntity(utilisateur.getAdresse()))
-                .entreprise(EntrepriseDto.fromEntity(utilisateur.getEntreprise()))
                 .photo(utilisateur.getPhoto())
                 .roles(
                         utilisateur.getRoles() != null?

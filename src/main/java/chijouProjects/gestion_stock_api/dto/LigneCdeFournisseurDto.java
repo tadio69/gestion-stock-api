@@ -20,6 +20,8 @@ public class LigneCdeFournisseurDto {
 
     private BigDecimal prixunitaire;
 
+    private Integer identreprise;
+
     public static LigneCdeFournisseurDto fromEntity(LigneCdeFournisseur lignecdefournisseur) {
         if (lignecdefournisseur == null) return null;
 
@@ -27,6 +29,7 @@ public class LigneCdeFournisseurDto {
                 .id(lignecdefournisseur.getId())
                 .quantite(lignecdefournisseur.getQuantite())
                 .prixunitaire(lignecdefournisseur.getPrixunitaire())
+                .identreprise(lignecdefournisseur.getIdentreprise())
                 .build();
     }
 
@@ -36,6 +39,7 @@ public class LigneCdeFournisseurDto {
         lignecdefournisseur.setId(lignecdefournisseurdto.getId());
         lignecdefournisseur.setQuantite(lignecdefournisseurdto.getQuantite());
         lignecdefournisseur.setPrixunitaire(lignecdefournisseurdto.getPrixunitaire());
+        lignecdefournisseur.setId(lignecdefournisseurdto.getIdentreprise());
         return lignecdefournisseur;
     }
 }
