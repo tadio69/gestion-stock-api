@@ -12,9 +12,9 @@ import java.math.BigDecimal;
 public class LigneCdeFournisseurDto {
     private Integer id;
 
-    private ArticleDto article;
+    private ArticleDto articledto;
 
-    private CommandeFournisseurDto commandeFournisseur;
+    private CommandeFournisseurDto commandeFournisseurdto;
 
     private BigDecimal quantite;
 
@@ -30,6 +30,8 @@ public class LigneCdeFournisseurDto {
                 .quantite(lignecdefournisseur.getQuantite())
                 .prixunitaire(lignecdefournisseur.getPrixunitaire())
                 .identreprise(lignecdefournisseur.getIdentreprise())
+                .articledto(ArticleDto.fromEntity(lignecdefournisseur.getArticle()))
+                .commandeFournisseurdto(CommandeFournisseurDto.fromEntity(lignecdefournisseur.getCommandefournisseur()))
                 .build();
     }
 
@@ -40,6 +42,8 @@ public class LigneCdeFournisseurDto {
         lignecdefournisseur.setQuantite(lignecdefournisseurdto.getQuantite());
         lignecdefournisseur.setPrixunitaire(lignecdefournisseurdto.getPrixunitaire());
         lignecdefournisseur.setId(lignecdefournisseurdto.getIdentreprise());
+        lignecdefournisseur.setArticle(ArticleDto.toEntity(lignecdefournisseurdto.getArticledto()));
+        lignecdefournisseur.setCommandefournisseur(CommandeFournisseurDto.toEntity(lignecdefournisseurdto.getCommandeFournisseurdto()));
         return lignecdefournisseur;
     }
 }

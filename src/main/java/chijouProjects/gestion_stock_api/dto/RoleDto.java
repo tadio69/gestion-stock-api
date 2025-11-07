@@ -12,7 +12,7 @@ public class RoleDto {
 
     private String rolename;
 
-    private UtilisateurDto utilisateur;
+    private UtilisateurDto utilisateurdto;
 
     private Integer identreprise;
 
@@ -23,6 +23,7 @@ public class RoleDto {
                 .id(role.getId())
                 .rolename(role.getRolename())
                 .identreprise(role.getIdentreprise())
+                .utilisateurdto(UtilisateurDto.fromEntity(role.getUtilisateur()))
                 .build();
     }
 
@@ -30,6 +31,7 @@ public class RoleDto {
         if (roledto == null) return null;
         Role role = new Role();
         role.setId(roledto.getId());
+        role.setUtilisateur(UtilisateurDto.toEntity(roledto.getUtilisateurdto()));
         role.setRolename(roledto.getRolename());
         role.setIdentreprise(roledto.getIdentreprise());
         return role;

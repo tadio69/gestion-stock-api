@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
+import chijouProjects.gestion_stock_api.model.CommandeClient;
 import chijouProjects.gestion_stock_api.model.Fournisseur;
 import chijouProjects.gestion_stock_api.model.LigneCdeClt;
 import lombok.Builder;
@@ -12,9 +13,9 @@ import java.math.BigDecimal;
 public class LigneCdeCltDto {
     private Integer id;
 
-    private ArticleDto article;
+    private ArticleDto articledto;
 
-    private CommandeClientDto commandeclient;
+    private CommandeClientDto commandeclientdto;
 
     private BigDecimal quantite;
 
@@ -30,6 +31,8 @@ public class LigneCdeCltDto {
                 .quantite(lignecdeclt.getQuantite())
                 .prixunitaire(lignecdeclt.getPrixunitaire())
                 .identreprise(lignecdeclt.getIdentreprise())
+                .articledto(ArticleDto.fromEntity(lignecdeclt.getArticle()))
+                .commandeclientdto(CommandeClientDto.fromEntity(lignecdeclt.getCommandeclient()))
                 .build();
     }
 
@@ -40,6 +43,8 @@ public class LigneCdeCltDto {
         lignecdeclt.setQuantite(lignecdecltdto.getQuantite());
         lignecdeclt.setPrixunitaire(lignecdecltdto.getPrixunitaire());
         lignecdeclt.setIdentreprise(lignecdecltdto.getIdentreprise());
+        lignecdeclt.setArticle(ArticleDto.toEntity(lignecdecltdto.getArticledto()));
+        lignecdeclt.setCommandeclient(CommandeClientDto.toEntity(lignecdecltdto.getCommandeclientdto()));
         return lignecdeclt;
     }
 }

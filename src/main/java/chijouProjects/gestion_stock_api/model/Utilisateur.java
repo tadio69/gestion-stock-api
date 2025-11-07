@@ -18,7 +18,7 @@ public class Utilisateur extends AbstractEntity {
     @Column(name = "nom")
     private String nom;
 
-    @Column(name = "prennom")
+    @Column(name = "prenom")
     private String prenom;
 
     @Column(name = "email")

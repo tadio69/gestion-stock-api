@@ -16,7 +16,7 @@ public class MvtStockDto {
 
     private Instant datemvt;
 
-    private ArticleDto article;
+    private ArticleDto articledto;
 
     private BigDecimal quantite;
 
@@ -32,6 +32,7 @@ public class MvtStockDto {
                 .datemvt(mvtdtock.getDatemvt())
                 .quantite(mvtdtock.getQuantite())
                 .typemvt(mvtdtock.getTypemvt())
+                .articledto(ArticleDto.fromEntity(mvtdtock.getArticle()))
                 .identreprise(mvtdtock.getIdentreprise())
                 .build();
     }
@@ -43,6 +44,7 @@ public class MvtStockDto {
         mvtstock.setDatemvt(mvtstockdto.getDatemvt());
         mvtstock.setQuantite(mvtstockdto.getQuantite());
         mvtstock.setTypemvt(mvtstockdto.getTypemvt());
+        mvtstock.setArticle(ArticleDto.toEntity(mvtstockdto.getArticledto()));
         mvtstock.setIdentreprise(mvtstockdto.getIdentreprise());
         return mvtstock;
     }

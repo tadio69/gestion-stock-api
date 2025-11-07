@@ -1,6 +1,5 @@
 package chijouProjects.gestion_stock_api.validator;
 
-import chijouProjects.gestion_stock_api.dto.RoleDto;
 import chijouProjects.gestion_stock_api.dto.VenteDto;
 import org.springframework.util.StringUtils;
 

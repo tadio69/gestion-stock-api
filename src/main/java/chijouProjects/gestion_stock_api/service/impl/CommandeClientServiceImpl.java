@@ -1,7 +1,6 @@
 package chijouProjects.gestion_stock_api.service.impl;
 
 import chijouProjects.gestion_stock_api.dto.CommandeClientDto;
-import chijouProjects.gestion_stock_api.dto.EntrepriseDto;
 import chijouProjects.gestion_stock_api.dto.LigneCdeCltDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.exception.ErrorCodes;
@@ -13,7 +12,6 @@ import chijouProjects.gestion_stock_api.repository.CommandeClientRepository;
 import chijouProjects.gestion_stock_api.repository.LigneCdeCltRepository;
 import chijouProjects.gestion_stock_api.service.CommandeClientService;
 import chijouProjects.gestion_stock_api.validator.CommandeClientValidator;
-import chijouProjects.gestion_stock_api.validator.EntrepriseValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,21 +46,21 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             log.error("Commande Client is not valid: {}", commandeClientDto);
             throw new InvalidEntityException("Commande Client n'est pas valide", ErrorCodes.COMMANDE_CLIENT_NOT_VALID, errors);
         }
-        Optional<Client> client = clientRepository.findById(commandeClientDto.getClient().getId());
+        Optional<Client> client = clientRepository.findById(commandeClientDto.getClientdto().getId());
 
         if(client.isEmpty()) {
-            log.warn("Client with ID {} was not found in the DBB", commandeClientDto.getClient().getId());
-            throw new EntityNotFoundException("Aucun client avec l'ID " + commandeClientDto.getClient().getId() + " n'a été trouvé dans la BDD");
+            log.warn("Client with ID {} was not found in the DBB", commandeClientDto.getClientdto().getId());
+            throw new EntityNotFoundException("Aucun client avec l'ID " + commandeClientDto.getClientdto().getId() + " n'a été trouvé dans la BDD");
         }
 
         List<String> articleErrors = new ArrayList<>();
 
-        if(commandeClientDto.getLignecdeclts() != null){
-            commandeClientDto.getLignecdeclts().forEach(lignecdeclt -> {
-                if(lignecdeclt.getArticle() != null){
-                    Optional<Article> article = articleRepository.findById(lignecdeclt.getArticle().getId());
+        if(commandeClientDto.getLignecdecltsdto() != null){
+            commandeClientDto.getLignecdecltsdto().forEach(lignecdecltdto -> {
+                if(lignecdecltdto.getArticledto() != null){
+                    Optional<Article> article = articleRepository.findById(lignecdecltdto.getArticledto().getId());
                     if(article.isEmpty()) {
-                        articleErrors.add("L'article avec l'ID " + lignecdeclt.getArticle().getId() + " n'existe pas.");
+                        articleErrors.add("L'article avec l'ID " + lignecdecltdto.getArticledto().getId() + " n'existe pas.");
                     }
                 } else {
                     articleErrors.add("Impossible d'enregistrer une commande avec un article NULL.");
@@ -77,8 +75,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         CommandeClient saveCmdClt = commandeClientRepository.save(CommandeClientDto.toEntity(commandeClientDto));
 
-        if(commandeClientDto.getLignecdeclts() != null){
-            commandeClientDto.getLignecdeclts().forEach(lignecdeclt -> {
+        if(commandeClientDto.getLignecdecltsdto() != null){
+            commandeClientDto.getLignecdecltsdto().forEach(lignecdeclt -> {
                 LigneCdeClt ligneCdeClt = LigneCdeCltDto.toEntity(lignecdeclt);
                 ligneCdeClt.setCommandeclient(saveCmdClt);
                 ligneCdeCltRepository.save(ligneCdeClt);

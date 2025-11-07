@@ -32,6 +32,9 @@ public class ArticleDto {
         return ArticleDto.builder()
                 .id(article.getId())
                 .codeArticle(article.getCodeArticle())
+                .categoriedto(
+                        CategorieDto.fromEntity(article.getCategorie())
+                )
                 .designation(article.getDesignation())
                 .prixunitaireht(article.getPrixunitaireht())
                 .tauxtva(article.getTauxtva())
@@ -45,6 +48,7 @@ public class ArticleDto {
         if (articledto == null) return null;
         Article article = new Article();
         article.setId(articledto.getId());
+        article.setCategorie(CategorieDto.toEntity(articledto.getCategoriedto()));
         article.setCodeArticle(articledto.getCodeArticle());
         article.setDesignation(articledto.getDesignation());
         article.setPrixunitaireht(articledto.getPrixunitaireht());

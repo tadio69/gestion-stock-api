@@ -25,12 +25,12 @@ public class UtilisateurDto {
 
     private String motdepasse;
 
-    private AdresseDto adresse;
+    private AdresseDto adressedto;
 
     private String photo;
 
     @JsonIgnore
-    private List<RoleDto> roles;
+    private List<RoleDto> rolesdto;
 
     public static UtilisateurDto fromEntity(Utilisateur utilisateur) {
         if (utilisateur == null) return null;
@@ -42,9 +42,9 @@ public class UtilisateurDto {
                 .email(utilisateur.getEmail())
                 .datenaissance(utilisateur.getDatenaissance())
                 .motdepasse(utilisateur.getMotdepasse())
-                .adresse(AdresseDto.fromEntity(utilisateur.getAdresse()))
+                .adressedto(AdresseDto.fromEntity(utilisateur.getAdresse()))
                 .photo(utilisateur.getPhoto())
-                .roles(
+                .rolesdto(
                         utilisateur.getRoles() != null?
                                 utilisateur.getRoles().stream()
                                         .map(RoleDto::fromEntity)
@@ -62,7 +62,15 @@ public class UtilisateurDto {
         utilisateur.setEmail(utilisateurdto.getEmail());
         utilisateur.setDatenaissance(utilisateurdto.getDatenaissance());
         utilisateur.setMotdepasse(utilisateurdto.getMotdepasse());
+        utilisateur.setAdresse(AdresseDto.toEntity(utilisateurdto.getAdressedto()));
         utilisateur.setPhoto(utilisateurdto.getPhoto());
+        if (utilisateurdto.getRolesdto() != null) {
+            utilisateur.setRoles(
+                    utilisateurdto.getRolesdto().stream()
+                            .map(RoleDto::toEntity)
+                            .collect(Collectors.toList())
+            );
+        }
         return utilisateur;
     }
 }
