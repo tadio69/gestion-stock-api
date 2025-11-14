@@ -96,13 +96,6 @@ public class EntrepriseDto {
                 .adressedto(AdresseDto.fromEntity(entreprise.getAdresse()))
                 .numtel(entreprise.getNumtel())
                 .siteweb(entreprise.getSiteweb())
-                .utilisateursdto(
-                        entreprise.getUtilisateurs() != null ?
-                                entreprise.getUtilisateurs().stream()
-                                        .map(UtilisateurDto::fromEntity)
-                                        .collect(Collectors.toList())
-                                : null
-                )
                 .build();
     }
 
@@ -119,13 +112,6 @@ public class EntrepriseDto {
         entreprise.setAdresse(AdresseDto.toEntity(entreprisedto.getAdressedto()));
         entreprise.setNumtel(entreprisedto.getNumtel());
         entreprise.setSiteweb(entreprisedto.getSiteweb());
-
-        if (entreprisedto.getUtilisateursdto() != null) {
-            List<Utilisateur> utilisateurs = entreprisedto.getUtilisateursdto().stream()
-                    .map(UtilisateurDto::toEntity)
-                    .collect(Collectors.toList());
-            entreprise.setUtilisateurs(utilisateurs);
-        }
 
         return entreprise;
     }

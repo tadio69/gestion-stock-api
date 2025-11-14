@@ -17,7 +17,7 @@ public interface ClientApi {
     ClientDto findById(@PathVariable("idClient") Integer id);
 
     @GetMapping(value = APP_ROOT + "/clients/{nom}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ClientDto findByNomClient(@PathVariable("nom") String nomClient);
+    ClientDto findByNom(@PathVariable("nom") String nomClient);
 
     @GetMapping(value = APP_ROOT + "/clients/all", produces = MediaType.APPLICATION_JSON_VALUE)
     List<ClientDto> findAll();

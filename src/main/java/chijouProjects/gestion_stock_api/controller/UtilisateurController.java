@@ -30,7 +30,7 @@ public class UtilisateurController implements UtilisateurApi {
 
     @Override
     public UtilisateurDto findByNomUtilisateur(String nom) {
-        return utilisateurService.findByNomUtilisateur(nom);
+        return utilisateurService.findByNom(nom);
     }
 
     @Override

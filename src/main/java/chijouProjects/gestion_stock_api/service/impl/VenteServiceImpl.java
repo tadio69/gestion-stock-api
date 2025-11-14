@@ -84,15 +84,15 @@ public class VenteServiceImpl implements VenteService {
     }
 
     @Override
-    public VenteDto findByCodeVente(String codeVente) {
-        if (!StringUtils.hasLength(codeVente)) {
+    public VenteDto findByCode(String code) {
+        if (!StringUtils.hasLength(code)) {
             log.error("Le code de vente est null ou vide");
             throw new IllegalArgumentException("Le code de vente ne peut pas être vide");
         }
 
-        Vente vente = venteRepository.findByCodeVente(codeVente)
+        Vente vente = venteRepository.findByCode(code)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Aucune vente avec le code = " + codeVente + " n'a été trouvée dans la BDD",
+                        "Aucune vente avec le code = " + code + " n'a été trouvée dans la BDD",
                         ErrorCodes.VENTE_NOT_FOUND
                 ));
 

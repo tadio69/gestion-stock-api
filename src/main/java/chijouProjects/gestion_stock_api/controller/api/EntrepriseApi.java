@@ -19,8 +19,8 @@ public interface EntrepriseApi {
     @GetMapping(value = APP_ROOT + "/entreprises/{description}", produces = MediaType.APPLICATION_JSON_VALUE)
     EntrepriseDto findByDescription(@PathVariable("description") String description);
 
-    @GetMapping(value = APP_ROOT + "/entreprises/{codeFiscal}", produces = MediaType.APPLICATION_JSON_VALUE)
-    EntrepriseDto findByCodeFiscal(@PathVariable("codeFiscal") String codeFiscal);
+    @GetMapping(value = APP_ROOT + "/entreprises/{codefiscal}", produces = MediaType.APPLICATION_JSON_VALUE)
+    EntrepriseDto findByCodefiscal(@PathVariable("codefiscal") String codeFiscal);
 
     @GetMapping(value = APP_ROOT + "/entreprises/all", produces = MediaType.APPLICATION_JSON_VALUE)
     List<EntrepriseDto> findAll();

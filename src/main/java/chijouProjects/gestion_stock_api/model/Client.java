@@ -28,12 +28,13 @@ public class Client extends AbstractEntity {
     @Embedded
     private Adresse adresse;
 
-    @Column(name = "photo")
-    private String photo;
-
     @OneToMany(mappedBy = "client")
     private List<CommandeClient> commandeclients;
 
     @Column(name = "identreprise")
     private Integer identreprise;
+
+    @OneToOne
+    @JoinColumn(name = "idimglink")
+    private ImgLink photoprofil;
 }

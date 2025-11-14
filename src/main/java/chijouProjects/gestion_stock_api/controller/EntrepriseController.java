@@ -34,8 +34,8 @@ public class EntrepriseController implements EntrepriseApi {
     }
 
     @Override
-    public EntrepriseDto findByCodeFiscal(String codeFiscal) {
-        return entrepriseService.findByCodeFiscal(codeFiscal);
+    public EntrepriseDto findByCodefiscal(String codefiscal) {
+        return entrepriseService.findByCodefiscal(codefiscal);
     }
 
     @Override

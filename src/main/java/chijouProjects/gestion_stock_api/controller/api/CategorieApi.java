@@ -19,8 +19,8 @@ public interface CategorieApi {
     @GetMapping(value = APP_ROOT + "/categories/{designation}", produces = MediaType.APPLICATION_JSON_VALUE)
     CategorieDto findByDesignation(@PathVariable("designation") String designation);
 
-    @GetMapping(value = APP_ROOT + "/categories/{codeCategorie}", produces = MediaType.APPLICATION_JSON_VALUE)
-    CategorieDto findByCodeCategorie(@PathVariable("codeCategorie") String codeCategorie);
+    @GetMapping(value = APP_ROOT + "/categories/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
+    CategorieDto findByCode(@PathVariable("code") String code);
 
     @GetMapping(value = APP_ROOT + "/categories/all", produces = MediaType.APPLICATION_JSON_VALUE)
     List<CategorieDto> findAll();

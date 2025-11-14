@@ -3,6 +3,7 @@ package chijouProjects.gestion_stock_api.dto;
 import chijouProjects.gestion_stock_api.model.CommandeFournisseur;
 import chijouProjects.gestion_stock_api.model.Entreprise;
 import chijouProjects.gestion_stock_api.model.Fournisseur;
+import chijouProjects.gestion_stock_api.model.ImgLink;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
@@ -74,7 +75,7 @@ public class FournisseurDto {
     private String email;
     private String numtel;
     private AdresseDto adressedto;
-    private String photo;
+    private ImgLink photoprofil;
     private Integer identreprise;
 
     @JsonIgnore
@@ -89,7 +90,7 @@ public class FournisseurDto {
                 .prenom(fournisseur.getPrenom())
                 .email(fournisseur.getEmail())
                 .numtel(fournisseur.getNumtel())
-                .photo(fournisseur.getPhoto())
+                .photoprofil(fournisseur.getPhotoprofil())
                 .adressedto(AdresseDto.fromEntity(fournisseur.getAdresse()))
                 .identreprise(fournisseur.getIdentreprise())
                 .commandefournisseursdto(
@@ -110,7 +111,7 @@ public class FournisseurDto {
         fournisseur.setPrenom(fournisseurdto.getPrenom()); // ✅ correction ici
         fournisseur.setEmail(fournisseurdto.getEmail());
         fournisseur.setNumtel(fournisseurdto.getNumtel());
-        fournisseur.setPhoto(fournisseurdto.getPhoto());
+        fournisseur.setPhotoprofil(fournisseurdto.getPhotoprofil());
         fournisseur.setAdresse(AdresseDto.toEntity(fournisseurdto.getAdressedto()));
         fournisseur.setIdentreprise(fournisseurdto.getIdentreprise());
 

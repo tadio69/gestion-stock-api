@@ -76,15 +76,15 @@ public class EntrepriseServiceImpl implements EntrepriseService {
     }
 
     @Override
-    public EntrepriseDto findByCodeFiscal(String codeFiscal) {
-        if (!StringUtils.hasLength(codeFiscal)) {
+    public EntrepriseDto findByCodefiscal(String codefiscal) {
+        if (!StringUtils.hasLength(codefiscal)) {
             log.error("Le code fiscal est null ou vide");
             throw new IllegalArgumentException("Le code fiscal ne peut pas être vide");
         }
 
-        Entreprise entreprise = entrepriseRepository.findByCodeFiscal(codeFiscal)
+        Entreprise entreprise = entrepriseRepository.findByCodefiscal(codefiscal)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Aucune entreprise avec le codeFiscal = " + codeFiscal + " n'a été trouvée dans la BDD",
+                        "Aucune entreprise avec le codeFiscal = " + codefiscal + " n'a été trouvée dans la BDD",
                         ErrorCodes.ENTREPRISE_NOT_FOUND
                 ));
 

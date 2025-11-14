@@ -17,7 +17,7 @@ public interface EntrepriseService {
 
     EntrepriseDto findByDescription(String description);
 
-    EntrepriseDto findByCodeFiscal(String codeFiscal);
+    EntrepriseDto findByCodefiscal(String codefiscal);
 
     List<EntrepriseDto> findAll();
 

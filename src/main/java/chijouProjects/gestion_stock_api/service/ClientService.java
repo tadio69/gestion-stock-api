@@ -10,7 +10,7 @@ public interface ClientService {
 
     ClientDto findById(Integer id);
 
-    ClientDto findByNomClient(String nom);
+    ClientDto findByNom(String nom);
 
     List<ClientDto> findAll();
 

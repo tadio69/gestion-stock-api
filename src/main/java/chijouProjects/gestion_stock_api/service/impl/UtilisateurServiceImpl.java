@@ -58,13 +58,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
-    public UtilisateurDto findByNomUtilisateur(String nom) {
+    public UtilisateurDto findByNom(String nom) {
         if (!StringUtils.hasLength(nom)) {
             log.error("Nom de l'utilisateur est null ou vide");
             throw new IllegalArgumentException("Le nom de l'utilisateur ne peut pas être vide");
         }
 
-        Utilisateur utilisateur = utilisateurRepository.findByNomUtilisateur(nom)
+        Utilisateur utilisateur = utilisateurRepository.findByNom(nom)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Aucun utilisateur avec le nom = " + nom + " n'a été trouvé dans la BDD",
                         ErrorCodes.UTILISATEUR_NOT_FOUND

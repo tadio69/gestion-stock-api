@@ -17,7 +17,7 @@ public interface FournisseurApi {
     FournisseurDto findById(@PathVariable("idFournisseur") Integer id);
 
     @GetMapping(value = APP_ROOT + "/fournisseurs/{nom}", produces = MediaType.APPLICATION_JSON_VALUE)
-    FournisseurDto findByNomFournisseur(@PathVariable("nom") String nom);
+    FournisseurDto findByNom(@PathVariable("nom") String nom);
 
     @GetMapping(value = APP_ROOT + "/fournisseurs/all", produces = MediaType.APPLICATION_JSON_VALUE)
     List<FournisseurDto> findAll();

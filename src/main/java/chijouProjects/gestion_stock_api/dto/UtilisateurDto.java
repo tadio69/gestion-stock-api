@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
+import chijouProjects.gestion_stock_api.model.ImgLink;
 import chijouProjects.gestion_stock_api.model.Role;
 import chijouProjects.gestion_stock_api.model.Utilisateur;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,7 +28,7 @@ public class UtilisateurDto {
 
     private AdresseDto adressedto;
 
-    private String photo;
+    private ImgLink photoprofil;
 
     @JsonIgnore
     private List<RoleDto> rolesdto;
@@ -43,7 +44,7 @@ public class UtilisateurDto {
                 .datenaissance(utilisateur.getDatenaissance())
                 .motdepasse(utilisateur.getMotdepasse())
                 .adressedto(AdresseDto.fromEntity(utilisateur.getAdresse()))
-                .photo(utilisateur.getPhoto())
+                .photoprofil(utilisateur.getPhotoprofil())
                 .rolesdto(
                         utilisateur.getRoles() != null?
                                 utilisateur.getRoles().stream()
@@ -63,7 +64,7 @@ public class UtilisateurDto {
         utilisateur.setDatenaissance(utilisateurdto.getDatenaissance());
         utilisateur.setMotdepasse(utilisateurdto.getMotdepasse());
         utilisateur.setAdresse(AdresseDto.toEntity(utilisateurdto.getAdressedto()));
-        utilisateur.setPhoto(utilisateurdto.getPhoto());
+        utilisateur.setPhotoprofil(utilisateurdto.getPhotoprofil());
         if (utilisateurdto.getRolesdto() != null) {
             utilisateur.setRoles(
                     utilisateurdto.getRolesdto().stream()

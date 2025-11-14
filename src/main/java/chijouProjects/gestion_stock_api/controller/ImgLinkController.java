@@ -5,6 +5,7 @@ import chijouProjects.gestion_stock_api.dto.ImgLinkDto;
 import chijouProjects.gestion_stock_api.service.ImgLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class ImgLinkController implements ImgLinkApi {
     }
 
     @Override
-    public ImgLinkDto uploadImage(ImgLinkDto imglinkDto) {
-        return imglinkService.uploadImage(imglinkDto);
+    public ImgLinkDto uploadImage(MultipartFile file, Integer identreprise) {
+        return null;
     }
 
     @Override

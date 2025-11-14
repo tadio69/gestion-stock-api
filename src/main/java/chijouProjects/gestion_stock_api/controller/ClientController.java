@@ -28,8 +28,8 @@ public class ClientController implements ClientApi {
     }
 
     @Override
-    public ClientDto findByNomClient(String nomClient) {
-        return clientService.findByNomClient(nomClient);
+    public ClientDto findByNom(String nom) {
+        return clientService.findByNom(nom);
     }
 
     @Override

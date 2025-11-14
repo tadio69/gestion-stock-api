@@ -45,21 +45,21 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
             log.error("Commande fournisseur is not valid: {}", commandeFournisseurDto);
             throw new InvalidEntityException("Commande fournisseur n'est pas valide", ErrorCodes.COMMANDE_FOURNISSEUR_NOT_FOUND, errors);
         }
-        Optional<Fournisseur> fournisseur = fournisseurRepository.findById(commandeFournisseurDto.getFournisseur().getId());
+        Optional<Fournisseur> fournisseur = fournisseurRepository.findById(commandeFournisseurDto.getFournisseurdto().getId());
 
         if(fournisseur.isEmpty()) {
-            log.warn("Fournisseur with ID {} was not found in the DBB", commandeFournisseurDto.getFournisseur().getId());
-            throw new EntityNotFoundException("Aucun Fournisseur avec l'ID " + commandeFournisseurDto.getFournisseur().getId() + " n'a été trouvé dans la BDD");
+            log.warn("Fournisseur with ID {} was not found in the DBB", commandeFournisseurDto.getFournisseurdto().getId());
+            throw new EntityNotFoundException("Aucun Fournisseur avec l'ID " + commandeFournisseurDto.getFournisseurdto().getId() + " n'a été trouvé dans la BDD");
         }
 
         List<String> articleErrors = new ArrayList<>();
 
-        if(commandeFournisseurDto.getLignecdefournisseurs() != null){
-            commandeFournisseurDto.getLignecdefournisseurs().forEach(lignecdefournisseur -> {
-                if(lignecdefournisseur.getArticle() != null){
-                    Optional<Article> article = articleRepository.findById(lignecdefournisseur.getArticle().getId());
+        if(commandeFournisseurDto.getLignecdefournisseursdto() != null){
+            commandeFournisseurDto.getLignecdefournisseursdto().forEach(lignecdefournisseur -> {
+                if(lignecdefournisseur.getArticledto() != null){
+                    Optional<Article> article = articleRepository.findById(lignecdefournisseur.getArticledto().getId());
                     if(article.isEmpty()) {
-                        articleErrors.add("L'article avec l'ID " + lignecdefournisseur.getArticle().getId() + " n'existe pas.");
+                        articleErrors.add("L'article avec l'ID " + lignecdefournisseur.getArticledto().getId() + " n'existe pas.");
                     }
                 } else {
                     articleErrors.add("Impossible d'enregistrer une commande avec un article NULL.");
@@ -74,8 +74,8 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
 
         CommandeFournisseur saveCmdFournisseur = commandeFournisseurrepository.save(CommandeFournisseurDto.toEntity(commandeFournisseurDto));
 
-        if(commandeFournisseurDto.getLignecdefournisseurs() != null){
-            commandeFournisseurDto.getLignecdefournisseurs().forEach(lignecdefournisseur -> {
+        if(commandeFournisseurDto.getLignecdefournisseursdto() != null){
+            commandeFournisseurDto.getLignecdefournisseursdto().forEach(lignecdefournisseur -> {
                 LigneCdeFournisseur ligneCdeFournisseur = LigneCdeFournisseurDto.toEntity(lignecdefournisseur);
                 ligneCdeFournisseur.setCommandefournisseur(saveCmdFournisseur);
                 ligneCdeFournisseurRepository.save(ligneCdeFournisseur);

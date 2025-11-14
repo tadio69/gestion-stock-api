@@ -66,13 +66,13 @@ public class ClientSericeImpl implements ClientService {
     }
 
     @Override
-    public ClientDto findByNomClient(String nom) {
+    public ClientDto findByNom(String nom) {
         if (!StringUtils.hasLength(nom)) {
             log.error("Nom client est null ou vide");
             throw new IllegalArgumentException("Le nom de client ne peut pas être vide");
         }
         /*
-        Client client = clientRepository.findByNomClient(nom);
+        Client client = clientRepository.findByNom(nom);
         if (client == null) {
             log.error("Aucun client trouvé avec le nom {}", nom);
             throw new EntityNotFoundException(
@@ -81,7 +81,7 @@ public class ClientSericeImpl implements ClientService {
             );
         }
          */
-        Client client = clientRepository.findByNomClient(nom)
+        Client client = clientRepository.findByNom(nom)
                 .orElseThrow(() -> new EntityNotFoundException(
                 "Aucun client avec le nom = " + nom + " n'a été trouvé dans la BDD",
                 ErrorCodes.CLIENT_NOT_FOUND

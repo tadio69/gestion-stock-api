@@ -11,7 +11,7 @@ public interface CategorieService {
 
     CategorieDto findById(Integer id);
 
-    CategorieDto findByCodeCategorie(String codeCategorie);
+    CategorieDto findByCode(String code);
 
     CategorieDto findByDesignation(String designation);
 

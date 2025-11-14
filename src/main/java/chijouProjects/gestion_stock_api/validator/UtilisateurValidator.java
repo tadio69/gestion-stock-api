@@ -40,22 +40,22 @@ public class UtilisateurValidator {
             errors.add("Veuillez renseigner la date de naissance d'utilisateur");
         }
 
-        if(utilisateurdto.getAdresse() == null) {
+        if(utilisateurdto.getAdressedto() == null) {
             errors.add("Veuillez renseigner l'adresse d'utilisateur");
         } else {
-            if(!StringUtils.hasLength(utilisateurdto.getAdresse().getAdresse1())) {
+            if(!StringUtils.hasLength(utilisateurdto.getAdressedto().getAdresse1())) {
                 errors.add("Le champ 'Adresse 1' est obligatoire");
             }
 
-            if(!StringUtils.hasLength(utilisateurdto.getAdresse().getVille())) {
+            if(!StringUtils.hasLength(utilisateurdto.getAdressedto().getVille())) {
                 errors.add("Le champ 'Ville' est obligatoire");
             }
 
-            if(!StringUtils.hasLength(utilisateurdto.getAdresse().getCodePostal())) {
+            if(!StringUtils.hasLength(utilisateurdto.getAdressedto().getCodePostal())) {
                 errors.add("Le champ 'Code postal' est obligatoire");
             }
 
-            if(!StringUtils.hasLength(utilisateurdto.getAdresse().getPays())) {
+            if(!StringUtils.hasLength(utilisateurdto.getAdressedto().getPays())) {
                 errors.add("Le champ 'Pays' est obligatoire");
             }
         }

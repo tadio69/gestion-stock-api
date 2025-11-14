@@ -16,11 +16,11 @@ public class LigneCdeFournisseurValidator {
             return errors;
         }
 
-        if(lignecdefournisseurdto.getArticle() == null) {
+        if(lignecdefournisseurdto.getArticledto() == null) {
             errors.add("Veuillez sélectionner l'article");
         }
 
-        if(lignecdefournisseurdto.getCommandeFournisseur() == null) {
+        if(lignecdefournisseurdto.getCommandeFournisseurdto() == null) {
             errors.add("Veuillez sélectionner la commande");
         }
 

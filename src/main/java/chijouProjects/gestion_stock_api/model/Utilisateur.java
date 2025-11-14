@@ -33,8 +33,9 @@ public class Utilisateur extends AbstractEntity {
     @Embedded
     private Adresse adresse;
 
-    @Column(name = "photo")
-    private String photo;
+    @OneToOne
+    @JoinColumn(name = "idimglink")
+    private ImgLink photoprofil;
 
     @OneToMany(mappedBy = "utilisateur")
     private List<Role> roles;

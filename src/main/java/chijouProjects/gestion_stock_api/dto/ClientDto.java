@@ -1,9 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
-import chijouProjects.gestion_stock_api.model.Adresse;
-import chijouProjects.gestion_stock_api.model.Article;
-import chijouProjects.gestion_stock_api.model.Client;
-import chijouProjects.gestion_stock_api.model.CommandeClient;
+import chijouProjects.gestion_stock_api.model.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
@@ -71,7 +68,7 @@ public class ClientDto {
     private String email;
     private String numTel;
     private AdresseDto adressedto;
-    private String photo;
+    private ImgLink photoprofil;
     private Integer identreprise;
 
     @JsonIgnore
@@ -87,7 +84,7 @@ public class ClientDto {
                 .email(client.getEmail())
                 .numTel(client.getNumTel())
                 .adressedto(AdresseDto.fromEntity(client.getAdresse()))
-                .photo(client.getPhoto())
+                .photoprofil(client.getPhotoprofil())
                 .identreprise(client.getIdentreprise())
                 .commandeclientsdto(
                         client.getCommandeclients() != null ?
@@ -107,7 +104,7 @@ public class ClientDto {
         client.setPrenom(clientdto.getPrenom());
         client.setEmail(clientdto.getEmail());
         client.setNumTel(clientdto.getNumTel());
-        client.setPhoto(clientdto.getPhoto());
+        client.setPhotoprofil(clientdto.getPhotoprofil());
         client.setAdresse(AdresseDto.toEntity(clientdto.getAdressedto()));
         client.setIdentreprise(clientdto.getIdentreprise());
 

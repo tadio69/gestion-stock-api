@@ -22,7 +22,7 @@ public class ImgLink extends AbstractEntity {
     private String filename;
 
     @Column(name = "uploaded_at")
-    private Instant createdAt;
+    private Instant uploadedAt;
 
     @Column(name = "identreprise")
     private Integer identreprise;

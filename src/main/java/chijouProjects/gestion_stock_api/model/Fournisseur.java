@@ -29,12 +29,13 @@ public class Fournisseur extends AbstractEntity {
     @Embedded
     private Adresse adresse;
 
-    @Column(name = "photo")
-    private String photo;
-
     @OneToMany(mappedBy = "fournisseur")
     private List<CommandeFournisseur> commandefournisseurs;
 
     @Column(name = "identreprise")
     private Integer identreprise;
+
+    @OneToOne
+    @JoinColumn(name = "idimglink")
+    private ImgLink photoprofil;
 }

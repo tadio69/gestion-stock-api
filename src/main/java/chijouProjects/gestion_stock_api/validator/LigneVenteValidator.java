@@ -16,7 +16,7 @@ public class LigneVenteValidator {
             return errors;
         }
 
-        if(ligneventedto.getVente() == null) {
+        if(ligneventedto.getVentedto() == null) {
             errors.add("Veuillez sélectionner la vente");
         }
 

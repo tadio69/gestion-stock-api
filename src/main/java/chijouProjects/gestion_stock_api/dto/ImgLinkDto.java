@@ -9,7 +9,6 @@ import lombok.Data;
 public class ImgLinkDto {
     private Integer id;
     private String filename; // nom optionnel de l'image
-    private String base64;   // image encodée en base64
     private String url;      // URL renvoyée par ImgLink
     private Integer identreprise;
 

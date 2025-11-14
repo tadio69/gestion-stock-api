@@ -60,15 +60,15 @@ public class CategorieServiceImpl implements CategorieService {
     }
 
     @Override
-    public CategorieDto findByCodeCategorie(String codeCategorie) {
-        if (!StringUtils.hasLength(codeCategorie)) {
+    public CategorieDto findByCode(String code) {
+        if (!StringUtils.hasLength(code)) {
             log.error("Catégorie CODE est null ou vide");
             throw new IllegalArgumentException("Le code de la catégorie ne peut pas être vide");
         }
 
-        Categorie categorie = categorieRepository.findByCodeCategorie(codeCategorie)
+        Categorie categorie = categorieRepository.findByCode(code)
                 .orElseThrow(() -> new EntityNotFoundException(
-                "Aucune catégorie avec le CODE = " + codeCategorie + " n'a été trouvé dans la BDD",
+                "Aucune catégorie avec le CODE = " + code + " n'a été trouvé dans la BDD",
                 ErrorCodes.CATEGORIE_NOT_FOUND
         ));
 

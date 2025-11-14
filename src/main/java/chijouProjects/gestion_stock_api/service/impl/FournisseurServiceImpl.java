@@ -59,13 +59,13 @@ public class FournisseurServiceImpl implements FournisseurService {
     }
 
     @Override
-    public FournisseurDto findByNomFournisseur(String nom) {
+    public FournisseurDto findByNom(String nom) {
         if (!StringUtils.hasLength(nom)) {
             log.error("Le nom du fournisseur est null ou vide");
             throw new IllegalArgumentException("Le nom du fournisseur ne peut pas être vide");
         }
 
-        Fournisseur fournisseur = fournisseurRepository.findByNomFournisseur(nom)
+        Fournisseur fournisseur = fournisseurRepository.findByNom(nom)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Aucun fournisseur avec le nom = " + nom + " n'a été trouvé dans la BDD",
                         ErrorCodes.FOURNISSEUR_NOT_FOUND

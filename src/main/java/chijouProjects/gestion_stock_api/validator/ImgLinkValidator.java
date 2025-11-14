@@ -12,13 +12,8 @@ public class ImgLinkValidator {
 
         if (imgLinkDto == null) {
             errors.add("Veuillez fournir les informations de la photo");
-            errors.add("L'URL de la photo est obligatoire");
             errors.add("Le nom du fichier est obligatoire");
             return errors;
-        }
-
-        if (!StringUtils.hasLength(imgLinkDto.getUrl())) {
-            errors.add("L'URL de la photo est obligatoire");
         }
 
         if (!StringUtils.hasLength(imgLinkDto.getFilename())) {
@@ -28,3 +23,19 @@ public class ImgLinkValidator {
         return errors;
     }
 }
+/*
+public class ImgLinkValidator {
+    public static List<String> validate(MultipartFile file, Integer identreprise) {
+        List<String> errors = new ArrayList<>();
+
+        if (file == null || file.isEmpty()) {
+            errors.add("Veuillez choisir une image.");
+        }
+
+        if (identreprise == null) {
+            errors.add("L'identreprise est obligatoire.");
+        }
+
+        return errors;
+    }
+}*/
