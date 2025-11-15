@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class ArticleDto {
     private Integer id;
 
-    private String codeArticle;
+    private String code;
 
     private String designation;
 
@@ -31,7 +31,7 @@ public class ArticleDto {
 
         return ArticleDto.builder()
                 .id(article.getId())
-                .codeArticle(article.getCodeArticle())
+                .code(article.getCode())
                 .categoriedto(
                         CategorieDto.fromEntity(article.getCategorie())
                 )
@@ -49,7 +49,7 @@ public class ArticleDto {
         Article article = new Article();
         article.setId(articledto.getId());
         article.setCategorie(CategorieDto.toEntity(articledto.getCategoriedto()));
-        article.setCodeArticle(articledto.getCodeArticle());
+        article.setCode(articledto.getCode());
         article.setDesignation(articledto.getDesignation());
         article.setPrixunitaireht(articledto.getPrixunitaireht());
         article.setTauxtva(articledto.getTauxtva());

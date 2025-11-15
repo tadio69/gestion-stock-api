@@ -10,7 +10,7 @@ public interface ArticleService {
 
     ArticleDto findById(Integer id);
 
-    ArticleDto findByCodeArticle(String codeArticle);
+    ArticleDto findByCode(String code);
 
     List<ArticleDto> findAll();
 

@@ -20,7 +20,11 @@ public class ImgLinkController implements ImgLinkApi {
 
     @Override
     public ImgLinkDto uploadImage(MultipartFile file, Integer identreprise) {
-        return null;
+        if (file == null || file.isEmpty()) {
+            throw new RuntimeException("Le fichier image est obligatoire pour l'upload.");
+        }
+
+        return imglinkService.uploadImage(file, identreprise);
     }
 
     @Override

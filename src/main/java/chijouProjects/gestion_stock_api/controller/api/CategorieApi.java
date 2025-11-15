@@ -13,8 +13,8 @@ public interface CategorieApi {
     @PostMapping(value = APP_ROOT + "/categories/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     CategorieDto save(@RequestBody CategorieDto categorieDto);
 
-    @GetMapping(value = APP_ROOT + "/categories/{idCategorie}" , produces = MediaType.APPLICATION_JSON_VALUE)
-    CategorieDto findById(@PathVariable("idCategorie") Integer id);
+    @GetMapping(value = APP_ROOT + "/categories/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    CategorieDto findById(@PathVariable("id") Integer id);
 
     @GetMapping(value = APP_ROOT + "/categories/{designation}", produces = MediaType.APPLICATION_JSON_VALUE)
     CategorieDto findByDesignation(@PathVariable("designation") String designation);
@@ -25,6 +25,6 @@ public interface CategorieApi {
     @GetMapping(value = APP_ROOT + "/categories/all", produces = MediaType.APPLICATION_JSON_VALUE)
     List<CategorieDto> findAll();
 
-    @DeleteMapping(value = APP_ROOT + "/categories/delete/{idCategorie}", produces = MediaType.APPLICATION_JSON_VALUE)
-    void delete(@PathVariable("idCategorie") Integer id);
+    @DeleteMapping(value = APP_ROOT + "/categories/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    void delete(@PathVariable("id") Integer id);
 }

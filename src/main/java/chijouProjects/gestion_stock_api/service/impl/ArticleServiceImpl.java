@@ -59,15 +59,15 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleDto findByCodeArticle(String codeArticle) {
-        if (!StringUtils.hasLength(codeArticle)) {
+    public ArticleDto findByCode(String code) {
+        if (!StringUtils.hasLength(code)) {
             log.error("Article CODE est null ou vide");
             throw new IllegalArgumentException("Le code de l'article ne peut pas être vide");
         }
 
-        Article article = articleRepository.findByCodeArticle(codeArticle)
+        Article article = articleRepository.findByCode(code)
                 .orElseThrow(() -> new EntityNotFoundException(
-                "Aucun article avec le code = " + codeArticle + " n'a été trouvé dans la BDD",
+                "Aucun article avec le code = " + code + " n'a été trouvé dans la BDD",
                 ErrorCodes.ARTICLE_NOT_FOUND
         ));
 

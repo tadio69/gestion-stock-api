@@ -13,8 +13,8 @@ public interface EntrepriseApi {
     @PostMapping(value = APP_ROOT + "/entreprises/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     EntrepriseDto save(@RequestBody EntrepriseDto articleDto);
 
-    @GetMapping(value = APP_ROOT + "/entreprises/{idEntreprise}" , produces = MediaType.APPLICATION_JSON_VALUE)
-    EntrepriseDto findById(@PathVariable("idEntreprise") Integer id);
+    @GetMapping(value = APP_ROOT + "/entreprises/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    EntrepriseDto findById(@PathVariable("id") Integer id);
 
     @GetMapping(value = APP_ROOT + "/entreprises/{description}", produces = MediaType.APPLICATION_JSON_VALUE)
     EntrepriseDto findByDescription(@PathVariable("description") String description);
@@ -25,6 +25,6 @@ public interface EntrepriseApi {
     @GetMapping(value = APP_ROOT + "/entreprises/all", produces = MediaType.APPLICATION_JSON_VALUE)
     List<EntrepriseDto> findAll();
 
-    @DeleteMapping(value = APP_ROOT + "/entreprises/delete/{idEntreprise}", produces = MediaType.APPLICATION_JSON_VALUE)
-    void delete(@PathVariable("idEntreprise") Integer id);
+    @DeleteMapping(value = APP_ROOT + "/entreprises/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    void delete(@PathVariable("id") Integer id);
 }

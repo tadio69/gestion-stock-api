@@ -13,8 +13,8 @@ public interface ClientApi {
     @PostMapping(value = APP_ROOT + "/clients/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     ClientDto save(@RequestBody ClientDto articleDto);
 
-    @GetMapping(value = APP_ROOT + "/clients/{idClient}" , produces = MediaType.APPLICATION_JSON_VALUE)
-    ClientDto findById(@PathVariable("idClient") Integer id);
+    @GetMapping(value = APP_ROOT + "/clients/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    ClientDto findById(@PathVariable("id") Integer id);
 
     @GetMapping(value = APP_ROOT + "/clients/{nom}", produces = MediaType.APPLICATION_JSON_VALUE)
     ClientDto findByNom(@PathVariable("nom") String nomClient);
@@ -22,6 +22,6 @@ public interface ClientApi {
     @GetMapping(value = APP_ROOT + "/clients/all", produces = MediaType.APPLICATION_JSON_VALUE)
     List<ClientDto> findAll();
 
-    @DeleteMapping(value = APP_ROOT + "/clients/delete/{idClient}", produces = MediaType.APPLICATION_JSON_VALUE)
-    void delete(@PathVariable("idClient") Integer id);
+    @DeleteMapping(value = APP_ROOT + "/clients/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    void delete(@PathVariable("id") Integer id);
 }

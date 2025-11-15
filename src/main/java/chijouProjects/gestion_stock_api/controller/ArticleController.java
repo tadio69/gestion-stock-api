@@ -28,8 +28,8 @@ public class ArticleController implements ArticleApi {
     }
 
     @Override
-    public ArticleDto findByCodeArticle(String codeArticle) {
-        return articleService.findByCodeArticle(codeArticle);
+    public ArticleDto findByCode(String code) {
+        return articleService.findByCode(code);
     }
 
     @Override

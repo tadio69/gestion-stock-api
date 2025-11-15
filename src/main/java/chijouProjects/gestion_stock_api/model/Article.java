@@ -15,8 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "article")
 public class Article extends AbstractEntity {
-    @Column(name = "codearticle", nullable = false)
-    private String codeArticle;
+    @Column(name = "code", nullable = false)
+    private String code;
 
     @Column(name = "designation")
     private String designation;

@@ -13,8 +13,8 @@ public interface FournisseurApi {
     @PostMapping(value = APP_ROOT + "/fournisseurs/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     FournisseurDto save(@RequestBody FournisseurDto fournisseurDto);
 
-    @GetMapping(value = APP_ROOT + "/fournisseurs/{idFournisseur}" , produces = MediaType.APPLICATION_JSON_VALUE)
-    FournisseurDto findById(@PathVariable("idFournisseur") Integer id);
+    @GetMapping(value = APP_ROOT + "/fournisseurs/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    FournisseurDto findById(@PathVariable("id") Integer id);
 
     @GetMapping(value = APP_ROOT + "/fournisseurs/{nom}", produces = MediaType.APPLICATION_JSON_VALUE)
     FournisseurDto findByNom(@PathVariable("nom") String nom);
@@ -22,6 +22,6 @@ public interface FournisseurApi {
     @GetMapping(value = APP_ROOT + "/fournisseurs/all", produces = MediaType.APPLICATION_JSON_VALUE)
     List<FournisseurDto> findAll();
 
-    @DeleteMapping(value = APP_ROOT + "/fournisseurs/delete/{idFournisseur}", produces = MediaType.APPLICATION_JSON_VALUE)
-    void delete(@PathVariable("idFournisseur") Integer id);
+    @DeleteMapping(value = APP_ROOT + "/fournisseurs/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    void delete(@PathVariable("id") Integer id);
 }

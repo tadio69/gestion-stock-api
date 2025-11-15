@@ -13,6 +13,7 @@ import chijouProjects.gestion_stock_api.validator.UtilisateurValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -28,18 +29,27 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     public UtilisateurServiceImpl(UtilisateurRepository utilisateurRepository) {
         this.utilisateurRepository = utilisateurRepository;
     }
+
     @Override
+    @Transactional // Assurez-vous que c'est transactionnel pour l'opération multiple
     public UtilisateurDto save(UtilisateurDto utilisateurDto) {
-        List<String> errors = UtilisateurValidator.validate(utilisateurDto);;
-        if(!errors.isEmpty()) {
+        List<String> errors = UtilisateurValidator.validate(utilisateurDto);
+        if (!errors.isEmpty()) {
             log.error("Utilisateur is not valid: {}", utilisateurDto);
             throw new InvalidEntityException("L'utilisateur n'est pas valide", ErrorCodes.UTILISATEUR_NOT_VALID, errors);
         }
-        return UtilisateurDto.fromEntity(
-                utilisateurRepository.save(
-                        UtilisateurDto.toEntity(utilisateurDto)
-                )
-        );
+
+        Utilisateur utilisateur = UtilisateurDto.toEntity(utilisateurDto);
+
+        if (utilisateur.getRoles() != null) {
+            utilisateur.getRoles().forEach(role -> {
+                role.setUtilisateur(utilisateur);
+            });
+        }
+
+        Utilisateur savedUtilisateur = utilisateurRepository.save(utilisateur);
+
+        return UtilisateurDto.fromEntity(savedUtilisateur);
     }
 
     @Override
