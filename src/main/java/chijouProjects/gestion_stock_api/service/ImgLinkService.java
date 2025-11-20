@@ -1,6 +1,5 @@
 package chijouProjects.gestion_stock_api.service;
 
-import chijouProjects.gestion_stock_api.dto.ArticleDto;
 import chijouProjects.gestion_stock_api.dto.ImgLinkDto;
 import org.springframework.web.multipart.MultipartFile;
 
