@@ -1,11 +1,9 @@
 package chijouProjects.gestion_stock_api.service.impl;
 
-import chijouProjects.gestion_stock_api.dto.ArticleDto;
 import chijouProjects.gestion_stock_api.dto.CategorieDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.exception.ErrorCodes;
 import chijouProjects.gestion_stock_api.exception.InvalidEntityException;
-import chijouProjects.gestion_stock_api.model.Article;
 import chijouProjects.gestion_stock_api.model.Categorie;
 import chijouProjects.gestion_stock_api.repository.CategorieRepository;
 import chijouProjects.gestion_stock_api.service.CategorieService;
@@ -13,6 +11,7 @@ import chijouProjects.gestion_stock_api.validator.CategorieValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -92,6 +91,7 @@ public class CategorieServiceImpl implements CategorieService {
     }
 
     @Override
+    @Transactional
     public List<CategorieDto> findAll() {
         return categorieRepository.findAll().stream()
                 .map(CategorieDto::fromEntity)
