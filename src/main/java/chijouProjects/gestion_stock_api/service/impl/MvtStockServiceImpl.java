@@ -36,14 +36,14 @@ public class MvtStockServiceImpl implements MvtStockService {
         }
 
         // Vérifie la présence de l’article lié
-        if (mvtStockDto.getArticledto() == null || mvtStockDto.getArticledto().getId() == null) {
+        if (mvtStockDto.getIdarticle() == null) {
             log.error("Article du mouvement de stock est null");
             throw new IllegalArgumentException("L'article associé est obligatoire pour un mouvement de stock");
         }
 
-        Optional<Article> articleOpt = articleRepository.findById(mvtStockDto.getArticledto().getId());
+        Optional<Article> articleOpt = articleRepository.findById(mvtStockDto.getIdarticle());
         if (articleOpt.isEmpty()) {
-            log.error("Aucun article trouvé avec l'id {}", mvtStockDto.getArticledto().getId());
+            log.error("Aucun article trouvé avec l'id {}", mvtStockDto.getIdarticle());
             throw new IllegalArgumentException("Article introuvable");
         }
 

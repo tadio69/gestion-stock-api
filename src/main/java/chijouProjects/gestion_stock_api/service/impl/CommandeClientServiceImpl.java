@@ -46,21 +46,21 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             log.error("Commande Client is not valid: {}", commandeClientDto);
             throw new InvalidEntityException("Commande Client n'est pas valide", ErrorCodes.COMMANDE_CLIENT_NOT_VALID, errors);
         }
-        Optional<Client> client = clientRepository.findById(commandeClientDto.getClientdto().getId());
+        Optional<Client> client = clientRepository.findById(commandeClientDto.getIdclient());
 
         if(client.isEmpty()) {
-            log.warn("Client with ID {} was not found in the DBB", commandeClientDto.getClientdto().getId());
-            throw new EntityNotFoundException("Aucun client avec l'ID " + commandeClientDto.getClientdto().getId() + " n'a été trouvé dans la BDD");
+            log.warn("Client with ID {} was not found in the DBB", commandeClientDto.getIdclient());
+            throw new EntityNotFoundException("Aucun client avec l'ID " + commandeClientDto.getIdclient() + " n'a été trouvé dans la BDD");
         }
 
         List<String> articleErrors = new ArrayList<>();
 
         if(commandeClientDto.getLignecdecltsdto() != null){
             commandeClientDto.getLignecdecltsdto().forEach(lignecdecltdto -> {
-                if(lignecdecltdto.getArticledto() != null){
-                    Optional<Article> article = articleRepository.findById(lignecdecltdto.getArticledto().getId());
+                if(lignecdecltdto.getIdarticle() != null){
+                    Optional<Article> article = articleRepository.findById(lignecdecltdto.getIdarticle());
                     if(article.isEmpty()) {
-                        articleErrors.add("L'article avec l'ID " + lignecdecltdto.getArticledto().getId() + " n'existe pas.");
+                        articleErrors.add("L'article avec l'ID " + lignecdecltdto.getIdarticle() + " n'existe pas.");
                     }
                 } else {
                     articleErrors.add("Impossible d'enregistrer une commande avec un article NULL.");

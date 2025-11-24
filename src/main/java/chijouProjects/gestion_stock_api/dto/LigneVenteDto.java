@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
+import chijouProjects.gestion_stock_api.model.Article;
 import chijouProjects.gestion_stock_api.model.LigneVente;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
 public class LigneVenteDto {
     private Integer id;
 
-    private ArticleDto articledto;
+    private Integer idarticle;
 
     private VenteDto ventedto;
 
@@ -27,7 +28,7 @@ public class LigneVenteDto {
         return LigneVenteDto.builder()
                 .id(lignevente.getId())
                 .quantite(lignevente.getQuantite())
-                .articledto(ArticleDto.fromEntity(lignevente.getArticle()))
+                .idarticle(lignevente.getArticle().getId())
                 .prixunitaire(lignevente.getPrixunitaire())
                 .ventedto(VenteDto.fromEntity(lignevente.getVente()))
                 .identreprise(lignevente.getIdentreprise())
@@ -38,7 +39,12 @@ public class LigneVenteDto {
         if (ligneventedto == null) return null;
         LigneVente lignevente = new LigneVente();
         lignevente.setId(ligneventedto.getId());
-        lignevente.setArticle(ArticleDto.toEntity(ligneventedto.getArticledto()));
+        if(ligneventedto.getIdarticle() != null) {
+            Article article = new Article();
+            article.setId(ligneventedto.getIdarticle());
+            lignevente.setArticle(article);
+        }
+
         lignevente.setVente(VenteDto.toEntity(ligneventedto.getVentedto()));
         lignevente.setQuantite(ligneventedto.getQuantite());
         lignevente.setPrixunitaire(ligneventedto.getPrixunitaire());

@@ -22,7 +22,7 @@ public class CommandeFournisseurValidator {
             errors.add("Veuillez renseigner la date de la commande du fournisseur");
         }
 
-        if(commandefournisseurdto.getFournisseurdto() == null) {
+        if(commandefournisseurdto.getIdfournisseur() == null) {
             errors.add("Veuillez sélectionner le fournisseur");
         }
 

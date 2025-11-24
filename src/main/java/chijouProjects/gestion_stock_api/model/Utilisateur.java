@@ -35,8 +35,9 @@ public class Utilisateur extends AbstractEntity {
 
     @OneToOne
     @JoinColumn(name = "idimglink")
-    private ImgLink photoprofil;
+    private ImgLink imglink;
 
     @OneToMany(mappedBy = "utilisateur")
     private List<Role> roles;
+
 }

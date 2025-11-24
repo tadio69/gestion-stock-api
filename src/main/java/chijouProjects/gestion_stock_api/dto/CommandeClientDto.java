@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
+import chijouProjects.gestion_stock_api.model.Client;
 import chijouProjects.gestion_stock_api.model.LigneCdeClt;
 import chijouProjects.gestion_stock_api.model.CommandeClient;
 
@@ -10,52 +11,13 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/*@Data
-@Builder
-public class CommandeClientDto {
-    private Integer id;
-
-    private String code;
-
-    private Instant datecommande;
-
-    private ClientDto clientdto;
-
-    private Integer identreprise;
-
-    private List<LigneCdeCltDto> lignecdecltsdto;
-
-    public static CommandeClientDto fromEntity(CommandeClient commandeclient) {
-        if (commandeclient == null) return null;
-
-        return CommandeClientDto.builder()
-                .id(commandeclient.getId())
-                .code(commandeclient.getCode())
-                .datecommande(commandeclient.getDatecommande())
-                .identreprise(commandeclient.getIdentreprise())
-                .clientdto(ClientDto.fromEntity(commandeclient.getClient()))
-                .build();
-    }
-
-    public static CommandeClient toEntity(CommandeClientDto commandeclientdto) {
-        if (commandeclientdto == null) return null;
-        CommandeClient commandeclient = new CommandeClient();
-        commandeclient.setId(commandeclientdto.getId());
-        commandeclient.setCode(commandeclientdto.getCode());
-        commandeclient.setDatecommande(commandeclientdto.getDatecommande());
-        commandeclient.setClient(ClientDto.toEntity(commandeclientdto.getClientdto()));
-        commandeclient.setIdentreprise(commandeclientdto.getIdentreprise());
-        return commandeclient;
-    }
-}*/
-
 @Data
 @Builder
 public class CommandeClientDto {
     private Integer id;
     private String code;
     private Instant datecommande;
-    private ClientDto clientdto;
+    private Integer  idclient;
     private Integer identreprise;
     private List<LigneCdeCltDto> lignecdecltsdto;
 
@@ -67,7 +29,7 @@ public class CommandeClientDto {
                 .code(commandeclient.getCode())
                 .datecommande(commandeclient.getDatecommande())
                 .identreprise(commandeclient.getIdentreprise())
-                .clientdto(ClientDto.fromEntity(commandeclient.getClient()))
+                .idclient(commandeclient.getClient().getId())
                 .lignecdecltsdto(
                         commandeclient.getLignecdeclts() != null ?
                                 commandeclient.getLignecdeclts().stream()
@@ -84,7 +46,6 @@ public class CommandeClientDto {
         commandeclient.setId(commandeclientdto.getId());
         commandeclient.setCode(commandeclientdto.getCode());
         commandeclient.setDatecommande(commandeclientdto.getDatecommande());
-        commandeclient.setClient(ClientDto.toEntity(commandeclientdto.getClientdto()));
         commandeclient.setIdentreprise(commandeclientdto.getIdentreprise());
 
         if (commandeclientdto.getLignecdecltsdto() != null) {
@@ -93,6 +54,12 @@ public class CommandeClientDto {
                     .collect(Collectors.toList());
             lignes.forEach(l -> l.setCommandeclient(commandeclient)); // 🔁 liaison bidirectionnelle
             commandeclient.setLignecdeclts(lignes);
+        }
+
+        if(commandeclientdto.getIdclient() != null) {
+            Client client = new Client();
+            client.setId(commandeclientdto.getIdclient());
+            commandeclient.setClient(client);
         }
 
         return commandeclient;

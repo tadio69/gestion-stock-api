@@ -17,7 +17,7 @@ public class MvtStockValidator {
             return errors;
         }
 
-        if(mvtstockdto.getArticledto() == null) {
+        if(mvtstockdto.getIdarticle() == null) {
             errors.add("Veuillez sélectionner le article");
         }
 

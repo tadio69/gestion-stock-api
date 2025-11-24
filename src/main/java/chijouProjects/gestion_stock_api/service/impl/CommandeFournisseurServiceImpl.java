@@ -45,21 +45,21 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
             log.error("Commande fournisseur is not valid: {}", commandeFournisseurDto);
             throw new InvalidEntityException("Commande fournisseur n'est pas valide", ErrorCodes.COMMANDE_FOURNISSEUR_NOT_FOUND, errors);
         }
-        Optional<Fournisseur> fournisseur = fournisseurRepository.findById(commandeFournisseurDto.getFournisseurdto().getId());
+        Optional<Fournisseur> fournisseur = fournisseurRepository.findById(commandeFournisseurDto.getIdfournisseur());
 
         if(fournisseur.isEmpty()) {
-            log.warn("Fournisseur with ID {} was not found in the DBB", commandeFournisseurDto.getFournisseurdto().getId());
-            throw new EntityNotFoundException("Aucun Fournisseur avec l'ID " + commandeFournisseurDto.getFournisseurdto().getId() + " n'a été trouvé dans la BDD");
+            log.warn("Fournisseur with ID {} was not found in the DBB", commandeFournisseurDto.getIdfournisseur());
+            throw new EntityNotFoundException("Aucun Fournisseur avec l'ID " + commandeFournisseurDto.getIdfournisseur() + " n'a été trouvé dans la BDD");
         }
 
         List<String> articleErrors = new ArrayList<>();
 
         if(commandeFournisseurDto.getLignecdefournisseursdto() != null){
             commandeFournisseurDto.getLignecdefournisseursdto().forEach(lignecdefournisseur -> {
-                if(lignecdefournisseur.getArticledto() != null){
-                    Optional<Article> article = articleRepository.findById(lignecdefournisseur.getArticledto().getId());
+                if(lignecdefournisseur.getIdarticle() != null){
+                    Optional<Article> article = articleRepository.findById(lignecdefournisseur.getIdarticle());
                     if(article.isEmpty()) {
-                        articleErrors.add("L'article avec l'ID " + lignecdefournisseur.getArticledto().getId() + " n'existe pas.");
+                        articleErrors.add("L'article avec l'ID " + lignecdefournisseur.getIdarticle() + " n'existe pas.");
                     }
                 } else {
                     articleErrors.add("Impossible d'enregistrer une commande avec un article NULL.");

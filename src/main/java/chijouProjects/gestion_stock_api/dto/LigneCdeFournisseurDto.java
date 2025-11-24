@@ -1,5 +1,7 @@
 package chijouProjects.gestion_stock_api.dto;
 
+import chijouProjects.gestion_stock_api.model.Article;
+import chijouProjects.gestion_stock_api.model.CommandeFournisseur;
 import chijouProjects.gestion_stock_api.model.LigneCdeClt;
 import chijouProjects.gestion_stock_api.model.LigneCdeFournisseur;
 import lombok.Builder;
@@ -12,9 +14,9 @@ import java.math.BigDecimal;
 public class LigneCdeFournisseurDto {
     private Integer id;
 
-    private ArticleDto articledto;
+    private Integer idarticle;
 
-    private CommandeFournisseurDto commandeFournisseurdto;
+    private Integer idcommandefournisseur;
 
     private BigDecimal quantite;
 
@@ -30,8 +32,8 @@ public class LigneCdeFournisseurDto {
                 .quantite(lignecdefournisseur.getQuantite())
                 .prixunitaire(lignecdefournisseur.getPrixunitaire())
                 .identreprise(lignecdefournisseur.getIdentreprise())
-                .articledto(ArticleDto.fromEntity(lignecdefournisseur.getArticle()))
-                .commandeFournisseurdto(CommandeFournisseurDto.fromEntity(lignecdefournisseur.getCommandefournisseur()))
+                .idarticle(lignecdefournisseur.getArticle().getId())
+                .idcommandefournisseur(lignecdefournisseur.getCommandefournisseur().getId())
                 .build();
     }
 
@@ -42,8 +44,17 @@ public class LigneCdeFournisseurDto {
         lignecdefournisseur.setQuantite(lignecdefournisseurdto.getQuantite());
         lignecdefournisseur.setPrixunitaire(lignecdefournisseurdto.getPrixunitaire());
         lignecdefournisseur.setId(lignecdefournisseurdto.getIdentreprise());
-        lignecdefournisseur.setArticle(ArticleDto.toEntity(lignecdefournisseurdto.getArticledto()));
-        lignecdefournisseur.setCommandefournisseur(CommandeFournisseurDto.toEntity(lignecdefournisseurdto.getCommandeFournisseurdto()));
+        if (lignecdefournisseurdto.getIdarticle() != null) {
+            Article article = new Article();
+            article.setId(lignecdefournisseurdto.getIdarticle());
+            lignecdefournisseur.setArticle(article);
+        }
+        if (lignecdefournisseurdto.getIdcommandefournisseur() != null) {
+            CommandeFournisseur commandefournisseur = new CommandeFournisseur();
+            commandefournisseur.setId(lignecdefournisseurdto.getIdcommandefournisseur());
+            lignecdefournisseur.setCommandefournisseur(commandefournisseur);
+        }
+
         return lignecdefournisseur;
     }
 }

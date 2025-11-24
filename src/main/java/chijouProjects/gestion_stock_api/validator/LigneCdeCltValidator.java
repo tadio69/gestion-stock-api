@@ -17,11 +17,11 @@ public class LigneCdeCltValidator {
             return errors;
         }
 
-        if(lignecdecltdto.getArticledto() == null) {
+        if(lignecdecltdto.getIdarticle() == null) {
             errors.add("Veuillez sélectionner l'article");
         }
 
-        if(lignecdecltdto.getCommandeclientdto() == null) {
+        if(lignecdecltdto.getIdcommandeclient() == null) {
             errors.add("Veuillez sélectionner la commande");
         }
 

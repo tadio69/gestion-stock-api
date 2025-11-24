@@ -75,7 +75,7 @@ public class FournisseurDto {
     private String email;
     private String numtel;
     private AdresseDto adressedto;
-    private ImgLink photoprofil;
+    private Integer idimglink;
     private Integer identreprise;
 
     @JsonIgnore
@@ -90,7 +90,7 @@ public class FournisseurDto {
                 .prenom(fournisseur.getPrenom())
                 .email(fournisseur.getEmail())
                 .numtel(fournisseur.getNumtel())
-                .photoprofil(fournisseur.getPhotoprofil())
+                .idimglink(fournisseur.getImglink().getId())
                 .adressedto(AdresseDto.fromEntity(fournisseur.getAdresse()))
                 .identreprise(fournisseur.getIdentreprise())
                 .commandefournisseursdto(
@@ -111,7 +111,11 @@ public class FournisseurDto {
         fournisseur.setPrenom(fournisseurdto.getPrenom()); // ✅ correction ici
         fournisseur.setEmail(fournisseurdto.getEmail());
         fournisseur.setNumtel(fournisseurdto.getNumtel());
-        fournisseur.setPhotoprofil(fournisseurdto.getPhotoprofil());
+        if (fournisseurdto.getIdimglink() != null) {
+            ImgLink imgLink = new ImgLink();
+            imgLink.setId(fournisseurdto.getIdimglink());
+            fournisseur.setImglink(imgLink);
+        }
         fournisseur.setAdresse(AdresseDto.toEntity(fournisseurdto.getAdressedto()));
         fournisseur.setIdentreprise(fournisseurdto.getIdentreprise());
 

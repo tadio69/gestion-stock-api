@@ -28,7 +28,7 @@ public class UtilisateurDto {
 
     private AdresseDto adressedto;
 
-    private ImgLink photoprofil;
+    private Integer idimglink;
 
     @JsonIgnore
     private List<RoleDto> rolesdto;
@@ -44,7 +44,7 @@ public class UtilisateurDto {
                 .datenaissance(utilisateur.getDatenaissance())
                 .motdepasse(utilisateur.getMotdepasse())
                 .adressedto(AdresseDto.fromEntity(utilisateur.getAdresse()))
-                .photoprofil(utilisateur.getPhotoprofil())
+                .idimglink(utilisateur.getImglink().getId())
                 .rolesdto(
                         utilisateur.getRoles() != null?
                                 utilisateur.getRoles().stream()
@@ -64,7 +64,12 @@ public class UtilisateurDto {
         utilisateur.setDatenaissance(utilisateurdto.getDatenaissance());
         utilisateur.setMotdepasse(utilisateurdto.getMotdepasse());
         utilisateur.setAdresse(AdresseDto.toEntity(utilisateurdto.getAdressedto()));
-        utilisateur.setPhotoprofil(utilisateurdto.getPhotoprofil());
+        if (utilisateurdto.getIdimglink() != null) {
+            ImgLink imgLink = new ImgLink();
+            imgLink.setId(utilisateurdto.getIdimglink());
+            utilisateur.setImglink(imgLink);
+        }
+
         if (utilisateurdto.getRolesdto() != null) {
             utilisateur.setRoles(
                     utilisateurdto.getRolesdto().stream()

@@ -37,5 +37,5 @@ public class Fournisseur extends AbstractEntity {
 
     @OneToOne
     @JoinColumn(name = "idimglink")
-    private ImgLink photoprofil;
+    private ImgLink imglink;
 }

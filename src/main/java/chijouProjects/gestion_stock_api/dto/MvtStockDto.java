@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
+import chijouProjects.gestion_stock_api.model.Article;
 import chijouProjects.gestion_stock_api.model.LigneVente;
 import chijouProjects.gestion_stock_api.model.MvtStock;
 import chijouProjects.gestion_stock_api.model.TypeMvtStock;
@@ -16,7 +17,7 @@ public class MvtStockDto {
 
     private Instant datemvt;
 
-    private ArticleDto articledto;
+    private Integer idarticle;
 
     private BigDecimal quantite;
 
@@ -32,7 +33,7 @@ public class MvtStockDto {
                 .datemvt(mvtdtock.getDatemvt())
                 .quantite(mvtdtock.getQuantite())
                 .typemvt(mvtdtock.getTypemvt())
-                .articledto(ArticleDto.fromEntity(mvtdtock.getArticle()))
+                .idarticle(mvtdtock.getArticle().getId())
                 .identreprise(mvtdtock.getIdentreprise())
                 .build();
     }
@@ -44,7 +45,12 @@ public class MvtStockDto {
         mvtstock.setDatemvt(mvtstockdto.getDatemvt());
         mvtstock.setQuantite(mvtstockdto.getQuantite());
         mvtstock.setTypemvt(mvtstockdto.getTypemvt());
-        mvtstock.setArticle(ArticleDto.toEntity(mvtstockdto.getArticledto()));
+        if (mvtstockdto.getIdarticle() != null) {
+            Article article = new Article();
+            article.setId(mvtstockdto.getIdarticle());
+            mvtstock.setArticle(article);
+        }
+
         mvtstock.setIdentreprise(mvtstockdto.getIdentreprise());
         return mvtstock;
     }

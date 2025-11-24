@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
+import chijouProjects.gestion_stock_api.model.Article;
 import chijouProjects.gestion_stock_api.model.CommandeClient;
 import chijouProjects.gestion_stock_api.model.Fournisseur;
 import chijouProjects.gestion_stock_api.model.LigneCdeClt;
@@ -13,9 +14,9 @@ import java.math.BigDecimal;
 public class LigneCdeCltDto {
     private Integer id;
 
-    private ArticleDto articledto;
+    private Integer idarticle;
 
-    private CommandeClientDto commandeclientdto;
+    private Integer idcommandeclient;
 
     private BigDecimal quantite;
 
@@ -31,8 +32,8 @@ public class LigneCdeCltDto {
                 .quantite(lignecdeclt.getQuantite())
                 .prixunitaire(lignecdeclt.getPrixunitaire())
                 .identreprise(lignecdeclt.getIdentreprise())
-                .articledto(ArticleDto.fromEntity(lignecdeclt.getArticle()))
-                .commandeclientdto(CommandeClientDto.fromEntity(lignecdeclt.getCommandeclient()))
+                .idarticle(lignecdeclt.getArticle().getId())
+                .idcommandeclient(lignecdeclt.getCommandeclient().getId())
                 .build();
     }
 
@@ -43,8 +44,16 @@ public class LigneCdeCltDto {
         lignecdeclt.setQuantite(lignecdecltdto.getQuantite());
         lignecdeclt.setPrixunitaire(lignecdecltdto.getPrixunitaire());
         lignecdeclt.setIdentreprise(lignecdecltdto.getIdentreprise());
-        lignecdeclt.setArticle(ArticleDto.toEntity(lignecdecltdto.getArticledto()));
-        lignecdeclt.setCommandeclient(CommandeClientDto.toEntity(lignecdecltdto.getCommandeclientdto()));
+        if (lignecdecltdto.getIdarticle() != null) {
+            Article article = new Article();
+            article.setId(lignecdecltdto.getIdarticle());
+            lignecdeclt.setArticle(article);
+        }
+        if (lignecdecltdto.getIdcommandeclient() != null) {
+            CommandeClient commandeclient = new CommandeClient();
+            commandeclient.setId(lignecdecltdto.getIdcommandeclient());
+            lignecdeclt.setCommandeclient(commandeclient);
+        }
         return lignecdeclt;
     }
 }

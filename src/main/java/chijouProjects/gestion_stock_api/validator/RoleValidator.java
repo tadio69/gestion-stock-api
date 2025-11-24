@@ -20,9 +20,6 @@ public class RoleValidator {
             errors.add("Veuillez renseigner le nom du rôle");
         }
 
-        if(roledto.getUtilisateurdto() == null) {
-            errors.add("Veuillez sélectionner l'utilisateur");
-        }
         return errors;
     }
 }

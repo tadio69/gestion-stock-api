@@ -2,6 +2,7 @@ package chijouProjects.gestion_stock_api.dto;
 
 import chijouProjects.gestion_stock_api.model.CommandeClient;
 import chijouProjects.gestion_stock_api.model.CommandeFournisseur;
+import chijouProjects.gestion_stock_api.model.Fournisseur;
 import chijouProjects.gestion_stock_api.model.LigneCdeFournisseur;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
@@ -56,7 +57,7 @@ public class CommandeFournisseurDto {
     private Integer id;
     private String code;
     private Instant datecommande;
-    private FournisseurDto fournisseurdto;
+    private Integer idfournisseur;
     private Integer identreprise;
     private List<LigneCdeFournisseurDto> lignecdefournisseursdto;
 
@@ -67,7 +68,7 @@ public class CommandeFournisseurDto {
                 .id(commandefournisseur.getId())
                 .code(commandefournisseur.getCode())
                 .datecommande(commandefournisseur.getDatecommande())
-                .fournisseurdto(FournisseurDto.fromEntity(commandefournisseur.getFournisseur()))
+                .idfournisseur(commandefournisseur.getFournisseur().getId())
                 .identreprise(commandefournisseur.getIdentreprise())
                 .lignecdefournisseursdto(
                         commandefournisseur.getLignecdefournisseurs() != null ?
@@ -85,7 +86,11 @@ public class CommandeFournisseurDto {
         commandefournisseur.setId(commandefournisseurdto.getId());
         commandefournisseur.setCode(commandefournisseurdto.getCode());
         commandefournisseur.setDatecommande(commandefournisseurdto.getDatecommande());
-        commandefournisseur.setFournisseur(FournisseurDto.toEntity(commandefournisseurdto.getFournisseurdto()));
+        if(commandefournisseurdto.getIdfournisseur() != null) {
+            Fournisseur fournisseur = new Fournisseur();
+            fournisseur.setId(commandefournisseurdto.getIdfournisseur());
+            commandefournisseur.setFournisseur(fournisseur);
+        }
         commandefournisseur.setIdentreprise(commandefournisseurdto.getIdentreprise());
 
         if (commandefournisseurdto.getLignecdefournisseursdto() != null) {

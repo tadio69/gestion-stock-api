@@ -47,9 +47,9 @@ public class VenteServiceImpl implements VenteService {
         }
         List<String> articleErrors = new ArrayList<>();
         venteDto.getLigneventesdto().forEach(ligneventeDto -> {
-            Optional<Article> article = articleRepository.findById(ligneventeDto.getArticledto().getId());
+            Optional<Article> article = articleRepository.findById(ligneventeDto.getIdarticle());
             if(article.isEmpty()) {
-                articleErrors.add("Aucun article avec l'ID " + ligneventeDto.getArticledto().getId() + "n'est pas été trouvé dans la BDD");
+                articleErrors.add("Aucun article avec l'ID " + ligneventeDto.getIdarticle() + "n'est pas été trouvé dans la BDD");
             }
         });
 

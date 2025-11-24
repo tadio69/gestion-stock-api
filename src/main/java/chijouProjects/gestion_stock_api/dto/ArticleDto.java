@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 import chijouProjects.gestion_stock_api.model.Article;
+import chijouProjects.gestion_stock_api.model.Categorie;
 import lombok.Builder;
 import lombok.Data;
 
@@ -22,7 +23,7 @@ public class ArticleDto {
 
     private String photo;
 
-    private CategorieDto categoriedto;
+    private Integer  idcategorie;
 
     private Integer identreprise;
 
@@ -32,9 +33,7 @@ public class ArticleDto {
         return ArticleDto.builder()
                 .id(article.getId())
                 .code(article.getCode())
-                .categoriedto(
-                        CategorieDto.fromEntity(article.getCategorie())
-                )
+                .idcategorie(article.getCategorie().getId())
                 .designation(article.getDesignation())
                 .prixunitaireht(article.getPrixunitaireht())
                 .tauxtva(article.getTauxtva())
@@ -48,7 +47,6 @@ public class ArticleDto {
         if (articledto == null) return null;
         Article article = new Article();
         article.setId(articledto.getId());
-        article.setCategorie(CategorieDto.toEntity(articledto.getCategoriedto()));
         article.setCode(articledto.getCode());
         article.setDesignation(articledto.getDesignation());
         article.setPrixunitaireht(articledto.getPrixunitaireht());
@@ -56,6 +54,11 @@ public class ArticleDto {
         article.setPrixunitairettc(articledto.getPrixunitairettc());
         article.setPhoto(articledto.getPhoto());
         article.setIdentreprise(articledto.getIdentreprise());
+        if (articledto.getIdcategorie() != null) {
+            Categorie categorie = new Categorie();
+            categorie.setId(articledto.getIdcategorie());
+            article.setCategorie(categorie);
+        }
         return article;
     }
 }

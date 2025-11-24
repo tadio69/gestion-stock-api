@@ -41,12 +41,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
         Utilisateur utilisateur = UtilisateurDto.toEntity(utilisateurDto);
 
-        if (utilisateur.getRoles() != null) {
-            utilisateur.getRoles().forEach(role -> {
-                role.setUtilisateur(utilisateur);
-            });
-        }
-
         Utilisateur savedUtilisateur = utilisateurRepository.save(utilisateur);
 
         return UtilisateurDto.fromEntity(savedUtilisateur);
