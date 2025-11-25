@@ -12,7 +12,7 @@ import java.util.List;
 
 import static chijouProjects.gestion_stock_api.utils.Constants.APP_ROOT;
 
-@Tag(name = "Articles", description = "API de gestion des articles")
+@Tag(name = "Articles", description = "Gestion des articles")
 public interface ArticleApi {
 
     @PostMapping(
@@ -49,8 +49,8 @@ public interface ArticleApi {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(
-            summary = "Rechercher un article par code",
-            description = "Cette méthode permet de chercher un article via son code"
+            summary = "Rechercher un article par son code",
+            description = "Cette méthode permet de chercher un article par son code"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Article trouvé avec succès"),
@@ -67,7 +67,7 @@ public interface ArticleApi {
             description = "Cette méthode retourne la liste des articles enregistrés"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Liste des articles retournée")
+            @ApiResponse(responseCode = "200", description = "Liste des articles retournée avec succès")
     })
     List<ArticleDto> findAll();
 
@@ -76,11 +76,11 @@ public interface ArticleApi {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(
-            summary = "Supprimer un article",
-            description = "Cette méthode supprime un article par son identifiant"
+            summary = "Supprimer un article par son ID",
+            description = "Cette méthode permet de supprimer un article par son identifiant"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Article supprimé")
+            @ApiResponse(responseCode = "200", description = "Article supprimé avec succès")
     })
     void delete(@PathVariable("id") Integer id);
 }
