@@ -31,7 +31,7 @@ public interface ClientApi {
     })
     ClientDto findById(@PathVariable("id") Integer id);
 
-    @GetMapping(value = APP_ROOT + "/clients/{nom}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/clients/nom/{nom}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Rechercher un client par son nom", description = "Cette méthode permet de chercher un client par son nom")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Client trouvé avec succès"),

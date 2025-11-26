@@ -1,6 +1,10 @@
 package chijouProjects.gestion_stock_api.controller.api;
 
 import chijouProjects.gestion_stock_api.dto.ImgLinkDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,19 +13,38 @@ import java.util.List;
 
 import static chijouProjects.gestion_stock_api.utils.Constants.APP_ROOT;
 
+@Tag(name = "Imglink", description = "Gestion des Imglinks (données relatives aux photos)")
 public interface ImgLinkApi {
     @PostMapping(value = APP_ROOT + "/photos/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Téléverser une photo", description = "Cette méthode permet de téléverser une photo dans ImgLink")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Photo téléversée avec succès"),
+            @ApiResponse(responseCode = "400", description = "Données de photo non valides")
+    })
     ImgLinkDto uploadImage(
             @RequestParam("file") MultipartFile file,
             @RequestParam(value = "identreprise") Integer identreprise
     );
 
     @GetMapping(value = APP_ROOT + "/photos/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Rechercher un Imglink par son ID", description = "Cette méthode permet de chercher un Imglink par son identifiant")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Imglink trouvé avec succès"),
+            @ApiResponse(responseCode = "404", description = "Aucun Imglink trouvé avec cet identifiant")
+    })
     ImgLinkDto findById(@PathVariable("id") Integer id);
 
     @GetMapping(value = APP_ROOT + "/photos/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Lister tous les Imglinks", description = "Cette méthode permet de retourner la liste des imglinks")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Liste des imglinks retournée avec succès")
+    })
     List<ImgLinkDto> findAll();
 
     @DeleteMapping(value = APP_ROOT + "/photos/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Supprimer un Imglink par son ID", description = "Cette méthode permet de supprimer un imglink par son identifiant")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Imglink supprimé avec succès")
+    })
     void delete(@PathVariable("id") Integer id);
 }
