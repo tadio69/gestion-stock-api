@@ -12,7 +12,7 @@ import java.util.List;
 
 import static chijouProjects.gestion_stock_api.utils.Constants.APP_ROOT;
 
-@Tag(name = "Commande client", description = "Gestion des commandes clients")
+@Tag(name = "Commandes client", description = "Gestion des commandes client")
 public interface CommandeClientApi {
     @PostMapping(
             value = APP_ROOT + "/commandes-client/create",
