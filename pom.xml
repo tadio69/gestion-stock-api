@@ -111,39 +111,22 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>com.github.kongchen</groupId>
-				<artifactId>swagger-maven-plugin</artifactId>
-				<version>3.1.8</version>
-
-				<configuration>
-					<apiSources>
-						<apiSource>
-							<springmvc>true</springmvc>
-							<locations>chijouProjects.gestion_stock_api.controller</locations>
-
-							<!-- Format généré -->
-							<swaggerDirectory>${project.build.directory}</swaggerDirectory>
-							<outputFormats>json</outputFormats>
-
-							<schemes>http</schemes>
-							<host>localhost:8080</host>
-							<basePath>/</basePath>
-
-							<info>
-								<title>Gestion Stock API</title>
-								<version>1.0</version>
-								<description>Documentation Swagger générée automatiquement</description>
-							</info>
-						</apiSource>
-					</apiSources>
-				</configuration>
-
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>3.1.0</version>
 				<executions>
 					<execution>
-						<phase>compile</phase>
+						<phase>package</phase>
 						<goals>
-							<goal>generate</goal>
+							<goal>run</goal>
 						</goals>
+						<configuration>
+							<target>
+								<mkdir dir="target/swagger"/>
+								<get src="http://localhost:8081/gestion-stock-api/v3/api-docs"
+									 dest="${project.build.directory}/swagger/swagger.json" />
+							</target>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

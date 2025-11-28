@@ -1,0 +1,1938 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: duro.chijou@gmail.com
+    name: ": Dubois Roger CHIJOU NENGOU"
+  description: Documentation de l'API de gestion de stock
+  license:
+    name: Apache 2.0
+  title: Gestion de Stock REST API
+  version: "1.0"
+servers:
+- description: Generated server url
+  url: http://localhost:8081
+tags:
+- description: Gestion des catégories
+  name: Catégories
+- description: Gestion des commandes client
+  name: Commandes client
+- description: Gestion des entreprises
+  name: Entreprises
+- description: Gestion des mouvements de stock
+  name: MvtStocks
+- description: Gestion des articles
+  name: Articles
+- description: Gestion des commandes fournisseur
+  name: Commandes fournisseur
+- description: Gestion des clients
+  name: Clients
+- description: Gestion des Imglinks (données relatives aux photos)
+  name: Imglink
+- description: Gestion des utilisateurs
+  name: Utilisateurs
+- description: Gestion des fournissuers
+  name: Fournisseur
+- description: Gestion des ventes
+  name: Ventes
+paths:
+  /gestionstock/v1/ventes/create:
+    post:
+      description: Cette méthode permet de créer ou modifier une vente
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VenteDto'
+        required: true
+      responses:
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VenteDto'
+          description: Vente non valide
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VenteDto'
+          description: Vente créée ou modifiée avec succès
+      summary: Enregistrer ou modifier une vente
+      tags:
+      - Ventes
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /gestionstock/v1/utilisateurs/create:
+    post:
+      description: Cette méthode permet de créer ou modifier un utilisateur
+      operationId: save_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UtilisateurDto'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UtilisateurDto'
+          description: Utilisateur créé ou modifié avec succès
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UtilisateurDto'
+          description: Utilisateur non valide
+      summary: Enregistrer ou modifier un utilisateur
+      tags:
+      - Utilisateurs
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /gestionstock/v1/photos/upload:
+    post:
+      description: Cette méthode permet de téléverser une photo dans ImgLink
+      operationId: uploadImage
+      parameters:
+      - explode: true
+        in: query
+        name: identreprise
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: form
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/uploadImage_request'
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ImgLinkDto'
+          description: Photo téléversée avec succès
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ImgLinkDto'
+          description: Données de photo non valides
+      summary: Téléverser une photo
+      tags:
+      - Imglink
+      x-content-type: multipart/form-data
+      x-accepts:
+      - '*/*'
+  /gestionstock/v1/mvtstocks/create:
+    post:
+      description: Cette méthode permet de créer ou de modifier un mouvement de stock
+      operationId: save_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MvtStockDto'
+        required: true
+      responses:
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MvtStockDto'
+          description: Mouvement de stock non valide
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MvtStockDto'
+          description: Mouvement de stock créé ou modifié avec succès
+      summary: Enregistrer ou modifier un mvtstock
+      tags:
+      - MvtStocks
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /gestionstock/v1/fournisseurs/create:
+    post:
+      description: Cette méthode permet de créer ou de modifier un fournisseur
+      operationId: save_3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FournisseurDto'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FournisseurDto'
+          description: Entreprise créée ou modifiée avec succès
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FournisseurDto'
+          description: Fournisseur non valide
+      summary: Enregistrer ou modifier un fournisseur
+      tags:
+      - Fournisseur
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /gestionstock/v1/entreprises/create:
+    post:
+      description: Cette méthode permet de créer ou de modifier une entreprise
+      operationId: save_4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntrepriseDto'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntrepriseDto'
+          description: Entreprise créée ou modifiée avec succès
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntrepriseDto'
+          description: Entreprise non valide
+      summary: Enregistrer ou modifier une entreprise
+      tags:
+      - Entreprises
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /gestionstock/v1/commandes-fournisseur/create:
+    post:
+      description: Cette méthode permet de créer ou de modifier une commande fournisseur
+      operationId: save_5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommandeFournisseurDto'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeFournisseurDto'
+          description: Commande fournisseur créée ou modifiée avec succès
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeFournisseurDto'
+          description: Commande fournisseur non valide
+      summary: Enregistrer ou modifier une commande fournisseur
+      tags:
+      - Commandes fournisseur
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /gestionstock/v1/commandes-client/create:
+    post:
+      description: Cette méthode permet d'enregistrer ou modifier une commande client
+      operationId: save_6
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommandeClientDto'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeClientDto'
+          description: Commande client créée ou modifiée avec succès
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeClientDto'
+          description: Commande client non valide
+      summary: Enregistrer ou modifier une commande client
+      tags:
+      - Commandes client
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /gestionstock/v1/clients/create:
+    post:
+      description: Cette méthode permet d'enregistrer ou de modifier un client
+      operationId: save_7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientDto'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDto'
+          description: Client créé ou modifié avec succès
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDto'
+          description: Client non valide
+      summary: Enregistrer ou modifier un client
+      tags:
+      - Clients
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /gestionstock/v1/categories/create:
+    post:
+      description: Cette méthode permet d'enregistrer ou de modifier une catégorie
+      operationId: save_8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategorieDto'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorieDto'
+          description: Catégorie créée ou modifiée avec succès
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorieDto'
+          description: Catégorie non valide
+      summary: Enregistrer ou modifier une catégorie
+      tags:
+      - Catégories
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /gestionstock/v1/articles/create:
+    post:
+      description: Cette méthode permet d'enregistrer ou modifier un article
+      operationId: save_9
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArticleDto'
+        required: true
+      responses:
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleDto'
+          description: Article non valide
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleDto'
+          description: Article créé ou modifié avec succès
+      summary: Enregistrer ou modifier un article
+      tags:
+      - Articles
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /gestionstock/v1/ventes/{id}:
+    get:
+      description: Cette méthode permet de chercher une vente par son identifiant
+      operationId: findById
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VenteDto'
+          description: Vente trouvée avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VenteDto'
+          description: Aucune vente trouvée avec cet identifiant
+      summary: Rechercher une vente par son ID
+      tags:
+      - Ventes
+      x-accepts:
+      - application/json
+  /gestionstock/v1/ventes/code/{code}:
+    get:
+      description: Cette méthode permet de chercher une vente par son code
+      operationId: findByCode
+      parameters:
+      - explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VenteDto'
+          description: Vente trouvée avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VenteDto'
+          description: Aucune vente trouvée avec ce code
+      summary: Rechercher une vente par son code
+      tags:
+      - Ventes
+      x-accepts:
+      - application/json
+  /gestionstock/v1/ventes/all:
+    get:
+      description: Cette méthode permet de retourner la liste des ventes enregistrées
+      operationId: findAll
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/VenteDto'
+                type: array
+          description: Liste des ventes retournée avec succès
+      summary: Renvoyer la liste des ventes
+      tags:
+      - Ventes
+      x-accepts:
+      - application/json
+  /gestionstock/v1/utilisateurs/{id}:
+    get:
+      description: Cette méthode permet de chercher un utilisateur par son identifiant
+      operationId: findById_1
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UtilisateurDto'
+          description: Utilisateur trouvé avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UtilisateurDto'
+          description: Aucun utilisateur trouvé avec cet identifiant
+      summary: Rechercher un utilisateur par son ID
+      tags:
+      - Utilisateurs
+      x-accepts:
+      - application/json
+  /gestionstock/v1/utilisateurs/nom/{nom}:
+    get:
+      description: Cette méthode permet de chercher un utilisateur par son nom
+      operationId: findByNom
+      parameters:
+      - explode: false
+        in: path
+        name: nom
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UtilisateurDto'
+          description: Aucun utilisateur trouvé avec ce nom
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UtilisateurDto'
+          description: Utilisateur trouvé avec succès
+      summary: Rechercher un utilisateur par son nom
+      tags:
+      - Utilisateurs
+      x-accepts:
+      - application/json
+  /gestionstock/v1/utilisateurs/all:
+    get:
+      description: Cette méthode permet de retourner la liste des utilisateurs enregistrés
+      operationId: findAll_1
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UtilisateurDto'
+                type: array
+          description: Liste des utilisateurs retournée avec succès
+      summary: Renvoyer la liste des utilisateurs
+      tags:
+      - Utilisateurs
+      x-accepts:
+      - application/json
+  /gestionstock/v1/photos/{id}:
+    get:
+      description: Cette méthode permet de chercher un Imglink par son identifiant
+      operationId: findById_2
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImgLinkDto'
+          description: Aucun Imglink trouvé avec cet identifiant
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImgLinkDto'
+          description: Imglink trouvé avec succès
+      summary: Rechercher un Imglink par son ID
+      tags:
+      - Imglink
+      x-accepts:
+      - application/json
+  /gestionstock/v1/photos/all:
+    get:
+      description: Cette méthode permet de retourner la liste des imglinks
+      operationId: findAll_2
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ImgLinkDto'
+                type: array
+          description: Liste des imglinks retournée avec succès
+      summary: Lister tous les Imglinks
+      tags:
+      - Imglink
+      x-accepts:
+      - application/json
+  /gestionstock/v1/mvtstocks/{id}:
+    get:
+      description: Cette méthode permet de chercher un mouvement de stock par identifiant
+      operationId: findById_3
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MvtStockDto'
+          description: Aucun mouvement de stock trouvé avec cet identifiant
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MvtStockDto'
+          description: Mouvement de stock trouvé avec succès
+      summary: Rechercher un mvtstock par son ID
+      tags:
+      - MvtStocks
+      x-accepts:
+      - application/json
+  /gestionstock/v1/mvtstocks/all:
+    get:
+      description: Cette méthode permet de retourner la liste des mouvements de stock
+      operationId: findAll_3
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/MvtStockDto'
+                type: array
+          description: Liste des mouvements de stock retournée avec succès
+      summary: Renvoyer la liste des mvtstocks
+      tags:
+      - MvtStocks
+      x-accepts:
+      - application/json
+  /gestionstock/v1/fournisseurs/{id}:
+    get:
+      description: Cette méthode permet de chercher un fournisseur par son identifiant
+      operationId: findById_4
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FournisseurDto'
+          description: Fournisseur trouvé avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FournisseurDto'
+          description: Aucun fournisseur trouvé avec cet identifiant
+      summary: Rechercher un fourniseur par ID
+      tags:
+      - Fournisseur
+      x-accepts:
+      - application/json
+  /gestionstock/v1/fournisseurs/nom/{nom}:
+    get:
+      description: Cette méthode permet de chercher un fournisseur par son nom
+      operationId: findByNom_1
+      parameters:
+      - explode: false
+        in: path
+        name: nom
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FournisseurDto'
+          description: Fournisseur trouvé avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FournisseurDto'
+          description: Aucun fournisseur trouvé avec ce nom
+      summary: Rechercher un fournisseur par son nom
+      tags:
+      - Fournisseur
+      x-accepts:
+      - application/json
+  /gestionstock/v1/fournisseurs/all:
+    get:
+      description: Cette méthode permet de retourner la liste des fournisseurs enregistrés
+      operationId: findAll_4
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FournisseurDto'
+                type: array
+          description: Liste des fournisseurs retournée avec succès
+      summary: Renvoyer la liste des fournisseurs
+      tags:
+      - Fournisseur
+      x-accepts:
+      - application/json
+  /gestionstock/v1/entreprises/{id}:
+    get:
+      description: Cette méthode permet de chercher une entreprise par son identifiant
+      operationId: findById_5
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntrepriseDto'
+          description: Entreprise trouvée avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntrepriseDto'
+          description: Aucune entreprise trouvée avec cet identifiant
+      summary: Rechercher une entreprise par son ID
+      tags:
+      - Entreprises
+      x-accepts:
+      - application/json
+  /gestionstock/v1/entreprises/description/{description}:
+    get:
+      description: Cette méthode permet de chercher uen entreprise par sa description
+      operationId: findByDescription
+      parameters:
+      - explode: false
+        in: path
+        name: description
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntrepriseDto'
+          description: Entreprise trouvée avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntrepriseDto'
+          description: Aucune entreprise trouvée avec cette description
+      summary: Rechercher une entreprise par sa description
+      tags:
+      - Entreprises
+      x-accepts:
+      - application/json
+  /gestionstock/v1/entreprises/codefiscal/{codefiscal}:
+    get:
+      description: Cette méthode permet de chercher une entreprise par son code fiscal
+      operationId: findByCodefiscal
+      parameters:
+      - explode: false
+        in: path
+        name: codefiscal
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntrepriseDto'
+          description: Aucune entreprise trouvée avec ce code fiscal
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntrepriseDto'
+          description: Entreprise trouvée avec succès
+      summary: Rechercher une entreprise par son code fiscal
+      tags:
+      - Entreprises
+      x-accepts:
+      - application/json
+  /gestionstock/v1/entreprises/all:
+    get:
+      description: Cette méthode permet de retourner la liste des entreprises enregistrées
+      operationId: findAll_5
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/EntrepriseDto'
+                type: array
+          description: Liste des entreprises retournée avec succès
+      summary: Renvoyer la liste des entreprises
+      tags:
+      - Entreprises
+      x-accepts:
+      - application/json
+  /gestionstock/v1/commandes-fournisseur/{id}:
+    get:
+      description: Cette méthode permet de chercher une commande fournisseur par son
+        identifiant
+      operationId: findById_6
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeFournisseurDto'
+          description: Commande fournisseur trouvée avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeFournisseurDto'
+          description: Aucune commande fournisseur trouvée avec cet identifiant
+      summary: Rechercher une commande fournisseur par son ID
+      tags:
+      - Commandes fournisseur
+      x-accepts:
+      - application/json
+  /gestionstock/v1/commandes-fournisseur/code/{code}:
+    get:
+      description: Cette méthode permet de chercher la commande fournisseur par son
+        code
+      operationId: findByCode_1
+      parameters:
+      - explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeFournisseurDto'
+          description: Commande fournisseur trouvée avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeFournisseurDto'
+          description: Aucune commande fournisseur trouvée avec ce code
+      summary: Rechercher une commande fournisseur par son code
+      tags:
+      - Commandes fournisseur
+      x-accepts:
+      - application/json
+  /gestionstock/v1/commandes-fournisseur/all:
+    get:
+      description: Cette méthode permet de retourner les commandes fournisseur enregistrées
+      operationId: findAll_6
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CommandeFournisseurDto'
+                type: array
+          description: Liste des commandes fournisseur retournée avec succès
+      summary: Renvoyer la liste des commandes fournisseur
+      tags:
+      - Commandes fournisseur
+      x-accepts:
+      - application/json
+  /gestionstock/v1/commandes-client/{id}:
+    get:
+      description: Cette méthode permet de chercher une commande client pas son identifiant
+      operationId: findById_7
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeClientDto'
+          description: Aucune commande client trouvée avec cet identifiant
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeClientDto'
+          description: Commande client trouvée avec succès
+      summary: Rechercher une commande client par son ID
+      tags:
+      - Commandes client
+      x-accepts:
+      - application/json
+  /gestionstock/v1/commandes-client/code/{code}:
+    get:
+      description: Cette méthode permet de chercher une commande client par son code
+      operationId: findByCode_2
+      parameters:
+      - explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeClientDto'
+          description: Commande client trouvée avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandeClientDto'
+          description: Aucune commande client trouvée avec ce code
+      summary: Rechercher une commande client par son code
+      tags:
+      - Commandes client
+      x-accepts:
+      - application/json
+  /gestionstock/v1/commandes-client/all:
+    get:
+      description: Cette méthode permet de retourner la liste des commandes client
+        enregistrées
+      operationId: findAll_7
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CommandeClientDto'
+                type: array
+          description: Liste des commandes client retournée avec succès
+      summary: Renvoyer la liste des commandes client
+      tags:
+      - Commandes client
+      x-accepts:
+      - application/json
+  /gestionstock/v1/clients/{id}:
+    get:
+      description: Cette méthode permet de chercher un client par son identifiant
+      operationId: findById_8
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDto'
+          description: Aucun client trouvé avec cet ID
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDto'
+          description: Client trouvé avec succès
+      summary: Rechercher un client par son ID
+      tags:
+      - Clients
+      x-accepts:
+      - application/json
+  /gestionstock/v1/clients/nom/{nom}:
+    get:
+      description: Cette méthode permet de chercher un client par son nom
+      operationId: findByNom_2
+      parameters:
+      - explode: false
+        in: path
+        name: nom
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDto'
+          description: Client trouvé avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDto'
+          description: Aucun client trouvé avec ce nom
+      summary: Rechercher un client par son nom
+      tags:
+      - Clients
+      x-accepts:
+      - application/json
+  /gestionstock/v1/clients/all:
+    get:
+      description: Cette méthode permet de renvoyer la liste des clients enregistrés
+      operationId: findAll_8
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ClientDto'
+                type: array
+          description: Liste des clients retournée avec succès
+      summary: Renvoyer la liste des clients
+      tags:
+      - Clients
+      x-accepts:
+      - application/json
+  /gestionstock/v1/categories/{id}:
+    get:
+      description: Cette méthode permet de chercher une catégorie via son identifiant
+      operationId: findById_9
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorieDto'
+          description: Aucune catégorie trouvée pour cet ID
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorieDto'
+          description: Catégorie trouvée avec succès
+      summary: Rechercher une catégorie par son ID
+      tags:
+      - Catégories
+      x-accepts:
+      - application/json
+  /gestionstock/v1/categories/designation/{designation}:
+    get:
+      description: Cette méthode permet de chercher une catégorie par sa désignation
+      operationId: findByDesignation
+      parameters:
+      - explode: false
+        in: path
+        name: designation
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorieDto'
+          description: Catégorie trouvée avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorieDto'
+          description: Aucune catégorie trouvée avec cette désignation
+      summary: Rechercher une catégorie par sa désignation
+      tags:
+      - Catégories
+      x-accepts:
+      - application/json
+  /gestionstock/v1/categories/code/{code}:
+    get:
+      description: Cette méthode permet de chercher une catégorie par son code
+      operationId: findByCode_3
+      parameters:
+      - explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorieDto'
+          description: Aucune catégorie trouvée avec ce code
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorieDto'
+          description: Catégorie trouvée avec succès
+      summary: Rechercher une catégorie par son code
+      tags:
+      - Catégories
+      x-accepts:
+      - application/json
+  /gestionstock/v1/categories/all:
+    get:
+      description: Cette méthode retourne la liste des catégories enregistrées
+      operationId: findAll_9
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CategorieDto'
+                type: array
+          description: Liste des catégories retournées avec succès
+      summary: Renvoyer la liste des catégories
+      tags:
+      - Catégories
+      x-accepts:
+      - application/json
+  /gestionstock/v1/articles/{id}:
+    get:
+      description: Cette méthode permet de chercher un article via son identifiant
+      operationId: findById_10
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleDto'
+          description: Article trouvé avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleDto'
+          description: Aucun article trouvé pour cet ID
+      summary: Rechercher un article par ID
+      tags:
+      - Articles
+      x-accepts:
+      - application/json
+  /gestionstock/v1/articles/code/{code}:
+    get:
+      description: Cette méthode permet de chercher un article par son code
+      operationId: findByCode_4
+      parameters:
+      - explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleDto'
+          description: Article trouvé avec succès
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleDto'
+          description: Aucun article trouvé pour ce code
+      summary: Rechercher un article par son code
+      tags:
+      - Articles
+      x-accepts:
+      - application/json
+  /gestionstock/v1/articles/all:
+    get:
+      description: Cette méthode retourne la liste des articles enregistrés
+      operationId: findAll_10
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ArticleDto'
+                type: array
+          description: Liste des articles retournée avec succès
+      summary: Renvoyer la liste des articles
+      tags:
+      - Articles
+      x-accepts:
+      - application/json
+  /gestionstock/v1/ventes/delete/{id}:
+    delete:
+      description: Cette méthode permet de supprimer une vente par identifiant
+      operationId: delete
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Vente supprimée avec succès
+      summary: Supprimer une vente par son ID
+      tags:
+      - Ventes
+      x-accepts:
+      - application/json
+  /gestionstock/v1/utilisateurs/delete/{id}:
+    delete:
+      description: Cette permet de supprimer un utilisateur par son identifiant
+      operationId: delete_1
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Utilisateur supprimé avec succès
+      summary: Supprimer un utilisateur par son ID
+      tags:
+      - Utilisateurs
+      x-accepts:
+      - application/json
+  /gestionstock/v1/photos/delete/{id}:
+    delete:
+      description: Cette méthode permet de supprimer un imglink par son identifiant
+      operationId: delete_2
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Imglink supprimé avec succès
+      summary: Supprimer un Imglink par son ID
+      tags:
+      - Imglink
+      x-accepts:
+      - application/json
+  /gestionstock/v1/mvtstocks/delete/{id}:
+    delete:
+      description: Cette méthode permet de supprimer un mouvement de stock
+      operationId: delete_3
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Mouvement de stock supprimé avec succès
+      summary: Supprimer un mvtstock par son ID
+      tags:
+      - MvtStocks
+      x-accepts:
+      - application/json
+  /gestionstock/v1/fournisseurs/delete/{id}:
+    delete:
+      description: Cette méthode permet de supprimer un fournisseur par son identifiant
+      operationId: delete_4
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Fournisseur supprimé avec succès
+      summary: Supprimer un fournisseur par son ID
+      tags:
+      - Fournisseur
+      x-accepts:
+      - application/json
+  /gestionstock/v1/entreprises/delete/{id}:
+    delete:
+      description: Cette méthode permet de supprimer une entreprise par son identifiant
+      operationId: delete_5
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Entreprise supprimée avec succès
+      summary: Supprimer une entreprise par son ID
+      tags:
+      - Entreprises
+      x-accepts:
+      - application/json
+  /gestionstock/v1/commandes-fournisseur/delete/{id}:
+    delete:
+      description: Cette méthode permet de supprimer une commande fournisseur par
+        son identifiant
+      operationId: delete_6
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Commande fournisseur supprimée avec succès
+      summary: Supprimer une commande fournisseur par son ID
+      tags:
+      - Commandes fournisseur
+      x-accepts:
+      - application/json
+  /gestionstock/v1/commandes-client/delete/{id}:
+    delete:
+      description: Cette méthode permet de supprimer une commande client par son identifiant
+      operationId: delete_7
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Commande client supprimée avec succès
+      summary: Supprimer une commande client par son ID
+      tags:
+      - Commandes client
+      x-accepts:
+      - application/json
+  /gestionstock/v1/clients/delete/{id}:
+    delete:
+      description: Cette méthode permet de supprimer un client par son identifiant
+      operationId: delete_8
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Client supprimé avec succès
+      summary: Supprimer un client par son ID
+      tags:
+      - Clients
+      x-accepts:
+      - application/json
+  /gestionstock/v1/categories/delete/{id}:
+    delete:
+      description: Cette méthode permet de supprimer une catégorie par son identifiant
+      operationId: delete_9
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Catégorie supprimée avec succès
+      summary: Supprimer une catégorie par son ID
+      tags:
+      - Catégories
+      x-accepts:
+      - application/json
+  /gestionstock/v1/articles/delete/{id}:
+    delete:
+      description: Cette méthode permet de supprimer un article par son identifiant
+      operationId: delete_10
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Article supprimé avec succès
+      summary: Supprimer un article par son ID
+      tags:
+      - Articles
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    LigneVenteDto:
+      example:
+        idarticle: 5
+        prixunitaire: 2.3021358869347655
+        ventedto: null
+        id: 1
+        identreprise: 7
+        quantite: 5.637376656633329
+      properties:
+        id:
+          format: int32
+          type: integer
+        idarticle:
+          format: int32
+          type: integer
+        ventedto:
+          $ref: '#/components/schemas/VenteDto'
+        quantite:
+          type: number
+        prixunitaire:
+          type: number
+        identreprise:
+          format: int32
+          type: integer
+      type: object
+    VenteDto:
+      example:
+        code: code
+        ligneventesdto:
+        - idarticle: 5
+          prixunitaire: 2.3021358869347655
+          ventedto: null
+          id: 1
+          identreprise: 7
+          quantite: 5.637376656633329
+        - idarticle: 5
+          prixunitaire: 2.3021358869347655
+          ventedto: null
+          id: 1
+          identreprise: 7
+          quantite: 5.637376656633329
+        datevente: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        commentaire: commentaire
+        identreprise: 6
+      properties:
+        id:
+          format: int32
+          type: integer
+        code:
+          type: string
+        datevente:
+          format: date-time
+          type: string
+        commentaire:
+          type: string
+        identreprise:
+          format: int32
+          type: integer
+        ligneventesdto:
+          items:
+            $ref: '#/components/schemas/LigneVenteDto'
+          type: array
+      type: object
+    AdresseDto:
+      example:
+        ville: ville
+        codePostal: codePostal
+        adresse1: adresse1
+        adresse2: adresse2
+        pays: pays
+      properties:
+        adresse1:
+          type: string
+        adresse2:
+          type: string
+        ville:
+          type: string
+        codePostal:
+          type: string
+        pays:
+          type: string
+      type: object
+    UtilisateurDto:
+      example:
+        idimglink: 6
+        datenaissance: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        motdepasse: motdepasse
+        adressedto:
+          ville: ville
+          codePostal: codePostal
+          adresse1: adresse1
+          adresse2: adresse2
+          pays: pays
+        nom: nom
+        prenom: prenom
+        email: email
+      properties:
+        id:
+          format: int32
+          type: integer
+        nom:
+          type: string
+        prenom:
+          type: string
+        email:
+          type: string
+        datenaissance:
+          format: date-time
+          type: string
+        motdepasse:
+          type: string
+        adressedto:
+          $ref: '#/components/schemas/AdresseDto'
+        idimglink:
+          format: int32
+          type: integer
+      type: object
+    ImgLinkDto:
+      example:
+        filename: filename
+        id: 0
+        identreprise: 6
+        url: url
+      properties:
+        id:
+          format: int32
+          type: integer
+        filename:
+          type: string
+        url:
+          type: string
+        identreprise:
+          format: int32
+          type: integer
+      type: object
+    MvtStockDto:
+      example:
+        idarticle: 6
+        typemvt: ENTREE
+        datemvt: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        identreprise: 5
+        quantite: 1.4658129805029452
+      properties:
+        id:
+          format: int32
+          type: integer
+        datemvt:
+          format: date-time
+          type: string
+        idarticle:
+          format: int32
+          type: integer
+        quantite:
+          type: number
+        typemvt:
+          enum:
+          - ENTREE
+          - SORTIE
+          type: string
+        identreprise:
+          format: int32
+          type: integer
+      type: object
+    FournisseurDto:
+      example:
+        idimglink: 6
+        id: 0
+        adressedto:
+          ville: ville
+          codePostal: codePostal
+          adresse1: adresse1
+          adresse2: adresse2
+          pays: pays
+        numtel: numtel
+        nom: nom
+        prenom: prenom
+        identreprise: 1
+        email: email
+      properties:
+        id:
+          format: int32
+          type: integer
+        nom:
+          type: string
+        prenom:
+          type: string
+        email:
+          type: string
+        numtel:
+          type: string
+        adressedto:
+          $ref: '#/components/schemas/AdresseDto'
+        idimglink:
+          format: int32
+          type: integer
+        identreprise:
+          format: int32
+          type: integer
+      type: object
+    EntrepriseDto:
+      example:
+        codefiscal: codefiscal
+        siteweb: siteweb
+        description: description
+        photo: photo
+        id: 0
+        adressedto:
+          ville: ville
+          codePostal: codePostal
+          adresse1: adresse1
+          adresse2: adresse2
+          pays: pays
+        numtel: numtel
+        nom: nom
+        email: email
+      properties:
+        id:
+          format: int32
+          type: integer
+        nom:
+          type: string
+        description:
+          type: string
+        adressedto:
+          $ref: '#/components/schemas/AdresseDto'
+        codefiscal:
+          type: string
+        photo:
+          type: string
+        email:
+          type: string
+        numtel:
+          type: string
+        siteweb:
+          type: string
+      type: object
+    CommandeFournisseurDto:
+      example:
+        datecommande: 2000-01-23T04:56:07.000+00:00
+        lignecdefournisseursdto:
+        - idarticle: 5
+          prixunitaire: 9.301444243932576
+          idcommandefournisseur: 2
+          id: 5
+          identreprise: 3
+          quantite: 7.061401241503109
+        - idarticle: 5
+          prixunitaire: 9.301444243932576
+          idcommandefournisseur: 2
+          id: 5
+          identreprise: 3
+          quantite: 7.061401241503109
+        code: code
+        id: 0
+        idfournisseur: 6
+        identreprise: 1
+      properties:
+        id:
+          format: int32
+          type: integer
+        code:
+          type: string
+        datecommande:
+          format: date-time
+          type: string
+        idfournisseur:
+          format: int32
+          type: integer
+        identreprise:
+          format: int32
+          type: integer
+        lignecdefournisseursdto:
+          items:
+            $ref: '#/components/schemas/LigneCdeFournisseurDto'
+          type: array
+      type: object
+    LigneCdeFournisseurDto:
+      example:
+        idarticle: 5
+        prixunitaire: 9.301444243932576
+        idcommandefournisseur: 2
+        id: 5
+        identreprise: 3
+        quantite: 7.061401241503109
+      properties:
+        id:
+          format: int32
+          type: integer
+        idarticle:
+          format: int32
+          type: integer
+        idcommandefournisseur:
+          format: int32
+          type: integer
+        quantite:
+          type: number
+        prixunitaire:
+          type: number
+        identreprise:
+          format: int32
+          type: integer
+      type: object
+    CommandeClientDto:
+      example:
+        datecommande: 2000-01-23T04:56:07.000+00:00
+        lignecdecltsdto:
+        - idarticle: 5
+          prixunitaire: 9.301444243932576
+          id: 5
+          idcommandeclient: 2
+          identreprise: 3
+          quantite: 7.061401241503109
+        - idarticle: 5
+          prixunitaire: 9.301444243932576
+          id: 5
+          idcommandeclient: 2
+          identreprise: 3
+          quantite: 7.061401241503109
+        code: code
+        id: 0
+        idclient: 6
+        identreprise: 1
+      properties:
+        id:
+          format: int32
+          type: integer
+        code:
+          type: string
+        datecommande:
+          format: date-time
+          type: string
+        idclient:
+          format: int32
+          type: integer
+        identreprise:
+          format: int32
+          type: integer
+        lignecdecltsdto:
+          items:
+            $ref: '#/components/schemas/LigneCdeCltDto'
+          type: array
+      type: object
+    LigneCdeCltDto:
+      example:
+        idarticle: 5
+        prixunitaire: 9.301444243932576
+        id: 5
+        idcommandeclient: 2
+        identreprise: 3
+        quantite: 7.061401241503109
+      properties:
+        id:
+          format: int32
+          type: integer
+        idarticle:
+          format: int32
+          type: integer
+        idcommandeclient:
+          format: int32
+          type: integer
+        quantite:
+          type: number
+        prixunitaire:
+          type: number
+        identreprise:
+          format: int32
+          type: integer
+      type: object
+    ClientDto:
+      example:
+        idimglink: 6
+        id: 0
+        adressedto:
+          ville: ville
+          codePostal: codePostal
+          adresse1: adresse1
+          adresse2: adresse2
+          pays: pays
+        nom: nom
+        prenom: prenom
+        numTel: numTel
+        identreprise: 1
+        email: email
+      properties:
+        id:
+          format: int32
+          type: integer
+        nom:
+          type: string
+        prenom:
+          type: string
+        email:
+          type: string
+        numTel:
+          type: string
+        adressedto:
+          $ref: '#/components/schemas/AdresseDto'
+        idimglink:
+          format: int32
+          type: integer
+        identreprise:
+          format: int32
+          type: integer
+      type: object
+    CategorieDto:
+      example:
+        code: code
+        id: 0
+        designation: designation
+        identreprise: 6
+      properties:
+        id:
+          format: int32
+          type: integer
+        code:
+          type: string
+        designation:
+          type: string
+        identreprise:
+          format: int32
+          type: integer
+      type: object
+    ArticleDto:
+      example:
+        prixunitairettc: 5.962133916683182
+        code: code
+        prixunitaireht: 6.027456183070403
+        photo: photo
+        id: 0
+        designation: designation
+        identreprise: 2
+        tauxtva: 1.4658129805029452
+        idcategorie: 5
+      properties:
+        id:
+          format: int32
+          type: integer
+        code:
+          type: string
+        designation:
+          type: string
+        prixunitaireht:
+          type: number
+        tauxtva:
+          type: number
+        prixunitairettc:
+          type: number
+        photo:
+          type: string
+        idcategorie:
+          format: int32
+          type: integer
+        identreprise:
+          format: int32
+          type: integer
+      type: object
+    uploadImage_request:
+      properties:
+        file:
+          format: binary
+          type: string
+      required:
+      - file
+      type: object
+

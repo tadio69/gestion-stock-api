@@ -18,7 +18,7 @@ public class OpenApiConfig {
                         .description("Documentation de l'API de gestion de stock")
                         .version("1.0")
                         .contact(new Contact()
-                                .name("Roger Chijou")
+                                .name(": Dubois Roger CHIJOU NENGOU")
                                 .email("duro.chijou@gmail.com")
                         )
                         .license(new License().name("Apache 2.0"))
