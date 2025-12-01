@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface CommandeFournisseurApi {
             @ApiResponse(responseCode = "200", description = "Commande fournisseur créée ou modifiée avec succès"),
             @ApiResponse(responseCode = "400", description = "Commande fournisseur non valide")
     })
-    CommandeFournisseurDto save(@RequestBody CommandeFournisseurDto commandeFournisseurDto);
+    ResponseEntity<CommandeFournisseurDto> save(@RequestBody CommandeFournisseurDto commandeFournisseurDto);
 
     @GetMapping(
             value = APP_ROOT + "/commandes-fournisseur/{id}",
@@ -35,7 +36,7 @@ public interface CommandeFournisseurApi {
             @ApiResponse(responseCode = "200", description = "Commande fournisseur trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune commande fournisseur trouvée avec cet identifiant")
     })
-    CommandeFournisseurDto findById(@PathVariable("id") Integer id);
+    ResponseEntity<CommandeFournisseurDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(
             value = APP_ROOT + "/commandes-fournisseur/code/{code}",
@@ -46,7 +47,7 @@ public interface CommandeFournisseurApi {
             @ApiResponse(responseCode = "200", description = "Commande fournisseur trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune commande fournisseur trouvée avec ce code")
     })
-    CommandeFournisseurDto findByCode(@PathVariable String code);
+    ResponseEntity<CommandeFournisseurDto> findByCode(@PathVariable String code);
 
     @GetMapping(
             value = APP_ROOT + "/commandes-fournisseur/all",
@@ -56,7 +57,7 @@ public interface CommandeFournisseurApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des commandes fournisseur retournée avec succès")
     })
-    List<CommandeFournisseurDto> findAll();
+    ResponseEntity<List<CommandeFournisseurDto>> findAll();
 
     @DeleteMapping(
             value = APP_ROOT + "/commandes-fournisseur/delete/{id}",
@@ -66,5 +67,5 @@ public interface CommandeFournisseurApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Commande fournisseur supprimée avec succès")
     })
-    void delete(@PathVariable Integer id);
+    ResponseEntity delete(@PathVariable Integer id);
 }

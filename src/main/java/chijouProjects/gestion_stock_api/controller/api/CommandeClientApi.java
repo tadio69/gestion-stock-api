@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public interface CommandeClientApi {
             @ApiResponse(responseCode = "200", description = "Commande client créée ou modifiée avec succès"),
             @ApiResponse(responseCode = "400", description = "Commande client non valide")
     })
-    CommandeClientDto save(@RequestBody CommandeClientDto commandeClientDto);
+    ResponseEntity<CommandeClientDto> save(@RequestBody CommandeClientDto commandeClientDto);
 
     @GetMapping(
             value = APP_ROOT + "/commandes-client/{id}",
@@ -38,7 +39,7 @@ public interface CommandeClientApi {
             @ApiResponse(responseCode = "200", description = "Commande client trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune commande client trouvée avec cet identifiant")
     })
-    CommandeClientDto findById(@PathVariable("id") Integer id);
+    ResponseEntity<CommandeClientDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(
             value = APP_ROOT + "/commandes-client/code/{code}",
@@ -49,7 +50,7 @@ public interface CommandeClientApi {
             @ApiResponse(responseCode = "200", description = "Commande client trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune commande client trouvée avec ce code")
     })
-    CommandeClientDto findByCode(@PathVariable("code") String code);
+    ResponseEntity<CommandeClientDto> findByCode(@PathVariable("code") String code);
 
     @GetMapping(
             value = APP_ROOT + "/commandes-client/all",
@@ -59,7 +60,7 @@ public interface CommandeClientApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des commandes client retournée avec succès")
     })
-    List<CommandeClientDto> findAll();
+    ResponseEntity<List<CommandeClientDto>> findAll();
 
     @DeleteMapping(
             value = APP_ROOT + "/commandes-client/delete/{id}",
@@ -69,5 +70,5 @@ public interface CommandeClientApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Commande client supprimée avec succès")
     })
-    void delete(@PathVariable("id") Integer id);
+    ResponseEntity delete(@PathVariable("id") Integer id);
 }

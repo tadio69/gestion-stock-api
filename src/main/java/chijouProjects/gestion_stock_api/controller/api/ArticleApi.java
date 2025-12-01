@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +15,10 @@ import static chijouProjects.gestion_stock_api.utils.Constants.APP_ROOT;
 
 @Tag(name = "Articles", description = "Gestion des articles")
 public interface ArticleApi {
-
+    /*
+    consumes et produces ne sont pas toujours nécessaires. Quand on ne les met pas on enlève aussi value =. On met juste
+    @PostMapping(APP_ROOT + "/articles/create")
+     */
     @PostMapping(
             value = APP_ROOT + "/articles/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -28,7 +32,7 @@ public interface ArticleApi {
             @ApiResponse(responseCode = "200", description = "Article créé ou modifié avec succès"),
             @ApiResponse(responseCode = "400", description = "Article non valide")
     })
-    ArticleDto save(@RequestBody ArticleDto articleDto);
+    ResponseEntity<ArticleDto> save(@RequestBody ArticleDto articleDto);
 
     @GetMapping(
             value = APP_ROOT + "/articles/{id}",
@@ -42,7 +46,7 @@ public interface ArticleApi {
             @ApiResponse(responseCode = "200", description = "Article trouvé avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucun article trouvé pour cet ID")
     })
-    ArticleDto findById(@PathVariable("id") Integer id);
+    ResponseEntity<ArticleDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(
             value = APP_ROOT + "/articles/code/{code}",
@@ -56,7 +60,7 @@ public interface ArticleApi {
             @ApiResponse(responseCode = "200", description = "Article trouvé avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucun article trouvé pour ce code")
     })
-    ArticleDto findByCode(@PathVariable("code") String codeArticle);
+    ResponseEntity<ArticleDto> findByCode(@PathVariable("code") String codeArticle);
 
     @GetMapping(
             value = APP_ROOT + "/articles/all",
@@ -69,7 +73,7 @@ public interface ArticleApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des articles retournée avec succès")
     })
-    List<ArticleDto> findAll();
+    ResponseEntity<List<ArticleDto>> findAll();
 
     @DeleteMapping(
             value = APP_ROOT + "/articles/delete/{id}",
@@ -82,5 +86,5 @@ public interface ArticleApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Article supprimé avec succès")
     })
-    void delete(@PathVariable("id") Integer id);
+    ResponseEntity delete(@PathVariable("id") Integer id);
 }

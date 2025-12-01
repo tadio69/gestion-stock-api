@@ -4,6 +4,8 @@ import chijouProjects.gestion_stock_api.controller.api.ArticleApi;
 import chijouProjects.gestion_stock_api.dto.ArticleDto;
 import chijouProjects.gestion_stock_api.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,27 +20,33 @@ public class ArticleController implements ArticleApi {
         this.articleService = articleService;
     }
     @Override
-    public ArticleDto save(ArticleDto articleDto) {
-        return articleService.save(articleDto);
+    public ResponseEntity<ArticleDto> save(ArticleDto articleDto) {
+        return ResponseEntity.ok(articleService.save(articleDto)); //ou bien
+        //return ResponseEntity.status(HttpStatus.OK).body(articleService.save(articleDto));
     }
 
     @Override
-    public ArticleDto findById(Integer id) {
-        return articleService.findById(id);
+    public ResponseEntity<ArticleDto> findById(Integer id) {
+        return ResponseEntity.ok(articleService.findById(id));
+        //return ResponseEntity.status(HttpStatus.OK).body(articleService.findById(id));
     }
 
     @Override
-    public ArticleDto findByCode(String code) {
-        return articleService.findByCode(code);
+    public ResponseEntity<ArticleDto> findByCode(String code) {
+        return ResponseEntity.ok(articleService.findByCode(code));
+        //return ResponseEntity.status(HttpStatus.OK).body(articleService.findByCode(code));
     }
 
     @Override
-    public List<ArticleDto> findAll() {
-        return articleService.findAll();
+    public ResponseEntity<List<ArticleDto>> findAll() {
+        return ResponseEntity.ok(articleService.findAll());
+        //return ResponseEntity.status(HttpStatus.OK).body(articleService.findAll());
     }
 
     @Override
-    public void delete(Integer id) {
+    public ResponseEntity<Void> delete(Integer id) {
         articleService.delete(id);
+        //return ResponseEntity.ok().build(); si on est sûr à 100% sinon on utilise
+        return ResponseEntity.noContent().build();
     }
 }

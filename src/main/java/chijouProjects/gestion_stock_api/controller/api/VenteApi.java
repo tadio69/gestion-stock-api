@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface VenteApi {
             @ApiResponse(responseCode = "200", description = "Vente créée ou modifiée avec succès"),
             @ApiResponse(responseCode = "400", description = "Vente non valide")
     })
-    VenteDto save(@RequestBody VenteDto venteDto);
+    ResponseEntity<VenteDto> save(@RequestBody VenteDto venteDto);
 
     @GetMapping(
             value = APP_ROOT + "/ventes/{id}",
@@ -35,7 +36,7 @@ public interface VenteApi {
             @ApiResponse(responseCode = "200", description = "Vente trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune vente trouvée avec cet identifiant")
     })
-    VenteDto findById(@PathVariable("id") Integer id);
+    ResponseEntity<VenteDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(
             value = APP_ROOT + "/ventes/code/{code}",
@@ -46,7 +47,7 @@ public interface VenteApi {
             @ApiResponse(responseCode = "200", description = "Vente trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune vente trouvée avec ce code")
     })
-    VenteDto findByCode(@PathVariable("code") String code);
+    ResponseEntity<VenteDto> findByCode(@PathVariable("code") String code);
 
     @GetMapping(
             value = APP_ROOT + "/ventes/all",
@@ -56,7 +57,7 @@ public interface VenteApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des ventes retournée avec succès")
     })
-    List<VenteDto> findAll();
+    ResponseEntity<List<VenteDto>> findAll();
 
     @DeleteMapping(
             value = APP_ROOT + "/ventes/delete/{id}",
@@ -66,5 +67,5 @@ public interface VenteApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Vente supprimée avec succès")
     })
-    void delete(@PathVariable("id") Integer id);
+    ResponseEntity<Void> delete(@PathVariable("id") Integer id);
 }

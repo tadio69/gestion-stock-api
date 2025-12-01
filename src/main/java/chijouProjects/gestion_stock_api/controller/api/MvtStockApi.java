@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface MvtStockApi {
             @ApiResponse(responseCode = "200", description = "Mouvement de stock créé ou modifié avec succès"),
             @ApiResponse(responseCode = "400", description = "Mouvement de stock non valide")
     })
-    MvtStockDto save(@RequestBody MvtStockDto mvtStockDto);
+    ResponseEntity<MvtStockDto> save(@RequestBody MvtStockDto mvtStockDto);
 
     @GetMapping(
             value = APP_ROOT + "/mvtstocks/{id}",
@@ -35,7 +36,7 @@ public interface MvtStockApi {
             @ApiResponse(responseCode = "200", description = "Mouvement de stock trouvé avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucun mouvement de stock trouvé avec cet identifiant")
     })
-    MvtStockDto findById(@PathVariable("id") Integer id);
+    ResponseEntity<MvtStockDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(
             value = APP_ROOT + "/mvtstocks/all",
@@ -45,7 +46,7 @@ public interface MvtStockApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des mouvements de stock retournée avec succès")
     })
-    List<MvtStockDto> findAll();
+    ResponseEntity<List<MvtStockDto>> findAll();
 
     @DeleteMapping(
             value = APP_ROOT + "/mvtstocks/delete/{id}",
@@ -55,5 +56,5 @@ public interface MvtStockApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Mouvement de stock supprimé avec succès")
     })
-    void delete(@PathVariable("id") Integer id);
+    ResponseEntity delete(@PathVariable("id") Integer id);
 }

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +22,7 @@ public interface ImgLinkApi {
             @ApiResponse(responseCode = "200", description = "Photo téléversée avec succès"),
             @ApiResponse(responseCode = "400", description = "Données de photo non valides")
     })
-    ImgLinkDto uploadImage(
+    ResponseEntity<ImgLinkDto> uploadImage(
             @RequestParam("file") MultipartFile file,
             @RequestParam(value = "identreprise") Integer identreprise
     );
@@ -32,19 +33,19 @@ public interface ImgLinkApi {
             @ApiResponse(responseCode = "200", description = "Imglink trouvé avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucun Imglink trouvé avec cet identifiant")
     })
-    ImgLinkDto findById(@PathVariable("id") Integer id);
+    ResponseEntity<ImgLinkDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(value = APP_ROOT + "/photos/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Lister tous les Imglinks", description = "Cette méthode permet de retourner la liste des imglinks")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des imglinks retournée avec succès")
     })
-    List<ImgLinkDto> findAll();
+    ResponseEntity<List<ImgLinkDto>> findAll();
 
     @DeleteMapping(value = APP_ROOT + "/photos/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Supprimer un Imglink par son ID", description = "Cette méthode permet de supprimer un imglink par son identifiant")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Imglink supprimé avec succès")
     })
-    void delete(@PathVariable("id") Integer id);
+    ResponseEntity delete(@PathVariable("id") Integer id);
 }

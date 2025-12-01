@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface UtilisateurApi {
             @ApiResponse(responseCode = "200", description = "Utilisateur créé ou modifié avec succès"),
             @ApiResponse(responseCode = "400", description = "Utilisateur non valide")
     })
-    UtilisateurDto save(@RequestBody UtilisateurDto fournisseurDto);
+    ResponseEntity<UtilisateurDto> save(@RequestBody UtilisateurDto fournisseurDto);
 
     @GetMapping(value = APP_ROOT + "/utilisateurs/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Rechercher un utilisateur par son ID", description = "Cette méthode permet de chercher un utilisateur par son identifiant")
@@ -29,7 +30,7 @@ public interface UtilisateurApi {
             @ApiResponse(responseCode = "200", description = "Utilisateur trouvé avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucun utilisateur trouvé avec cet identifiant")
     })
-    UtilisateurDto findById(@PathVariable("id") Integer id);
+    ResponseEntity<UtilisateurDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(value = APP_ROOT + "/utilisateurs/nom/{nom}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Rechercher un utilisateur par son nom", description = "Cette méthode permet de chercher un utilisateur par son nom")
@@ -37,19 +38,19 @@ public interface UtilisateurApi {
             @ApiResponse(responseCode = "200", description = "Utilisateur trouvé avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucun utilisateur trouvé avec ce nom")
     })
-    UtilisateurDto findByNom(@PathVariable("nom") String nom);
+    ResponseEntity<UtilisateurDto> findByNom(@PathVariable("nom") String nom);
 
     @GetMapping(value = APP_ROOT + "/utilisateurs/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Renvoyer la liste des utilisateurs", description = "Cette méthode permet de retourner la liste des utilisateurs enregistrés")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des utilisateurs retournée avec succès")
     })
-    List<UtilisateurDto> findAll();
+    ResponseEntity<List<UtilisateurDto>> findAll();
 
     @DeleteMapping(value = APP_ROOT + "/utilisateurs/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Supprimer un utilisateur par son ID", description = "Cette permet de supprimer un utilisateur par son identifiant")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Utilisateur supprimé avec succès")
     })
-    void delete(@PathVariable("id") Integer id);
+    ResponseEntity delete(@PathVariable("id") Integer id);
 }

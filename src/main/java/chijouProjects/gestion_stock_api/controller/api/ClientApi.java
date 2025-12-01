@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface ClientApi {
             @ApiResponse(responseCode = "200", description = "Client créé ou modifié avec succès"),
             @ApiResponse(responseCode = "400", description = "Client non valide")
     })
-    ClientDto save(@RequestBody ClientDto articleDto);
+    ResponseEntity<ClientDto> save(@RequestBody ClientDto articleDto);
 
     @GetMapping(value = APP_ROOT + "/clients/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Rechercher un client par son ID", description = "Cette méthode permet de chercher un client par son identifiant")
@@ -29,7 +30,7 @@ public interface ClientApi {
             @ApiResponse(responseCode = "200", description = "Client trouvé avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucun client trouvé avec cet ID")
     })
-    ClientDto findById(@PathVariable("id") Integer id);
+    ResponseEntity<ClientDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(value = APP_ROOT + "/clients/nom/{nom}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Rechercher un client par son nom", description = "Cette méthode permet de chercher un client par son nom")
@@ -37,19 +38,19 @@ public interface ClientApi {
             @ApiResponse(responseCode = "200", description = "Client trouvé avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucun client trouvé avec ce nom")
     })
-    ClientDto findByNom(@PathVariable("nom") String nomClient);
+    ResponseEntity<ClientDto> findByNom(@PathVariable("nom") String nomClient);
 
     @GetMapping(value = APP_ROOT + "/clients/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Renvoyer la liste des clients", description = "Cette méthode permet de renvoyer la liste des clients enregistrés")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des clients retournée avec succès")
     })
-    List<ClientDto> findAll();
+    ResponseEntity<List<ClientDto>> findAll();
 
     @DeleteMapping(value = APP_ROOT + "/clients/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Supprimer un client par son ID", description = "Cette méthode permet de supprimer un client par son identifiant")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Client supprimé avec succès")
     })
-    void delete(@PathVariable("id") Integer id);
+    ResponseEntity delete(@PathVariable("id") Integer id);
 }
