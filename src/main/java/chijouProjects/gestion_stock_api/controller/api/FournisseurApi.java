@@ -51,5 +51,5 @@ public interface FournisseurApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Fournisseur supprimé avec succès")
     })
-    ResponseEntity delete(@PathVariable("id") Integer id);
+    ResponseEntity<Void> delete(@PathVariable("id") Integer id);
 }

@@ -4,6 +4,7 @@ import chijouProjects.gestion_stock_api.controller.api.VenteApi;
 import chijouProjects.gestion_stock_api.dto.VenteDto;
 import chijouProjects.gestion_stock_api.service.VenteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,27 +19,28 @@ public class VenteController implements VenteApi {
     }
 
     @Override
-    public VenteDto save(VenteDto venteDto) {
-        return venteService.save(venteDto);
+    public ResponseEntity<VenteDto> save(VenteDto venteDto) {
+        return ResponseEntity.ok(venteService.save(venteDto));
     }
 
     @Override
-    public VenteDto findById(Integer id) {
-        return venteService.findById(id);
+    public ResponseEntity<VenteDto> findById(Integer id) {
+        return ResponseEntity.ok(venteService.findById(id));
     }
 
     @Override
-    public VenteDto findByCode(String code) {
-        return venteService.findByCode(code);
+    public ResponseEntity<VenteDto> findByCode(String code) {
+        return ResponseEntity.ok(venteService.findByCode(code));
     }
 
     @Override
-    public List<VenteDto> findAll() {
-        return venteService.findAll();
+    public ResponseEntity<List<VenteDto>> findAll() {
+        return ResponseEntity.ok(venteService.findAll());
     }
 
     @Override
-    public void delete(Integer id) {
+    public ResponseEntity<Void> delete(Integer id) {
         venteService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

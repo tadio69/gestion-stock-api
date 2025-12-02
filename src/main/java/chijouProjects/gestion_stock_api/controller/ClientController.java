@@ -4,6 +4,7 @@ import chijouProjects.gestion_stock_api.controller.api.ClientApi;
 import chijouProjects.gestion_stock_api.dto.ClientDto;
 import chijouProjects.gestion_stock_api.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,27 +19,28 @@ public class ClientController implements ClientApi {
         this.clientService = clientService;
     }
     @Override
-    public ClientDto save(ClientDto articleDto) {
-        return clientService.save(articleDto);
+    public ResponseEntity<ClientDto> save(ClientDto articleDto) {
+        return ResponseEntity.ok(clientService.save(articleDto));
     }
 
     @Override
-    public ClientDto findById(Integer id) {
-        return clientService.findById(id);
+    public ResponseEntity<ClientDto> findById(Integer id) {
+        return ResponseEntity.ok(clientService.findById(id));
     }
 
     @Override
-    public ClientDto findByNom(String nom) {
-        return clientService.findByNom(nom);
+    public ResponseEntity<ClientDto> findByNom(String nom) {
+        return ResponseEntity.ok(clientService.findByNom(nom));
     }
 
     @Override
-    public List<ClientDto> findAll() {
-        return clientService.findAll();
+    public ResponseEntity<List<ClientDto>> findAll() {
+        return ResponseEntity.ok(clientService.findAll());
     }
 
     @Override
-    public void delete(Integer id) {
+    public ResponseEntity<Void> delete(Integer id) {
         clientService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -2,6 +2,7 @@ package chijouProjects.gestion_stock_api.controller;
 
 import chijouProjects.gestion_stock_api.controller.api.ArticleApi;
 import chijouProjects.gestion_stock_api.dto.ArticleDto;
+import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,8 +46,14 @@ public class ArticleController implements ArticleApi {
 
     @Override
     public ResponseEntity<Void> delete(Integer id) {
-        articleService.delete(id);
-        //return ResponseEntity.ok().build(); si on est sûr à 100% sinon on utilise
-        return ResponseEntity.noContent().build();
+        try {
+            articleService.delete(id); // si l'article n'existe pas, on peut lever une exception
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
+
 }

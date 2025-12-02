@@ -70,5 +70,5 @@ public interface CommandeClientApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Commande client supprimée avec succès")
     })
-    ResponseEntity delete(@PathVariable("id") Integer id);
+    ResponseEntity<Void> delete(@PathVariable("id") Integer id);
 }

@@ -52,5 +52,5 @@ public interface UtilisateurApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Utilisateur supprimé avec succès")
     })
-    ResponseEntity delete(@PathVariable("id") Integer id);
+    ResponseEntity<Void> delete(@PathVariable("id") Integer id);
 }

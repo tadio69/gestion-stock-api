@@ -4,6 +4,7 @@ import chijouProjects.gestion_stock_api.controller.api.EntrepriseApi;
 import chijouProjects.gestion_stock_api.dto.EntrepriseDto;
 import chijouProjects.gestion_stock_api.service.EntrepriseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,32 +20,33 @@ public class EntrepriseController implements EntrepriseApi {
     }
 
     @Override
-    public EntrepriseDto save(EntrepriseDto articleDto) {
-        return entrepriseService.save(articleDto);
+    public ResponseEntity<EntrepriseDto> save(EntrepriseDto articleDto) {
+        return ResponseEntity.ok(entrepriseService.save(articleDto));
     }
 
     @Override
-    public EntrepriseDto findById(Integer id) {
-        return entrepriseService.findById(id);
+    public ResponseEntity<EntrepriseDto> findById(Integer id) {
+        return ResponseEntity.ok(entrepriseService.findById(id));
     }
 
     @Override
-    public EntrepriseDto findByDescription(String description) {
-        return entrepriseService.findByDescription(description);
+    public ResponseEntity<EntrepriseDto> findByDescription(String description) {
+        return ResponseEntity.ok(entrepriseService.findByDescription(description));
     }
 
     @Override
-    public EntrepriseDto findByCodefiscal(String codefiscal) {
-        return entrepriseService.findByCodefiscal(codefiscal);
+    public ResponseEntity<EntrepriseDto> findByCodefiscal(String codefiscal) {
+        return ResponseEntity.ok(entrepriseService.findByCodefiscal(codefiscal));
     }
 
     @Override
-    public List<EntrepriseDto> findAll() {
-        return entrepriseService.findAll();
+    public ResponseEntity<List<EntrepriseDto>> findAll() {
+        return ResponseEntity.ok(entrepriseService.findAll());
     }
 
     @Override
-    public void delete(Integer id) {
+    public ResponseEntity<Void> delete(Integer id) {
         entrepriseService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

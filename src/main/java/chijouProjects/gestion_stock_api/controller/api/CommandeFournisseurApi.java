@@ -67,5 +67,5 @@ public interface CommandeFournisseurApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Commande fournisseur supprimée avec succès")
     })
-    ResponseEntity delete(@PathVariable Integer id);
+    ResponseEntity<Void> delete(@PathVariable Integer id);
 }

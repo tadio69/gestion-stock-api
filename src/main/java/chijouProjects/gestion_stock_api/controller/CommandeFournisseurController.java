@@ -4,6 +4,7 @@ import chijouProjects.gestion_stock_api.controller.api.CommandeFournisseurApi;
 import chijouProjects.gestion_stock_api.dto.CommandeFournisseurDto;
 import chijouProjects.gestion_stock_api.service.CommandeFournisseurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,27 +19,28 @@ public class CommandeFournisseurController implements CommandeFournisseurApi {
     }
 
     @Override
-    public CommandeFournisseurDto save(CommandeFournisseurDto commandeFournisseurDto) {
-        return commandeFournisseurService.save(commandeFournisseurDto);
+    public ResponseEntity<CommandeFournisseurDto> save(CommandeFournisseurDto commandeFournisseurDto) {
+        return ResponseEntity.ok(commandeFournisseurService.save(commandeFournisseurDto));
     }
 
     @Override
-    public CommandeFournisseurDto findById(Integer id) {
-        return commandeFournisseurService.findById(id);
+    public ResponseEntity<CommandeFournisseurDto> findById(Integer id) {
+        return ResponseEntity.ok(commandeFournisseurService.findById(id));
     }
 
     @Override
-    public CommandeFournisseurDto findByCode(String code) {
-        return commandeFournisseurService.findByCode(code);
+    public ResponseEntity<CommandeFournisseurDto> findByCode(String code) {
+        return ResponseEntity.ok(commandeFournisseurService.findByCode(code));
     }
 
     @Override
-    public List<CommandeFournisseurDto> findAll() {
-        return commandeFournisseurService.findAll();
+    public ResponseEntity<List<CommandeFournisseurDto>> findAll() {
+        return ResponseEntity.ok(commandeFournisseurService.findAll());
     }
 
     @Override
-    public void delete(Integer id) {
+    public ResponseEntity<Void> delete(Integer id) {
         commandeFournisseurService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

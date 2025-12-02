@@ -60,5 +60,5 @@ public interface EntrepriseApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Entreprise supprimée avec succès")
     })
-    ResponseEntity delete(@PathVariable("id") Integer id);
+    ResponseEntity<Void> delete(@PathVariable("id") Integer id);
 }

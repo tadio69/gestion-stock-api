@@ -4,6 +4,7 @@ import chijouProjects.gestion_stock_api.controller.api.FournisseurApi;
 import chijouProjects.gestion_stock_api.dto.FournisseurDto;
 import chijouProjects.gestion_stock_api.service.FournisseurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,27 +20,28 @@ public class FournisseurController implements FournisseurApi {
     }
 
     @Override
-    public FournisseurDto save(FournisseurDto fournisseurDto) {
-        return fournisseurService.save(fournisseurDto);
+    public ResponseEntity<FournisseurDto> save(FournisseurDto fournisseurDto) {
+        return ResponseEntity.ok(fournisseurService.save(fournisseurDto));
     }
 
     @Override
-    public FournisseurDto findById(Integer id) {
-        return fournisseurService.findById(id);
+    public ResponseEntity<FournisseurDto> findById(Integer id) {
+        return ResponseEntity.ok(fournisseurService.findById(id));
     }
 
     @Override
-    public FournisseurDto findByNom(String nom) {
-        return fournisseurService.findByNom(nom);
+    public ResponseEntity<FournisseurDto> findByNom(String nom) {
+        return ResponseEntity.ok(fournisseurService.findByNom(nom));
     }
 
     @Override
-    public List<FournisseurDto> findAll() {
-        return fournisseurService.findAll();
+    public ResponseEntity<List<FournisseurDto>> findAll() {
+        return ResponseEntity.ok(fournisseurService.findAll());
     }
 
     @Override
-    public void delete(Integer id) {
+    public ResponseEntity<Void> delete(Integer id) {
         fournisseurService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

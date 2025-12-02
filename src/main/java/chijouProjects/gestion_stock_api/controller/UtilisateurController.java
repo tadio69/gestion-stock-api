@@ -4,6 +4,7 @@ import chijouProjects.gestion_stock_api.controller.api.UtilisateurApi;
 import chijouProjects.gestion_stock_api.dto.UtilisateurDto;
 import chijouProjects.gestion_stock_api.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,27 +20,28 @@ public class UtilisateurController implements UtilisateurApi {
     }
 
     @Override
-    public UtilisateurDto save(UtilisateurDto fournisseurDto) {
-        return utilisateurService.save(fournisseurDto);
+    public ResponseEntity<UtilisateurDto> save(UtilisateurDto fournisseurDto) {
+        return ResponseEntity.ok(utilisateurService.save(fournisseurDto));
     }
 
     @Override
-    public UtilisateurDto findById(Integer id) {
-        return utilisateurService.findById(id);
+    public ResponseEntity<UtilisateurDto> findById(Integer id) {
+        return ResponseEntity.ok(utilisateurService.findById(id));
     }
 
     @Override
-    public UtilisateurDto findByNom(String nom) {
-        return utilisateurService.findByNom(nom);
+    public ResponseEntity<UtilisateurDto> findByNom(String nom) {
+        return ResponseEntity.ok(utilisateurService.findByNom(nom));
     }
 
     @Override
-    public List<UtilisateurDto> findAll() {
-        return utilisateurService.findAll();
+    public ResponseEntity<List<UtilisateurDto>> findAll() {
+        return ResponseEntity.ok(utilisateurService.findAll());
     }
 
     @Override
-    public void delete(Integer id) {
+    public ResponseEntity<Void> delete(Integer id) {
         utilisateurService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

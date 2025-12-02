@@ -59,5 +59,5 @@ public interface CategorieApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Catégorie supprimée avec succès")
     })
-    ResponseEntity delete(@PathVariable("id") Integer id);
+    ResponseEntity<Void> delete(@PathVariable("id") Integer id);
 }

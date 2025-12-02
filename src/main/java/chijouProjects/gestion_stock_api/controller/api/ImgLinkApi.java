@@ -47,5 +47,5 @@ public interface ImgLinkApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Imglink supprimé avec succès")
     })
-    ResponseEntity delete(@PathVariable("id") Integer id);
+    ResponseEntity<Void> delete(@PathVariable("id") Integer id);
 }

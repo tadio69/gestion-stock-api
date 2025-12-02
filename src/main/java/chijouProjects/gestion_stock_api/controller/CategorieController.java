@@ -4,6 +4,7 @@ import chijouProjects.gestion_stock_api.controller.api.CategorieApi;
 import chijouProjects.gestion_stock_api.dto.CategorieDto;
 import chijouProjects.gestion_stock_api.service.CategorieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,32 +20,33 @@ public class CategorieController implements CategorieApi {
     }
 
     @Override
-    public CategorieDto save(CategorieDto categorieDto) {
-        return categorieService.save(categorieDto);
+    public ResponseEntity<CategorieDto> save(CategorieDto categorieDto) {
+        return ResponseEntity.ok(categorieService.save(categorieDto));
     }
 
     @Override
-    public CategorieDto findById(Integer id) {
-        return categorieService.findById(id);
+    public ResponseEntity<CategorieDto> findById(Integer id) {
+        return ResponseEntity.ok(categorieService.findById(id));
     }
 
     @Override
-    public CategorieDto findByDesignation(String designation) {
-        return categorieService.findByDesignation(designation);
+    public ResponseEntity<CategorieDto> findByDesignation(String designation) {
+        return ResponseEntity.ok(categorieService.findByDesignation(designation));
     }
 
     @Override
-    public CategorieDto findByCode(String code) {
-        return categorieService.findByCode(code);
+    public ResponseEntity<CategorieDto> findByCode(String code) {
+        return ResponseEntity.ok(categorieService.findByCode(code));
     }
 
     @Override
-    public List<CategorieDto> findAll() {
-        return categorieService.findAll();
+    public ResponseEntity<List<CategorieDto>> findAll() {
+        return ResponseEntity.ok(categorieService.findAll());
     }
 
     @Override
-    public void delete(Integer id) {
+    public ResponseEntity<Void> delete(Integer id) {
         categorieService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
