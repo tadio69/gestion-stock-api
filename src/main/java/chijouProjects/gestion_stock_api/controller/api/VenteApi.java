@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static chijouProjects.gestion_stock_api.utils.Constants.APP_ROOT;
+import static chijouProjects.gestion_stock_api.utils.Constants.VENTE_ENDPOINT;
 
 @Tag(name = "Ventes", description = "Gestion des ventes")
 public interface VenteApi {
     @PostMapping(
-            value = APP_ROOT + "/ventes/create",
+            value = VENTE_ENDPOINT + "/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -28,7 +28,7 @@ public interface VenteApi {
     ResponseEntity<VenteDto> save(@RequestBody VenteDto venteDto);
 
     @GetMapping(
-            value = APP_ROOT + "/ventes/{id}",
+            value = VENTE_ENDPOINT + "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Rechercher une vente par son ID", description = "Cette méthode permet de chercher une vente par son identifiant")
@@ -39,7 +39,7 @@ public interface VenteApi {
     ResponseEntity<VenteDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(
-            value = APP_ROOT + "/ventes/code/{code}",
+            value = VENTE_ENDPOINT + "/code/{code}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Rechercher une vente par son code", description = "Cette méthode permet de chercher une vente par son code")
@@ -50,7 +50,7 @@ public interface VenteApi {
     ResponseEntity<VenteDto> findByCode(@PathVariable("code") String code);
 
     @GetMapping(
-            value = APP_ROOT + "/ventes/all",
+            value = VENTE_ENDPOINT + "/all",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Renvoyer la liste des ventes", description = "Cette méthode permet de retourner la liste des ventes enregistrées")
@@ -60,7 +60,7 @@ public interface VenteApi {
     ResponseEntity<List<VenteDto>> findAll();
 
     @DeleteMapping(
-            value = APP_ROOT + "/ventes/delete/{id}",
+            value = VENTE_ENDPOINT + "/delete/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Supprimer une vente par son ID", description = "Cette méthode permet de supprimer une vente par identifiant")

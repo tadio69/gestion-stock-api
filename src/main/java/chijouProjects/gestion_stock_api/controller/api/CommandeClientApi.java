@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static chijouProjects.gestion_stock_api.utils.Constants.APP_ROOT;
+import static chijouProjects.gestion_stock_api.utils.Constants.COMMANDES_CLIENT_ENDPOINT;
 
 @Tag(name = "Commandes client", description = "Gestion des commandes client")
 public interface CommandeClientApi {
     @PostMapping(
-            value = APP_ROOT + "/commandes-client/create",
+            value = COMMANDES_CLIENT_ENDPOINT + "/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -31,7 +31,7 @@ public interface CommandeClientApi {
     ResponseEntity<CommandeClientDto> save(@RequestBody CommandeClientDto commandeClientDto);
 
     @GetMapping(
-            value = APP_ROOT + "/commandes-client/{id}",
+            value = COMMANDES_CLIENT_ENDPOINT + "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Rechercher une commande client par son ID", description = "Cette méthode permet de chercher une commande client pas son identifiant")
@@ -42,7 +42,7 @@ public interface CommandeClientApi {
     ResponseEntity<CommandeClientDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(
-            value = APP_ROOT + "/commandes-client/code/{code}",
+            value = COMMANDES_CLIENT_ENDPOINT + "/code/{code}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Rechercher une commande client par son code", description = "Cette méthode permet de chercher une commande client par son code")
@@ -53,7 +53,7 @@ public interface CommandeClientApi {
     ResponseEntity<CommandeClientDto> findByCode(@PathVariable("code") String code);
 
     @GetMapping(
-            value = APP_ROOT + "/commandes-client/all",
+            value = COMMANDES_CLIENT_ENDPOINT + "/all",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Renvoyer la liste des commandes client", description = "Cette méthode permet de retourner la liste des commandes client enregistrées")
@@ -63,7 +63,7 @@ public interface CommandeClientApi {
     ResponseEntity<List<CommandeClientDto>> findAll();
 
     @DeleteMapping(
-            value = APP_ROOT + "/commandes-client/delete/{id}",
+            value = COMMANDES_CLIENT_ENDPOINT + "/delete/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Supprimer une commande client par son ID", description = "Cette méthode permet de supprimer une commande client par son identifiant")

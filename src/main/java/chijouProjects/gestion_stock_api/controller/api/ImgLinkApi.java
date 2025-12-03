@@ -12,11 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static chijouProjects.gestion_stock_api.utils.Constants.APP_ROOT;
+import static chijouProjects.gestion_stock_api.utils.Constants.PHOTOS_ENDPOINT;
 
 @Tag(name = "Imglink", description = "Gestion des Imglinks (données relatives aux photos)")
 public interface ImgLinkApi {
-    @PostMapping(value = APP_ROOT + "/photos/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = PHOTOS_ENDPOINT + "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Téléverser une photo", description = "Cette méthode permet de téléverser une photo dans ImgLink")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Photo téléversée avec succès"),
@@ -27,7 +27,7 @@ public interface ImgLinkApi {
             @RequestParam(value = "identreprise") Integer identreprise
     );
 
-    @GetMapping(value = APP_ROOT + "/photos/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = PHOTOS_ENDPOINT + "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Rechercher un Imglink par son ID", description = "Cette méthode permet de chercher un Imglink par son identifiant")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Imglink trouvé avec succès"),
@@ -35,14 +35,14 @@ public interface ImgLinkApi {
     })
     ResponseEntity<ImgLinkDto> findById(@PathVariable("id") Integer id);
 
-    @GetMapping(value = APP_ROOT + "/photos/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = PHOTOS_ENDPOINT + "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Lister tous les Imglinks", description = "Cette méthode permet de retourner la liste des imglinks")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des imglinks retournée avec succès")
     })
     ResponseEntity<List<ImgLinkDto>> findAll();
 
-    @DeleteMapping(value = APP_ROOT + "/photos/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = PHOTOS_ENDPOINT + "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Supprimer un Imglink par son ID", description = "Cette méthode permet de supprimer un imglink par son identifiant")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Imglink supprimé avec succès")

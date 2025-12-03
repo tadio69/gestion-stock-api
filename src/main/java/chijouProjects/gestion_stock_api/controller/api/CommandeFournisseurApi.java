@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static chijouProjects.gestion_stock_api.utils.Constants.APP_ROOT;
+import static chijouProjects.gestion_stock_api.utils.Constants.COMMANDES_FOURNISSEUR_ENDPOINT;
 
 @Tag(name = "Commandes fournisseur", description = "Gestion des commandes fournisseur")
 public interface CommandeFournisseurApi {
     @PostMapping(
-            value = APP_ROOT + "/commandes-fournisseur/create",
+            value = COMMANDES_FOURNISSEUR_ENDPOINT + "/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -28,7 +28,7 @@ public interface CommandeFournisseurApi {
     ResponseEntity<CommandeFournisseurDto> save(@RequestBody CommandeFournisseurDto commandeFournisseurDto);
 
     @GetMapping(
-            value = APP_ROOT + "/commandes-fournisseur/{id}",
+            value = COMMANDES_FOURNISSEUR_ENDPOINT + "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Rechercher une commande fournisseur par son ID", description = "Cette méthode permet de chercher une commande fournisseur par son identifiant")
@@ -39,7 +39,7 @@ public interface CommandeFournisseurApi {
     ResponseEntity<CommandeFournisseurDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(
-            value = APP_ROOT + "/commandes-fournisseur/code/{code}",
+            value = COMMANDES_FOURNISSEUR_ENDPOINT + "/code/{code}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Rechercher une commande fournisseur par son code", description = "Cette méthode permet de chercher la commande fournisseur par son code")
@@ -50,7 +50,7 @@ public interface CommandeFournisseurApi {
     ResponseEntity<CommandeFournisseurDto> findByCode(@PathVariable String code);
 
     @GetMapping(
-            value = APP_ROOT + "/commandes-fournisseur/all",
+            value = COMMANDES_FOURNISSEUR_ENDPOINT + "/all",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Renvoyer la liste des commandes fournisseur", description = "Cette méthode permet de retourner les commandes fournisseur enregistrées")
@@ -60,7 +60,7 @@ public interface CommandeFournisseurApi {
     ResponseEntity<List<CommandeFournisseurDto>> findAll();
 
     @DeleteMapping(
-            value = APP_ROOT + "/commandes-fournisseur/delete/{id}",
+            value = COMMANDES_FOURNISSEUR_ENDPOINT + "/delete/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Supprimer une commande fournisseur par son ID", description = "Cette méthode permet de supprimer une commande fournisseur par son identifiant")

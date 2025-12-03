@@ -2,8 +2,10 @@ package chijouProjects.gestion_stock_api.controller;
 
 import chijouProjects.gestion_stock_api.controller.api.CommandeClientApi;
 import chijouProjects.gestion_stock_api.dto.CommandeClientDto;
+import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.service.CommandeClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,7 +42,13 @@ public class CommandeClientController implements CommandeClientApi {
 
     @Override
     public ResponseEntity<Void> delete(Integer id) {
-        commandeClientService.delete(id);
-        return ResponseEntity.noContent().build();
+        try {
+            commandeClientService.delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

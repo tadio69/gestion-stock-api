@@ -2,8 +2,10 @@ package chijouProjects.gestion_stock_api.controller;
 
 import chijouProjects.gestion_stock_api.controller.api.ImgLinkApi;
 import chijouProjects.gestion_stock_api.dto.ImgLinkDto;
+import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.service.ImgLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +42,13 @@ public class ImgLinkController implements ImgLinkApi {
 
     @Override
     public ResponseEntity<Void> delete(Integer id) {
-        imglinkService.delete(id);
-        return ResponseEntity.noContent().build();
+        try {
+            imglinkService.delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

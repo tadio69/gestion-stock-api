@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static chijouProjects.gestion_stock_api.utils.Constants.APP_ROOT;
+import static chijouProjects.gestion_stock_api.utils.Constants.MVTSTOCK_ENDPOINT;
 
 @Tag(name = "MvtStocks", description = "Gestion des mouvements de stock")
 public interface MvtStockApi {
     @PostMapping(
-            value = APP_ROOT + "/mvtstocks/create",
+            value = MVTSTOCK_ENDPOINT + "/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -28,7 +28,7 @@ public interface MvtStockApi {
     ResponseEntity<MvtStockDto> save(@RequestBody MvtStockDto mvtStockDto);
 
     @GetMapping(
-            value = APP_ROOT + "/mvtstocks/{id}",
+            value = MVTSTOCK_ENDPOINT + "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Rechercher un mvtstock par son ID", description = "Cette méthode permet de chercher un mouvement de stock par identifiant")
@@ -39,7 +39,7 @@ public interface MvtStockApi {
     ResponseEntity<MvtStockDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(
-            value = APP_ROOT + "/mvtstocks/all",
+            value = MVTSTOCK_ENDPOINT + "/all",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Renvoyer la liste des mvtstocks", description = "Cette méthode permet de retourner la liste des mouvements de stock")
@@ -49,7 +49,7 @@ public interface MvtStockApi {
     ResponseEntity<List<MvtStockDto>> findAll();
 
     @DeleteMapping(
-            value = APP_ROOT + "/mvtstocks/delete/{id}",
+            value = MVTSTOCK_ENDPOINT + "/delete/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Supprimer un mvtstock par son ID", description = "Cette méthode permet de supprimer un mouvement de stock")

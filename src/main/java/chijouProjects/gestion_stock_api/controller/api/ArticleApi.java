@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static chijouProjects.gestion_stock_api.utils.Constants.APP_ROOT;
+import static chijouProjects.gestion_stock_api.utils.Constants.ARTICLE_ENDPOINT;
 
 @Tag(name = "Articles", description = "Gestion des articles")
 public interface ArticleApi {
@@ -20,7 +20,7 @@ public interface ArticleApi {
     @PostMapping(APP_ROOT + "/articles/create")
      */
     @PostMapping(
-            value = APP_ROOT + "/articles/create",
+            value = ARTICLE_ENDPOINT + "/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -35,7 +35,7 @@ public interface ArticleApi {
     ResponseEntity<ArticleDto> save(@RequestBody ArticleDto articleDto);
 
     @GetMapping(
-            value = APP_ROOT + "/articles/{id}",
+            value = ARTICLE_ENDPOINT + "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(
@@ -49,7 +49,7 @@ public interface ArticleApi {
     ResponseEntity<ArticleDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(
-            value = APP_ROOT + "/articles/code/{code}",
+            value = ARTICLE_ENDPOINT + "/code/{code}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(
@@ -63,7 +63,7 @@ public interface ArticleApi {
     ResponseEntity<ArticleDto> findByCode(@PathVariable("code") String codeArticle);
 
     @GetMapping(
-            value = APP_ROOT + "/articles/all",
+            value = ARTICLE_ENDPOINT + "/all",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(
@@ -76,7 +76,7 @@ public interface ArticleApi {
     ResponseEntity<List<ArticleDto>> findAll();
 
     @DeleteMapping(
-            value = APP_ROOT + "/articles/delete/{id}",
+            value = ARTICLE_ENDPOINT + "/delete/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(
