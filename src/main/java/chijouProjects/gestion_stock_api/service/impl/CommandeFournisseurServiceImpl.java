@@ -15,6 +15,7 @@ import chijouProjects.gestion_stock_api.validator.CommandeFournisseurValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -86,6 +87,7 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CommandeFournisseurDto findById(Integer id) {
         if (id == null) {
             log.error("Commande fournisseur ID is null");
@@ -97,10 +99,15 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
                         "Aucune commande Fournisseur avec l'ID = " + id + " n'a été trouvée dans la BDD",
                         ErrorCodes.COMMANDE_FOURNISSEUR_NOT_FOUND
                 ));
+
+        if(commandeFournisseur.getLignecdefournisseurs() != null){
+            commandeFournisseur.getLignecdefournisseurs().size();
+        }
         return CommandeFournisseurDto.fromEntity(commandeFournisseur);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CommandeFournisseurDto findByCode(String code) {
         if (!StringUtils.hasLength(code)) {
             log.error("Le code de commande Fournisseur est null ou vide");
@@ -113,7 +120,9 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
                         ErrorCodes.COMMANDE_FOURNISSEUR_NOT_FOUND
                 ));
 
-
+        if(commandeFournisseur.getLignecdefournisseurs() != null){
+            commandeFournisseur.getLignecdefournisseurs().size();
+        }
         return CommandeFournisseurDto.fromEntity(commandeFournisseur);
     }
 

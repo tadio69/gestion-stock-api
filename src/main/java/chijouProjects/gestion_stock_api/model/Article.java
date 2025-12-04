@@ -44,11 +44,11 @@ public class Article extends AbstractEntity {
     private List<LigneVente> lignevente;
 
     @OneToMany(mappedBy = "article")
-    private List<LigneCdeClt> lignecdeclt;
+    private List<LigneCdeClt> lignecdeclts;
 
     @OneToMany(mappedBy = "article")
-    private List<LigneCdeFournisseur> lignecdefournisseur;
+    private List<LigneCdeFournisseur> lignecdefournisseurs;
 
     @OneToMany(mappedBy = "article")
-    private List<MvtStock> mvtstock;
+    private List<MvtStock> mvtstocks;
 }

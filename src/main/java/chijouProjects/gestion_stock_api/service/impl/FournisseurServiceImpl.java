@@ -14,6 +14,7 @@ import chijouProjects.gestion_stock_api.validator.FournisseurValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -44,6 +45,7 @@ public class FournisseurServiceImpl implements FournisseurService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FournisseurDto findById(Integer id) {
         if (id == null) {
             log.error("Fournisseur ID is null");
@@ -55,10 +57,14 @@ public class FournisseurServiceImpl implements FournisseurService {
                         "Aucun fournisseur avec l'ID = " + id + " n'a été trouvé dans la BDD",
                         ErrorCodes.FOURNISSEUR_NOT_FOUND
                 ));
+        if(fournisseur.getCommandefournisseurs() == null) {
+            fournisseur.getCommandefournisseurs().size();
+        }
         return FournisseurDto.fromEntity(fournisseur);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FournisseurDto findByNom(String nom) {
         if (!StringUtils.hasLength(nom)) {
             log.error("Le nom du fournisseur est null ou vide");
@@ -71,7 +77,9 @@ public class FournisseurServiceImpl implements FournisseurService {
                         ErrorCodes.FOURNISSEUR_NOT_FOUND
                 ));
 
-
+        if(fournisseur.getCommandefournisseurs() == null) {
+            fournisseur.getCommandefournisseurs().size();
+        }
         return FournisseurDto.fromEntity(fournisseur);
     }
 

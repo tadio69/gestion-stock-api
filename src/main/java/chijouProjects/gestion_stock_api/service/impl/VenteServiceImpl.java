@@ -17,6 +17,7 @@ import chijouProjects.gestion_stock_api.service.VenteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class VenteServiceImpl implements VenteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public VenteDto findById(Integer id) {
         if (id == null) {
             log.error("Vente ID is null");
@@ -80,10 +82,14 @@ public class VenteServiceImpl implements VenteService {
                         "Aucune vente avec l'ID = " + id + " n'a été trouvée dans la BDD",
                         ErrorCodes.VENTE_NOT_FOUND
                 ));
+        if(vente.getLigneventes() == null) {
+            vente.getLigneventes().size();
+        }
         return VenteDto.fromEntity(vente);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public VenteDto findByCode(String code) {
         if (!StringUtils.hasLength(code)) {
             log.error("Le code de vente est null ou vide");
@@ -96,6 +102,9 @@ public class VenteServiceImpl implements VenteService {
                         ErrorCodes.VENTE_NOT_FOUND
                 ));
 
+        if(vente.getLigneventes() == null) {
+            vente.getLigneventes().size();
+        }
 
         return VenteDto.fromEntity(vente);
     }

@@ -11,6 +11,7 @@ import chijouProjects.gestion_stock_api.validator.ArticleValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -43,6 +44,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ArticleDto findById(Integer id) {
         if (id == null) {
             log.error("Article ID is null");
@@ -55,10 +57,20 @@ public class ArticleServiceImpl implements ArticleService {
                 ErrorCodes.ARTICLE_NOT_FOUND
         ));
 
+        if (article.getLignecdeclts() != null) {
+            article.getLignecdeclts().size();
+        }
+        if (article.getLignecdefournisseurs() != null) {
+            article.getLignecdefournisseurs().size();
+        }
+        if (article.getMvtstocks() != null) {
+            article.getMvtstocks().size();
+        }
         return ArticleDto.fromEntity(article);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ArticleDto findByCode(String code) {
         if (!StringUtils.hasLength(code)) {
             log.error("Article CODE est null ou vide");
@@ -71,6 +83,15 @@ public class ArticleServiceImpl implements ArticleService {
                 ErrorCodes.ARTICLE_NOT_FOUND
         ));
 
+        if (article.getLignecdeclts() != null) {
+            article.getLignecdeclts().size();
+        }
+        if (article.getLignecdefournisseurs() != null) {
+            article.getLignecdefournisseurs().size();
+        }
+        if (article.getMvtstocks() != null) {
+            article.getMvtstocks().size();
+        }
         return ArticleDto.fromEntity(article);
     }
 

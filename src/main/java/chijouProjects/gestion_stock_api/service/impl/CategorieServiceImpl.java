@@ -43,6 +43,7 @@ public class CategorieServiceImpl implements CategorieService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CategorieDto findById(Integer id) {
         if (id == null) {
             log.error("Catégorie ID is null");
@@ -55,10 +56,15 @@ public class CategorieServiceImpl implements CategorieService {
                 ErrorCodes.CATEGORIE_NOT_FOUND
         ));
 
+        if (categorie.getArticles() != null) {
+            categorie.getArticles().size();
+        }
+
         return CategorieDto.fromEntity(categorie);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CategorieDto findByCode(String code) {
         if (!StringUtils.hasLength(code)) {
             log.error("Catégorie CODE est null ou vide");
@@ -71,10 +77,15 @@ public class CategorieServiceImpl implements CategorieService {
                 ErrorCodes.CATEGORIE_NOT_FOUND
         ));
 
+        if (categorie.getArticles() != null) {
+            categorie.getArticles().size();
+        }
+
         return CategorieDto.fromEntity(categorie);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CategorieDto findByDesignation(String designation) {
         if (!StringUtils.hasLength(designation)) {
             log.error("Désignation de catégorie est null ou vide");
@@ -86,6 +97,10 @@ public class CategorieServiceImpl implements CategorieService {
                 "Aucune catégorie avec la désignation = " + designation + " n'a été trouvé dans la BDD",
                 ErrorCodes.CATEGORIE_NOT_FOUND
         ));
+
+        if (categorie.getArticles() != null) {
+            categorie.getArticles().size();
+        }
 
         return CategorieDto.fromEntity(categorie);
     }

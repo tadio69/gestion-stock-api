@@ -1,11 +1,9 @@
 package chijouProjects.gestion_stock_api.service.impl;
 
-import chijouProjects.gestion_stock_api.dto.CategorieDto;
 import chijouProjects.gestion_stock_api.dto.ClientDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.exception.ErrorCodes;
 import chijouProjects.gestion_stock_api.exception.InvalidEntityException;
-import chijouProjects.gestion_stock_api.model.Categorie;
 import chijouProjects.gestion_stock_api.model.Client;
 import chijouProjects.gestion_stock_api.repository.ClientRepository;
 import chijouProjects.gestion_stock_api.service.ClientService;
@@ -13,6 +11,7 @@ import chijouProjects.gestion_stock_api.validator.ClientValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -44,6 +43,7 @@ public class ClientSericeImpl implements ClientService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ClientDto findById(Integer id) {
         if (id == null) {
             log.error("Client ID is null");
@@ -62,10 +62,16 @@ public class ClientSericeImpl implements ClientService {
                         "Aucun client avec l'ID = " + id + " n'a été trouvé dans la BDD",
                         ErrorCodes.CLIENT_NOT_FOUND
                 ));
+
+        if(client.getCommandeclients() != null) {
+            client.getCommandeclients().size();
+        }
+
         return ClientDto.fromEntity(client);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ClientDto findByNom(String nom) {
         if (!StringUtils.hasLength(nom)) {
             log.error("Nom client est null ou vide");
@@ -86,6 +92,10 @@ public class ClientSericeImpl implements ClientService {
                 "Aucun client avec le nom = " + nom + " n'a été trouvé dans la BDD",
                 ErrorCodes.CLIENT_NOT_FOUND
         ));
+
+        if(client.getCommandeclients() != null) {
+            client.getCommandeclients().size();
+        }
 
         return ClientDto.fromEntity(client);
     }

@@ -15,6 +15,7 @@ import chijouProjects.gestion_stock_api.validator.CommandeClientValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -87,6 +88,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CommandeClientDto findById(Integer id) {
         if (id == null) {
             log.error("Commande client ID is null");
@@ -98,10 +100,15 @@ public class CommandeClientServiceImpl implements CommandeClientService {
                         "Aucune commande client avec l'ID = " + id + " n'a été trouvée dans la BDD",
                         ErrorCodes.COMMANDE_CLIENT_NOT_FOUND
                 ));
+
+        if(commandeClient.getLignecdeclts() != null){
+            commandeClient.getLignecdeclts().size();
+        }
         return CommandeClientDto.fromEntity(commandeClient);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CommandeClientDto findByCode(String code) {
         if (!StringUtils.hasLength(code)) {
             log.error("Le code de commande Client est null ou vide");
@@ -114,7 +121,9 @@ public class CommandeClientServiceImpl implements CommandeClientService {
                         ErrorCodes.COMMANDE_CLIENT_NOT_FOUND
                 ));
 
-
+        if(commandeClient.getLignecdeclts() != null){
+            commandeClient.getLignecdeclts().size();
+        }
         return CommandeClientDto.fromEntity(commandeClient);
     }
 
