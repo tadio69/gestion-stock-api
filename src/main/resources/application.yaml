@@ -22,6 +22,11 @@ spring:
     # Configuration optionnelle pour éliminer le WARN Open-In-View
     open-in-view: false
 
+    properties:
+      hibernate:
+        session_factory:
+          statement_inspector: chijouProjects.gestion_stock_api.interceptor.Interceptor
+
 server:
   port: 8081
 
