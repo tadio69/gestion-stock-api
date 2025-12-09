@@ -2,6 +2,8 @@ package chijouProjects.gestion_stock_api.controller.api;
 
 import chijouProjects.gestion_stock_api.dto.CategorieDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -48,7 +50,12 @@ public interface CategorieApi {
     ResponseEntity<CategorieDto> findByCode(@PathVariable("code") String code);
 
     @GetMapping(value = CATEGORIE_ENDPOINT + "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Renvoyer la liste des catégories", description = "Cette méthode retourne la liste des catégories enregistrées")
+    @Operation(summary = "Renvoyer la liste des catégories",
+                description = "Cette méthode retourne la liste des catégories enregistrées",
+                parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+                }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des catégories retournées avec succès")
     })
