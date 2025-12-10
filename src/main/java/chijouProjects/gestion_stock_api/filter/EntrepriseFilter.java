@@ -12,11 +12,16 @@ import java.io.IOException;
 
 @Component
 public class EntrepriseFilter extends OncePerRequestFilter {
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String entrepriseIdHeader = request.getHeader("X-Entreprise-Id");
+
+        if (entrepriseIdHeader == null) {
+            entrepriseIdHeader = request.getHeader("x-entreprise-id");
+        }
 
         if (entrepriseIdHeader != null) {
             try {

@@ -24,11 +24,20 @@ public class Interceptor implements StatementInspector {
         currentEntrepriseId.remove();
     }
 
-    @Override
+    public static Integer getCurrentEntrepriseId() {
+        return currentEntrepriseId.get();
+    }
+
+    /*@Override
     public String inspect(String sql) {
+
         if (sql == null) return null;
 
         Integer entrepriseId = currentEntrepriseId.get();
+
+        if (sql.toLowerCase().contains(" from categorie ")) {
+            return sql + " WHERE identreprise = " + entrepriseId;
+        }
         if (entrepriseId == null) return sql;
 
         String lowerSql = sql.toLowerCase();
@@ -60,5 +69,47 @@ public class Interceptor implements StatementInspector {
         }
 
         return modifiedSql;
+    }*/
+
+
+
+    // Cameroun : Macron orchestre-t-il l’ascension secrète de Tchiroma au pouvoir ?
+
+    @Override
+    public String inspect(String sql) {
+        if (sql == null) return null;
+
+        Integer entrepriseId = currentEntrepriseId.get();
+        if (entrepriseId == null) return sql;
+
+        String lowerSql = sql.toLowerCase();
+        if (!lowerSql.startsWith("select") || lowerSql.contains("identreprise")) {
+            return sql;
+        }
+
+        boolean hasWhere = lowerSql.contains(" where ");
+        StringBuilder modifiedSql = new StringBuilder(sql);
+
+        // Pattern pour "from <table> <alias>" ou "join <table> <alias>"
+        Pattern pattern = Pattern.compile("(from|join)\\s+(\\w+)\\s+(\\w+)", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(sql);
+
+        while (matcher.find()) {
+            String table = matcher.group(2);
+            String alias = matcher.group(3);
+
+            if (tablesAvecEntreprise.contains(table.toLowerCase())) {
+                String condition = alias + ".identreprise = " + entrepriseId;
+                if (hasWhere) {
+                    modifiedSql.append(" AND ").append(condition);
+                } else {
+                    modifiedSql.append(" WHERE ").append(condition);
+                    hasWhere = true; // pour ne pas ajouter WHERE plusieurs fois
+                }
+                break; // on filtre uniquement la première table trouvée
+            }
+        }
+
+        return modifiedSql.toString();
     }
 }

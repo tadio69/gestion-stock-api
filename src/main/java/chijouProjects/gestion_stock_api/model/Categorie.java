@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 
 import java.util.List;
 
@@ -12,6 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "categorie")
+@FilterDef(name = "entrepriseFilter", parameters = @ParamDef(name = "entrepriseId", type = Integer.class))
+@Filter(name = "entrepriseFilter", condition = "identreprise = :entrepriseId")
 public class Categorie extends AbstractEntity {
     @Column(name = "code")
     private String code;

@@ -4,18 +4,20 @@ import chijouProjects.gestion_stock_api.dto.CategorieDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.exception.ErrorCodes;
 import chijouProjects.gestion_stock_api.exception.InvalidEntityException;
+import chijouProjects.gestion_stock_api.interceptor.Interceptor;
 import chijouProjects.gestion_stock_api.model.Categorie;
 import chijouProjects.gestion_stock_api.repository.CategorieRepository;
 import chijouProjects.gestion_stock_api.service.CategorieService;
 import chijouProjects.gestion_stock_api.validator.CategorieValidator;
+import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,10 +25,12 @@ import java.util.stream.Collectors;
 public class CategorieServiceImpl implements CategorieService {
 
     private CategorieRepository categorieRepository;
+    private final EntityManager entityManager;
 
     @Autowired
-    public CategorieServiceImpl(CategorieRepository categorieRepository) {
+    public CategorieServiceImpl(CategorieRepository categorieRepository, EntityManager entityManager) {
         this.categorieRepository = categorieRepository;
+        this.entityManager = entityManager;
     }
     @Override
     public CategorieDto save(CategorieDto categorieDto) {
@@ -106,8 +110,14 @@ public class CategorieServiceImpl implements CategorieService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<CategorieDto> findAll() {
+        Session session = entityManager.unwrap(Session.class);
+        Integer entrepriseId = Interceptor.getCurrentEntrepriseId(); // tu peux ajouter un getter
+        if (entrepriseId != null) {
+            session.enableFilter("entrepriseFilter")
+                    .setParameter("entrepriseId", entrepriseId);
+        }
         return categorieRepository.findAll().stream()
                 .map(CategorieDto::fromEntity)
                 .collect(Collectors.toList());
