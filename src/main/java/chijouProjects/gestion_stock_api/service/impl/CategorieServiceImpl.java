@@ -49,6 +49,12 @@ public class CategorieServiceImpl implements CategorieService {
     @Override
     @Transactional(readOnly = true)
     public CategorieDto findById(Integer id) {
+        Session session = entityManager.unwrap(Session.class);
+        Integer entrepriseId = Interceptor.getCurrentEntrepriseId(); // tu peux ajouter un getter
+        if (entrepriseId != null) {
+            session.enableFilter("entrepriseFilter")
+                    .setParameter("entrepriseId", entrepriseId);
+        }
         if (id == null) {
             log.error("Catégorie ID is null");
             return null; // ou throw IllegalArgumentException
@@ -70,6 +76,12 @@ public class CategorieServiceImpl implements CategorieService {
     @Override
     @Transactional(readOnly = true)
     public CategorieDto findByCode(String code) {
+        Session session = entityManager.unwrap(Session.class);
+        Integer entrepriseId = Interceptor.getCurrentEntrepriseId(); // tu peux ajouter un getter
+        if (entrepriseId != null) {
+            session.enableFilter("entrepriseFilter")
+                    .setParameter("entrepriseId", entrepriseId);
+        }
         if (!StringUtils.hasLength(code)) {
             log.error("Catégorie CODE est null ou vide");
             throw new IllegalArgumentException("Le code de la catégorie ne peut pas être vide");
@@ -91,6 +103,12 @@ public class CategorieServiceImpl implements CategorieService {
     @Override
     @Transactional(readOnly = true)
     public CategorieDto findByDesignation(String designation) {
+        Session session = entityManager.unwrap(Session.class);
+        Integer entrepriseId = Interceptor.getCurrentEntrepriseId(); // tu peux ajouter un getter
+        if (entrepriseId != null) {
+            session.enableFilter("entrepriseFilter")
+                    .setParameter("entrepriseId", entrepriseId);
+        }
         if (!StringUtils.hasLength(designation)) {
             log.error("Désignation de catégorie est null ou vide");
             throw new IllegalArgumentException("La désignation de la catégorie ne peut pas être vide");

@@ -28,51 +28,6 @@ public class Interceptor implements StatementInspector {
         return currentEntrepriseId.get();
     }
 
-    /*@Override
-    public String inspect(String sql) {
-
-        if (sql == null) return null;
-
-        Integer entrepriseId = currentEntrepriseId.get();
-
-        if (sql.toLowerCase().contains(" from categorie ")) {
-            return sql + " WHERE identreprise = " + entrepriseId;
-        }
-        if (entrepriseId == null) return sql;
-
-        String lowerSql = sql.toLowerCase();
-
-        // Ne modifier que les SELECT
-        if (!lowerSql.startsWith("select") || lowerSql.contains("identreprise")) {
-            return sql;
-        }
-
-        String modifiedSql = sql;
-
-        // Pattern pour trouver "from <table> <alias>"
-        Pattern fromPattern = Pattern.compile("from\\s+(\\w+)\\s+(\\w+)", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = fromPattern.matcher(sql);
-
-        while (matcher.find()) {
-            String table = matcher.group(1);
-            String alias = matcher.group(2);
-
-            if (tablesAvecEntreprise.contains(table.toLowerCase())) {
-                // Si la requête contient déjà WHERE
-                if (modifiedSql.toLowerCase().contains(" where ")) {
-                    modifiedSql += " AND " + alias + ".identreprise = " + entrepriseId;
-                } else {
-                    modifiedSql += " WHERE " + alias + ".identreprise = " + entrepriseId;
-                }
-                break; // On filtre uniquement la première table correspondante
-            }
-        }
-
-        return modifiedSql;
-    }*/
-
-
-
     // Cameroun : Macron orchestre-t-il l’ascension secrète de Tchiroma au pouvoir ?
 
     @Override

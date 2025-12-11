@@ -26,7 +26,12 @@ public interface CategorieApi {
     ResponseEntity<CategorieDto> save(@RequestBody CategorieDto categorieDto);
 
     @GetMapping(value = CATEGORIE_ENDPOINT + "/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Rechercher une catégorie par son ID", description = "Cette méthode permet de chercher une catégorie via son identifiant")
+    @Operation(summary = "Rechercher une catégorie par son ID",
+            description = "Cette méthode permet de chercher une catégorie via son identifiant",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Catégorie trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune catégorie trouvée pour cet ID")
@@ -34,7 +39,12 @@ public interface CategorieApi {
     ResponseEntity<CategorieDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(value = CATEGORIE_ENDPOINT + "/designation/{designation}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Rechercher une catégorie par sa désignation", description = "Cette méthode permet de chercher une catégorie par sa désignation")
+    @Operation(summary = "Rechercher une catégorie par sa désignation",
+            description = "Cette méthode permet de chercher une catégorie par sa désignation",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Catégorie trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune catégorie trouvée avec cette désignation")
@@ -42,7 +52,12 @@ public interface CategorieApi {
     ResponseEntity<CategorieDto> findByDesignation(@PathVariable("designation") String designation);
 
     @GetMapping(value = CATEGORIE_ENDPOINT + "/code/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Rechercher une catégorie par son code", description = "Cette méthode permet de chercher une catégorie par son code")
+    @Operation(summary = "Rechercher une catégorie par son code",
+            description = "Cette méthode permet de chercher une catégorie par son code",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Catégorie trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune catégorie trouvée avec ce code")
