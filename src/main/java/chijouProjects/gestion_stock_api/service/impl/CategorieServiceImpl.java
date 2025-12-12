@@ -52,6 +52,7 @@ public class CategorieServiceImpl implements CategorieService {
         Session session = entityManager.unwrap(Session.class);
         Integer entrepriseId = Interceptor.getCurrentEntrepriseId(); // tu peux ajouter un getter
         if (entrepriseId != null) {
+            session.clear();
             session.enableFilter("entrepriseFilter")
                     .setParameter("entrepriseId", entrepriseId);
         }
