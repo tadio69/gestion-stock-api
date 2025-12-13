@@ -49,23 +49,54 @@ public class CategorieServiceImpl implements CategorieService {
     @Override
     @Transactional(readOnly = true)
     public CategorieDto findById(Integer id) {
-        Session session = entityManager.unwrap(Session.class);
-        Integer entrepriseId = Interceptor.getCurrentEntrepriseId(); // tu peux ajouter un getter
-        if (entrepriseId != null) {
-            session.clear();
-            session.enableFilter("entrepriseFilter")
-                    .setParameter("entrepriseId", entrepriseId);
-        }
         if (id == null) {
             log.error("Catégorie ID is null");
-            return null; // ou throw IllegalArgumentException
+            return null;
         }
 
+        // 1. Récupération de l'ID d'entreprise (obligatoire)
+        Object currentId = Interceptor.getCurrentEntrepriseId();
+        Integer entrepriseId;
+
+        try {
+            // Logique de conversion sécurisée (Integer ou String -> Integer)
+            if (currentId == null) { throw new NullPointerException(); }
+            entrepriseId = Integer.parseInt(String.valueOf(currentId));
+
+        } catch (NumberFormatException | NullPointerException e) {
+            throw new InvalidEntityException(
+                    "Le filtre d'entreprise (X-Entreprise-Id) est obligatoire et doit être un nombre valide.",
+                    ErrorCodes.ENTREPRISE_ID_REQUIRED
+            );
+        }
+
+        // 2. Activation du filtre (Maintenu, car il fonctionne pour findByCode/findAll)
+        Session session = entityManager.unwrap(Session.class);
+        session.enableFilter("entrepriseFilter")
+                .setParameter("entrepriseId", entrepriseId);
+
+        // 3. Appel du JpaRepository (celui qui bypass le filtre)
         Categorie categorie = categorieRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
-                "Aucune catégorie avec l'ID = " + id + " n'a été trouvée dans la BDD",
-                ErrorCodes.CATEGORIE_NOT_FOUND
-        ));
+                        "Aucune catégorie avec l'ID = " + id + " n'a été trouvée dans la BDD",
+                        ErrorCodes.CATEGORIE_NOT_FOUND
+                ));
+
+        // ====================================================================
+        // 🎯 ÉTAPE CRUCIALE : CONTRÔLE DE SÉCURITÉ
+        // ====================================================================
+        if (categorie.getIdentreprise() == null || !categorie.getIdentreprise().equals(entrepriseId)) {
+            log.warn("Catégorie ID {} trouvée mais l'ID d'entreprise {} ne correspond pas à l'ID de session {}",
+                    id, categorie.getIdentreprise(), entrepriseId);
+
+            // Simuler un 404/NOT_FOUND pour l'utilisateur non autorisé
+            throw new EntityNotFoundException(
+                    "Aucune catégorie avec l'ID = " + id + " n'a été trouvée dans la BDD pour cette entreprise.",
+                    ErrorCodes.CATEGORIE_NOT_FOUND // Retourne le même code d'erreur
+            );
+        }
+        // ====================================================================
+
 
         if (categorie.getArticles() != null) {
             categorie.getArticles().size();
@@ -78,7 +109,7 @@ public class CategorieServiceImpl implements CategorieService {
     @Transactional(readOnly = true)
     public CategorieDto findByCode(String code) {
         Session session = entityManager.unwrap(Session.class);
-        Integer entrepriseId = Interceptor.getCurrentEntrepriseId(); // tu peux ajouter un getter
+        Integer entrepriseId = (Integer) Interceptor.getCurrentEntrepriseId(); // tu peux ajouter un getter
         if (entrepriseId != null) {
             session.enableFilter("entrepriseFilter")
                     .setParameter("entrepriseId", entrepriseId);

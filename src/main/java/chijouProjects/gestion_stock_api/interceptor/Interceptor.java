@@ -13,7 +13,7 @@ public class Interceptor implements StatementInspector {
 
     // Liste des tables à filtrer
     private static final Set<String> tablesAvecEntreprise = Set.of(
-            "categorie", "article", "autre_table"
+            /*"categorie"*/ "article", "autre_table"
     );
 
     public static void setCurrentEntrepriseId(Integer entrepriseId) {
