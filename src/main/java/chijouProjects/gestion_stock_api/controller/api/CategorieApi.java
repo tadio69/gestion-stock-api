@@ -27,10 +27,7 @@ public interface CategorieApi {
 
     @GetMapping(value = CATEGORIE_ENDPOINT + "/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Rechercher une catégorie par son ID",
-            description = "Cette méthode permet de chercher une catégorie via son identifiant",
-            parameters = {
-                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
-            }
+            description = "Cette méthode permet de chercher une catégorie via son identifiant"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Catégorie trouvée avec succès"),
