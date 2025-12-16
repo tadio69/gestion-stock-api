@@ -2,6 +2,8 @@ package chijouProjects.gestion_stock_api.controller.api;
 
 import chijouProjects.gestion_stock_api.dto.VenteDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,7 +22,9 @@ public interface VenteApi {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @Operation(summary = "Enregistrer ou modifier une vente", description = "Cette méthode permet de créer ou modifier une vente")
+    @Operation(summary = "Enregistrer ou modifier une vente",
+            description = "Cette méthode permet de créer ou modifier une vente"
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Vente créée ou modifiée avec succès"),
             @ApiResponse(responseCode = "400", description = "Vente non valide")
@@ -31,7 +35,9 @@ public interface VenteApi {
             value = VENTE_ENDPOINT + "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @Operation(summary = "Rechercher une vente par son ID", description = "Cette méthode permet de chercher une vente par son identifiant")
+    @Operation(summary = "Rechercher une vente par son ID",
+            description = "Cette méthode permet de chercher une vente par son identifiant"
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Vente trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune vente trouvée avec cet identifiant")
@@ -42,7 +48,12 @@ public interface VenteApi {
             value = VENTE_ENDPOINT + "/code/{code}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @Operation(summary = "Rechercher une vente par son code", description = "Cette méthode permet de chercher une vente par son code")
+    @Operation(summary = "Rechercher une vente par son code",
+            description = "Cette méthode permet de chercher une vente par son code",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Vente trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune vente trouvée avec ce code")
@@ -53,7 +64,12 @@ public interface VenteApi {
             value = VENTE_ENDPOINT + "/all",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @Operation(summary = "Renvoyer la liste des ventes", description = "Cette méthode permet de retourner la liste des ventes enregistrées")
+    @Operation(summary = "Renvoyer la liste des ventes",
+            description = "Cette méthode permet de retourner la liste des ventes enregistrées",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des ventes retournée avec succès")
     })

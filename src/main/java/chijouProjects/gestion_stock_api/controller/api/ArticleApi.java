@@ -2,6 +2,8 @@ package chijouProjects.gestion_stock_api.controller.api;
 
 import chijouProjects.gestion_stock_api.dto.ArticleDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,10 +17,6 @@ import static chijouProjects.gestion_stock_api.utils.Constants.ARTICLE_ENDPOINT;
 
 @Tag(name = "Articles", description = "Gestion des articles")
 public interface ArticleApi {
-    /*
-    consumes et produces ne sont pas toujours nécessaires. Quand on ne les met pas on enlève aussi value =. On met juste
-    @PostMapping(APP_ROOT + "/articles/create")
-     */
     @PostMapping(
             value = ARTICLE_ENDPOINT + "/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -54,7 +52,10 @@ public interface ArticleApi {
     )
     @Operation(
             summary = "Rechercher un article par son code",
-            description = "Cette méthode permet de chercher un article par son code"
+            description = "Cette méthode permet de chercher un article par son code",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Article trouvé avec succès"),
@@ -68,7 +69,10 @@ public interface ArticleApi {
     )
     @Operation(
             summary = "Renvoyer la liste des articles",
-            description = "Cette méthode retourne la liste des articles enregistrés"
+            description = "Cette méthode retourne la liste des articles enregistrés",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des articles retournée avec succès")

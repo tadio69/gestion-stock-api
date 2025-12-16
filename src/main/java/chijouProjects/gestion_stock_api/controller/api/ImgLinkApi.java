@@ -2,6 +2,8 @@ package chijouProjects.gestion_stock_api.controller.api;
 
 import chijouProjects.gestion_stock_api.dto.ImgLinkDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,7 +19,9 @@ import static chijouProjects.gestion_stock_api.utils.Constants.PHOTOS_ENDPOINT;
 @Tag(name = "Imglink", description = "Gestion des Imglinks (données relatives aux photos)")
 public interface ImgLinkApi {
     @PostMapping(value = PHOTOS_ENDPOINT + "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Operation(summary = "Téléverser une photo", description = "Cette méthode permet de téléverser une photo dans ImgLink")
+    @Operation(summary = "Téléverser une photo",
+            description = "Cette méthode permet de téléverser une photo dans ImgLink"
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Photo téléversée avec succès"),
             @ApiResponse(responseCode = "400", description = "Données de photo non valides")
@@ -28,7 +32,9 @@ public interface ImgLinkApi {
     );
 
     @GetMapping(value = PHOTOS_ENDPOINT + "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Rechercher un Imglink par son ID", description = "Cette méthode permet de chercher un Imglink par son identifiant")
+    @Operation(summary = "Rechercher un Imglink par son ID",
+            description = "Cette méthode permet de chercher un Imglink par son identifiant"
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Imglink trouvé avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucun Imglink trouvé avec cet identifiant")
@@ -36,7 +42,12 @@ public interface ImgLinkApi {
     ResponseEntity<ImgLinkDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(value = PHOTOS_ENDPOINT + "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Lister tous les Imglinks", description = "Cette méthode permet de retourner la liste des imglinks")
+    @Operation(summary = "Lister tous les Imglinks",
+            description = "Cette méthode permet de retourner la liste des imglinks",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des imglinks retournée avec succès")
     })

@@ -3,6 +3,8 @@ package chijouProjects.gestion_stock_api.controller.api;
 
 import chijouProjects.gestion_stock_api.dto.ClientDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,7 +28,9 @@ public interface ClientApi {
     ResponseEntity<ClientDto> save(@RequestBody ClientDto articleDto);
 
     @GetMapping(value = CLIENT_ENDPOINT + "/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Rechercher un client par son ID", description = "Cette méthode permet de chercher un client par son identifiant")
+    @Operation(summary = "Rechercher un client par son ID",
+            description = "Cette méthode permet de chercher un client par son identifiant"
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Client trouvé avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucun client trouvé avec cet ID")
@@ -34,7 +38,12 @@ public interface ClientApi {
     ResponseEntity<ClientDto> findById(@PathVariable("id") Integer id);
 
     @GetMapping(value = CLIENT_ENDPOINT + "/nom/{nom}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Rechercher un client par son nom", description = "Cette méthode permet de chercher un client par son nom")
+    @Operation(summary = "Rechercher un client par son nom",
+                description = "Cette méthode permet de chercher un client par son nom",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Client trouvé avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucun client trouvé avec ce nom")
@@ -42,7 +51,12 @@ public interface ClientApi {
     ResponseEntity<ClientDto> findByNom(@PathVariable("nom") String nomClient);
 
     @GetMapping(value = CLIENT_ENDPOINT + "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Renvoyer la liste des clients", description = "Cette méthode permet de renvoyer la liste des clients enregistrés")
+    @Operation(summary = "Renvoyer la liste des clients",
+            description = "Cette méthode permet de renvoyer la liste des clients enregistrés",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des clients retournée avec succès")
     })

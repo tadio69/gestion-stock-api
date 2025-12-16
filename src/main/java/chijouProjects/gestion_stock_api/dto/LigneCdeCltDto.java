@@ -31,7 +31,6 @@ public class LigneCdeCltDto {
                 .id(lignecdeclt.getId())
                 .quantite(lignecdeclt.getQuantite())
                 .prixunitaire(lignecdeclt.getPrixunitaire())
-                .identreprise(lignecdeclt.getIdentreprise())
                 .idarticle(lignecdeclt.getArticle().getId())
                 .idcommandeclient(lignecdeclt.getCommandeclient().getId())
                 .build();
@@ -43,7 +42,6 @@ public class LigneCdeCltDto {
         lignecdeclt.setId(lignecdecltdto.getId());
         lignecdeclt.setQuantite(lignecdecltdto.getQuantite());
         lignecdeclt.setPrixunitaire(lignecdecltdto.getPrixunitaire());
-        lignecdeclt.setIdentreprise(lignecdecltdto.getIdentreprise());
         if (lignecdecltdto.getIdarticle() != null) {
             Article article = new Article();
             article.setId(lignecdecltdto.getIdarticle());

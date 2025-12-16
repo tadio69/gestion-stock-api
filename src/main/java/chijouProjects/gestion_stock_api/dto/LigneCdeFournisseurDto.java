@@ -31,7 +31,6 @@ public class LigneCdeFournisseurDto {
                 .id(lignecdefournisseur.getId())
                 .quantite(lignecdefournisseur.getQuantite())
                 .prixunitaire(lignecdefournisseur.getPrixunitaire())
-                .identreprise(lignecdefournisseur.getIdentreprise())
                 .idarticle(lignecdefournisseur.getArticle().getId())
                 .idcommandefournisseur(lignecdefournisseur.getCommandefournisseur().getId())
                 .build();

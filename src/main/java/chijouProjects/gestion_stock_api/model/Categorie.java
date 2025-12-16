@@ -15,8 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "categorie")
-@FilterDef(name = "entrepriseFilter", parameters = @ParamDef(name = "entrepriseId", type = Integer.class))
-@Filter(name = "entrepriseFilter", condition = "identreprise = :entrepriseId")
 public class Categorie extends AbstractEntity {
     @Column(name = "code")
     private String code;

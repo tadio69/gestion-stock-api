@@ -34,7 +34,6 @@ public class MvtStockDto {
                 .quantite(mvtdtock.getQuantite())
                 .typemvt(mvtdtock.getTypemvt())
                 .idarticle(mvtdtock.getArticle().getId())
-                .identreprise(mvtdtock.getIdentreprise())
                 .build();
     }
 
@@ -51,7 +50,6 @@ public class MvtStockDto {
             mvtstock.setArticle(article);
         }
 
-        mvtstock.setIdentreprise(mvtstockdto.getIdentreprise());
         return mvtstock;
     }
 }

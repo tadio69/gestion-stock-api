@@ -2,6 +2,8 @@ package chijouProjects.gestion_stock_api.controller.api;
 
 import chijouProjects.gestion_stock_api.dto.CommandeFournisseurDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,7 +22,9 @@ public interface CommandeFournisseurApi {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @Operation(summary = "Enregistrer ou modifier une commande fournisseur", description = "Cette méthode permet de créer ou de modifier une commande fournisseur")
+    @Operation(summary = "Enregistrer ou modifier une commande fournisseur",
+            description = "Cette méthode permet de créer ou de modifier une commande fournisseur"
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Commande fournisseur créée ou modifiée avec succès"),
             @ApiResponse(responseCode = "400", description = "Commande fournisseur non valide")
@@ -31,7 +35,9 @@ public interface CommandeFournisseurApi {
             value = COMMANDES_FOURNISSEUR_ENDPOINT + "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @Operation(summary = "Rechercher une commande fournisseur par son ID", description = "Cette méthode permet de chercher une commande fournisseur par son identifiant")
+    @Operation(summary = "Rechercher une commande fournisseur par son ID",
+            description = "Cette méthode permet de chercher une commande fournisseur par son identifiant"
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Commande fournisseur trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune commande fournisseur trouvée avec cet identifiant")
@@ -42,7 +48,12 @@ public interface CommandeFournisseurApi {
             value = COMMANDES_FOURNISSEUR_ENDPOINT + "/code/{code}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @Operation(summary = "Rechercher une commande fournisseur par son code", description = "Cette méthode permet de chercher la commande fournisseur par son code")
+    @Operation(summary = "Rechercher une commande fournisseur par son code",
+            description = "Cette méthode permet de chercher la commande fournisseur par son code",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Commande fournisseur trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune commande fournisseur trouvée avec ce code")
@@ -53,7 +64,12 @@ public interface CommandeFournisseurApi {
             value = COMMANDES_FOURNISSEUR_ENDPOINT + "/all",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @Operation(summary = "Renvoyer la liste des commandes fournisseur", description = "Cette méthode permet de retourner les commandes fournisseur enregistrées")
+    @Operation(summary = "Renvoyer la liste des commandes fournisseur",
+            description = "Cette méthode permet de retourner les commandes fournisseur enregistrées",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des commandes fournisseur retournée avec succès")
     })

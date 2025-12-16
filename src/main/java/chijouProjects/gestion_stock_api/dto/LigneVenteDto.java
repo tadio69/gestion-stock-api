@@ -31,7 +31,6 @@ public class LigneVenteDto {
                 .idarticle(lignevente.getArticle().getId())
                 .prixunitaire(lignevente.getPrixunitaire())
                 .ventedto(VenteDto.fromEntity(lignevente.getVente()))
-                .identreprise(lignevente.getIdentreprise())
                 .build();
     }
 
@@ -48,7 +47,6 @@ public class LigneVenteDto {
         lignevente.setVente(VenteDto.toEntity(ligneventedto.getVentedto()));
         lignevente.setQuantite(ligneventedto.getQuantite());
         lignevente.setPrixunitaire(ligneventedto.getPrixunitaire());
-        lignevente.setIdentreprise(ligneventedto.getIdentreprise());
         return lignevente;
     }
 }

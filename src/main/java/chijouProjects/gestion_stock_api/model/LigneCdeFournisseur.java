@@ -26,7 +26,4 @@ public class LigneCdeFournisseur extends AbstractEntity {
 
     @Column(name = "prixunitaire")
     private BigDecimal prixunitaire;
-
-    @Column(name = "identreprise")
-    private Integer identreprise;
 }

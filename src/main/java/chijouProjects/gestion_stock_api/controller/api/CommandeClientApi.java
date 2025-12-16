@@ -2,6 +2,8 @@ package chijouProjects.gestion_stock_api.controller.api;
 
 import chijouProjects.gestion_stock_api.dto.CommandeClientDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,7 +36,9 @@ public interface CommandeClientApi {
             value = COMMANDES_CLIENT_ENDPOINT + "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @Operation(summary = "Rechercher une commande client par son ID", description = "Cette méthode permet de chercher une commande client pas son identifiant")
+    @Operation(summary = "Rechercher une commande client par son ID",
+            description = "Cette méthode permet de chercher une commande client pas son identifiant"
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Commande client trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune commande client trouvée avec cet identifiant")
@@ -45,7 +49,12 @@ public interface CommandeClientApi {
             value = COMMANDES_CLIENT_ENDPOINT + "/code/{code}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @Operation(summary = "Rechercher une commande client par son code", description = "Cette méthode permet de chercher une commande client par son code")
+    @Operation(summary = "Rechercher une commande client par son code",
+            description = "Cette méthode permet de chercher une commande client par son code",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Commande client trouvée avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucune commande client trouvée avec ce code")
@@ -56,7 +65,12 @@ public interface CommandeClientApi {
             value = COMMANDES_CLIENT_ENDPOINT + "/all",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @Operation(summary = "Renvoyer la liste des commandes client", description = "Cette méthode permet de retourner la liste des commandes client enregistrées")
+    @Operation(summary = "Renvoyer la liste des commandes client",
+            description = "Cette méthode permet de retourner la liste des commandes client enregistrées",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des commandes client retournée avec succès")
     })
