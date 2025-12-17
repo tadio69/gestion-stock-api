@@ -131,6 +131,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ArticleDto> findAll() {
         Session session = entityManager.unwrap(Session.class);
         Integer entrepriseId = Interceptor.getCurrentEntrepriseId();
