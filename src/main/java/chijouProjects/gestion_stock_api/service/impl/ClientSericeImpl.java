@@ -8,6 +8,7 @@ import chijouProjects.gestion_stock_api.model.Client;
 import chijouProjects.gestion_stock_api.repository.ClientRepository;
 import chijouProjects.gestion_stock_api.service.ClientService;
 import chijouProjects.gestion_stock_api.validator.ClientValidator;
+import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,12 @@ import java.util.stream.Collectors;
 public class ClientSericeImpl implements ClientService {
 
     private ClientRepository clientRepository;
+    private final EntityManager entityManager;
 
     @Autowired
-    public ClientSericeImpl(ClientRepository clientRepository) {
+    public ClientSericeImpl(ClientRepository clientRepository, EntityManager entityManager) {
         this.clientRepository = clientRepository;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -77,16 +80,7 @@ public class ClientSericeImpl implements ClientService {
             log.error("Nom client est null ou vide");
             throw new IllegalArgumentException("Le nom de client ne peut pas être vide");
         }
-        /*
-        Client client = clientRepository.findByNom(nom);
-        if (client == null) {
-            log.error("Aucun client trouvé avec le nom {}", nom);
-            throw new EntityNotFoundException(
-                    "Aucun client avec le nom = " + nom + " n'a été trouvé dans la BDD",
-                    ErrorCodes.CLIENT_NOT_FOUND
-            );
-        }
-         */
+
         Client client = clientRepository.findByNom(nom)
                 .orElseThrow(() -> new EntityNotFoundException(
                 "Aucun client avec le nom = " + nom + " n'a été trouvé dans la BDD",

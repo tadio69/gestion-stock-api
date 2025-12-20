@@ -1,6 +1,7 @@
 package chijouProjects.gestion_stock_api.controller.api;
 
 import chijouProjects.gestion_stock_api.dto.ArticleDto;
+import chijouProjects.gestion_stock_api.dto.CategorieDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static chijouProjects.gestion_stock_api.utils.Constants.ARTICLE_ENDPOINT;
+import static chijouProjects.gestion_stock_api.utils.Constants.CATEGORIE_ENDPOINT;
 
 @Tag(name = "Articles", description = "Gestion des articles")
 public interface ArticleApi {
@@ -62,6 +64,19 @@ public interface ArticleApi {
             @ApiResponse(responseCode = "404", description = "Aucun article trouvé pour ce code")
     })
     ResponseEntity<ArticleDto> findByCode(@PathVariable("code") String codeArticle);
+
+    @GetMapping(value = ARTICLE_ENDPOINT + "/designation/{designation}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Rechercher un article par sa désignation",
+            description = "Cette méthode permet de chercher un article par sa désignation",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Article trouvé avec succès"),
+            @ApiResponse(responseCode = "404", description = "Aucun article trouvé avec cette désignation")
+    })
+    ResponseEntity<ArticleDto> findByDesignation(@PathVariable("designation") String designation);
 
     @GetMapping(
             value = ARTICLE_ENDPOINT + "/all",

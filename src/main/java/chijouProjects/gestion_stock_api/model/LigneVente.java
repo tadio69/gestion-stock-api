@@ -1,6 +1,7 @@
 package chijouProjects.gestion_stock_api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,8 @@ import java.math.BigDecimal;
 @Table(name = "lignevente")
 public class LigneVente extends AbstractEntity {
     @ManyToOne
-    @JoinColumn(name = "idvente")
+    @JoinColumn(name = "idvente", nullable = false)
+    @NotNull(message = "La vente est obligatoire")
     private Vente vente;
 
     @Column(name = "quantite")
@@ -25,6 +27,7 @@ public class LigneVente extends AbstractEntity {
     private BigDecimal prixunitaire;
 
     @ManyToOne
-    @JoinColumn(name = "idarticle")
+    @JoinColumn(name = "idarticle", nullable = false)
+    @NotNull(message = "L'article est obligatoire")
     private Article article;
 }

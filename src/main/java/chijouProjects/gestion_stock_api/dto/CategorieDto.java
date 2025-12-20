@@ -2,6 +2,7 @@ package chijouProjects.gestion_stock_api.dto;
 
 import chijouProjects.gestion_stock_api.model.Article;
 import chijouProjects.gestion_stock_api.model.Categorie;
+import chijouProjects.gestion_stock_api.model.Entreprise;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
@@ -72,7 +73,7 @@ public class CategorieDto {
                 .id(categorie.getId())
                 .code(categorie.getCode())
                 .designation(categorie.getDesignation())
-                .identreprise(categorie.getIdentreprise())
+                .identreprise(categorie.getId())
                 .articlesdto(
                         categorie.getArticles() != null ?
                                 categorie.getArticles().stream()
@@ -90,7 +91,11 @@ public class CategorieDto {
         categorie.setId(categorieDto.getId());
         categorie.setCode(categorieDto.getCode());
         categorie.setDesignation(categorieDto.getDesignation());
-        categorie.setIdentreprise(categorieDto.getIdentreprise());
+        if (categorieDto.getIdentreprise() != null) {
+            Entreprise entreprise = new Entreprise();
+            entreprise.setId(categorieDto.getIdentreprise());
+            categorie.setEntreprise(entreprise);
+        }
 
         if (categorieDto.getArticlesdto() != null) {
             List<Article> articles = categorieDto.getArticlesdto().stream()

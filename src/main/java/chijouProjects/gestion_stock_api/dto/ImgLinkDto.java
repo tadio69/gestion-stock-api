@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
+import chijouProjects.gestion_stock_api.model.Entreprise;
 import chijouProjects.gestion_stock_api.model.ImgLink;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class ImgLinkDto {
                 .id(img.getId())
                 .filename(img.getFilename())
                 .url(img.getUrl())
-                .identreprise(img.getIdentreprise())
+                .identreprise(img.getEntreprise().getId())
                 .build();
     }
 
@@ -29,7 +30,11 @@ public class ImgLinkDto {
         img.setId(dto.getId());
         img.setFilename(dto.getFilename());
         img.setUrl(dto.getUrl());
-        img.setIdentreprise(dto.getIdentreprise());
+        if(dto.getIdentreprise() != null){
+            Entreprise entreprise = new Entreprise();
+            entreprise.setId(dto.getIdentreprise());
+            img.setEntreprise(entreprise);
+        }
         return img;
     }
 }

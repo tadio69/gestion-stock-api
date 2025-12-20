@@ -3,6 +3,7 @@ package chijouProjects.gestion_stock_api.controller;
 import chijouProjects.gestion_stock_api.controller.api.ImgLinkApi;
 import chijouProjects.gestion_stock_api.dto.ImgLinkDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
+import chijouProjects.gestion_stock_api.model.Entreprise;
 import chijouProjects.gestion_stock_api.service.ImgLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,12 +23,12 @@ public class ImgLinkController implements ImgLinkApi {
     }
 
     @Override
-    public ResponseEntity<ImgLinkDto> uploadImage(MultipartFile file, Integer identreprise) {
+    public ResponseEntity<ImgLinkDto> uploadImage(MultipartFile file, Entreprise entreprise) {
         if (file == null || file.isEmpty()) {
             throw new RuntimeException("Le fichier image est obligatoire pour l'upload.");
         }
 
-        return ResponseEntity.ok(imglinkService.uploadImage(file, identreprise));
+        return ResponseEntity.ok(imglinkService.uploadImage(file, entreprise));
     }
 
     @Override

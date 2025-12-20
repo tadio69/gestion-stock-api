@@ -1,6 +1,7 @@
 package chijouProjects.gestion_stock_api.dto;
 import chijouProjects.gestion_stock_api.model.Article;
 import chijouProjects.gestion_stock_api.model.Categorie;
+import chijouProjects.gestion_stock_api.model.Entreprise;
 import lombok.Builder;
 import lombok.Data;
 
@@ -39,7 +40,7 @@ public class ArticleDto {
                 .tauxtva(article.getTauxtva())
                 .prixunitairettc(article.getPrixunitairettc())
                 .photo(article.getPhoto())
-                .identreprise(article.getIdentreprise())
+                .identreprise(article.getEntreprise().getId())
                 .build();
     }
 
@@ -53,7 +54,11 @@ public class ArticleDto {
         article.setTauxtva(articledto.getTauxtva());
         article.setPrixunitairettc(articledto.getPrixunitairettc());
         article.setPhoto(articledto.getPhoto());
-        article.setIdentreprise(articledto.getIdentreprise());
+        if (articledto.getIdentreprise() != null) {
+            Entreprise entreprise = new Entreprise();
+            entreprise.setId(articledto.getIdentreprise());
+            article.setEntreprise(entreprise);
+        }
         if (articledto.getIdcategorie() != null) {
             Categorie categorie = new Categorie();
             categorie.setId(articledto.getIdcategorie());

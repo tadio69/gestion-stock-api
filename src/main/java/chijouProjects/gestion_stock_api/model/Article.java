@@ -1,6 +1,7 @@
 package chijouProjects.gestion_stock_api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,11 +38,14 @@ public class Article extends AbstractEntity {
     private String photo;
 
     @ManyToOne
-    @JoinColumn(name = "idcategorie")
+    @JoinColumn(name = "idcategorie", nullable = false)
+    @NotNull(message = "La catégorie est obligatoire")
     private Categorie categorie;
 
-    @Column(name = "identreprise")
-    private Integer identreprise;
+    @ManyToOne
+    @JoinColumn(name = "identreprise", nullable = false)
+    @NotNull(message = "L'entreprise est obligatoire")
+    private Entreprise entreprise;
 
     @OneToMany(mappedBy = "article")
     private List<LigneVente> lignevente;

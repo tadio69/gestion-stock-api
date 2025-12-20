@@ -95,9 +95,9 @@ public class CategorieServiceImpl implements CategorieService {
                         ErrorCodes.CATEGORIE_NOT_FOUND
                 ));
 
-        if (categorie.getIdentreprise() == null || !categorie.getIdentreprise().equals(entrepriseId)) {
+        if (categorie.getEntreprise() == null || !categorie.getEntreprise().getId().equals(entrepriseId)) {
             log.warn("Catégorie de CODE {} trouvée mais l'ID d'entreprise {} ne correspond pas à l'ID de session {}",
-                    code, categorie.getIdentreprise(), entrepriseId);
+                    code, categorie.getEntreprise().getId(), entrepriseId);
 
             throw new EntityNotFoundException(
                     "Aucune catégorie avec le code = " + code + " n'a été trouvée dans la BDD concernant l'entreprise d'ID = " + entrepriseId + ".",
@@ -144,9 +144,9 @@ public class CategorieServiceImpl implements CategorieService {
                         ErrorCodes.CATEGORIE_NOT_FOUND
                 ));
 
-        if (categorie.getIdentreprise() == null || !categorie.getIdentreprise().equals(entrepriseId)) {
+        if (categorie.getEntreprise() == null || !categorie.getEntreprise().getId().equals(entrepriseId)) {
             log.warn("Catégorie avec la désignation {} trouvée mais l'ID d'entreprise {} ne correspond pas à l'ID de session {}",
-                    designation, categorie.getIdentreprise(), entrepriseId);
+                    designation, categorie.getEntreprise().getId(), entrepriseId);
 
             throw new EntityNotFoundException(
                     "Aucune catégorie avec la désignation = " + designation + " n'a été trouvée dans la BDD concernant l'entreprise d'ID = " + entrepriseId + ".",

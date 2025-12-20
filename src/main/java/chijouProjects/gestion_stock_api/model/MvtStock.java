@@ -1,6 +1,7 @@
 package chijouProjects.gestion_stock_api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,8 @@ public class MvtStock extends AbstractEntity {
     private Instant datemvt;
 
     @ManyToOne
-    @JoinColumn(name = "idarticle")
+    @JoinColumn(name = "idarticle", nullable = false)
+    @NotNull(message = "L'article est obligatoire")
     private Article article;
 
     @Column(name = "quantite")

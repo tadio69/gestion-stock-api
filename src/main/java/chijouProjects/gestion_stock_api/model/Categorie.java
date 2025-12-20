@@ -1,9 +1,11 @@
 package chijouProjects.gestion_stock_api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.ParamDef;
@@ -25,6 +27,8 @@ public class Categorie extends AbstractEntity {
     @OneToMany(mappedBy = "categorie")
     private List<Article> articles;
 
-    @Column(name = "identreprise")
-    private Integer identreprise;
+    @ManyToOne
+    @JoinColumn(name = "identreprise", nullable = false)
+    @NotNull(message = "L'entreprise est obligatoire")
+    private Entreprise entreprise;
 }

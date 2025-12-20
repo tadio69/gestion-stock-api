@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
+import chijouProjects.gestion_stock_api.model.Entreprise;
 import chijouProjects.gestion_stock_api.model.MvtStock;
 import chijouProjects.gestion_stock_api.model.Role;
 import chijouProjects.gestion_stock_api.model.Utilisateur;
@@ -23,7 +24,7 @@ public class RoleDto {
         return RoleDto.builder()
                 .id(role.getId())
                 .rolename(role.getRolename())
-                .identreprise(role.getIdentreprise())
+                .identreprise(role.getEntreprise().getId())
                 .idutilisateur(role.getUtilisateur().getId())
                 .build();
     }
@@ -39,7 +40,11 @@ public class RoleDto {
         }
 
         role.setRolename(roledto.getRolename());
-        role.setIdentreprise(roledto.getIdentreprise());
+        if(roledto.getIdentreprise() != null){
+            Entreprise entreprise = new Entreprise();
+            entreprise.setId(roledto.getIdentreprise());
+            role.setEntreprise(entreprise);
+        }
         return role;
     }
 }

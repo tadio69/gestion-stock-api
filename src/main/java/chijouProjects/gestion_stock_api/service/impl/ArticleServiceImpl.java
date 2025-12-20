@@ -103,9 +103,9 @@ public class ArticleServiceImpl implements ArticleService {
                         ErrorCodes.CATEGORIE_NOT_FOUND
                 ));
 
-        if (article.getIdentreprise() == null || !article.getIdentreprise().equals(entrepriseId)) {
+        if (article.getEntreprise() == null || !article.getEntreprise().getId().equals(entrepriseId)) {
             log.warn("Article de CODE {} trouvée mais l'ID d'entreprise {} ne correspond pas à l'ID de session {}",
-                    code, article.getIdentreprise(), entrepriseId);
+                    code, article.getEntreprise().getId(), entrepriseId);
 
             throw new EntityNotFoundException(
                     "Aucun article avec le code = " + code + " n'a été trouvée dans la BDD concernant l'entreprise d'ID = " + entrepriseId + ".",
@@ -116,6 +116,60 @@ public class ArticleServiceImpl implements ArticleService {
         if (!StringUtils.hasLength(code)) {
             log.error("Article CODE est null ou vide");
             throw new IllegalArgumentException("Le code de l'article ne peut pas être vide");
+        }
+
+        if (article.getLignecdeclts() != null) {
+            article.getLignecdeclts().size();
+        }
+        if (article.getLignecdefournisseurs() != null) {
+            article.getLignecdefournisseurs().size();
+        }
+        if (article.getMvtstocks() != null) {
+            article.getMvtstocks().size();
+        }
+        return ArticleDto.fromEntity(article);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ArticleDto findByDesignation(String designation) {
+        Object currentId = Interceptor.getCurrentEntrepriseId();
+        Integer entrepriseId;
+
+        try {
+            if (currentId == null) { throw new NullPointerException(); }
+            entrepriseId = Integer.parseInt(String.valueOf(currentId));
+
+        } catch (NumberFormatException | NullPointerException e) {
+            throw new InvalidEntityException(
+                    "Le filtre d'entreprise (X-Entreprise-Id) est obligatoire et doit être un nombre valide.",
+                    ErrorCodes.ENTREPRISE_ID_REQUIRED
+            );
+        }
+
+        Session session = entityManager.unwrap(Session.class);
+        session.enableFilter("entrepriseFilter")
+                .setParameter("entrepriseId", entrepriseId);
+
+        Article article = articleRepository.findByDesignation(designation)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Aucun article avec la désignation = " + designation + " n'a été trouvée dans la BDD concernant l'entreprise d'ID = " + entrepriseId + ".",
+                        ErrorCodes.CATEGORIE_NOT_FOUND
+                ));
+
+        if (article.getEntreprise() == null || !article.getEntreprise().getId().equals(entrepriseId)) {
+            log.warn("Article de désignation {} trouvée mais l'ID d'entreprise {} ne correspond pas à l'ID de session {}",
+                    designation, article.getEntreprise().getId(), entrepriseId);
+
+            throw new EntityNotFoundException(
+                    "Aucun article avec la désignation = " + designation + " n'a été trouvée dans la BDD concernant l'entreprise d'ID = " + entrepriseId + ".",
+                    ErrorCodes.CATEGORIE_NOT_FOUND
+            );
+        }
+
+        if (!StringUtils.hasLength(designation)) {
+            log.error("Article désignation est null ou vide");
+            throw new IllegalArgumentException("La désination de l'article ne peut pas être vide");
         }
 
         if (article.getLignecdeclts() != null) {

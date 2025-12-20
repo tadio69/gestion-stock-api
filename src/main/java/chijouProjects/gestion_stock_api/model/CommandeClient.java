@@ -1,6 +1,7 @@
 package chijouProjects.gestion_stock_api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,12 +26,15 @@ public class CommandeClient extends AbstractEntity {
     private Instant datecommande;
 
     @ManyToOne
-    @JoinColumn(name = "idclient")
+    @JoinColumn(name = "idclient", nullable = false)
+    @NotNull(message = "Le client est obligatoire")
     private Client client;
 
     @OneToMany(mappedBy = "commandeclient")
     private List<LigneCdeClt> lignecdeclts;
 
-    @Column(name = "identreprise")
-    private Integer identreprise;
+    @ManyToOne
+    @JoinColumn(name = "identreprise", nullable = false)
+    @NotNull(message = "L'entreprise est obligatoire")
+    private Entreprise entreprise;
 }

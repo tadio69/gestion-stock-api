@@ -34,7 +34,7 @@ public class ClientDto {
                 .numTel(client.getNumTel())
                 .adressedto(AdresseDto.fromEntity(client.getAdresse()))
                 .idimglink(client.getImglink().getId())
-                .identreprise(client.getIdentreprise())
+                .identreprise(client.getEntreprise().getId())
                 .commandeclientsdto(
                         client.getCommandeclients() != null ?
                                 client.getCommandeclients().stream()
@@ -60,7 +60,11 @@ public class ClientDto {
         }
 
         client.setAdresse(AdresseDto.toEntity(clientdto.getAdressedto()));
-        client.setIdentreprise(clientdto.getIdentreprise());
+        if(clientdto.getIdentreprise() != null){
+            Entreprise entreprise = new Entreprise();
+            entreprise.setId(clientdto.getIdentreprise());
+            client.setEntreprise(entreprise);
+        }
 
         if (clientdto.getCommandeclientsdto() != null) {
             List<CommandeClient> commandes = clientdto.getCommandeclientsdto().stream()

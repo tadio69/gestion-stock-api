@@ -39,6 +39,11 @@ public class ArticleController implements ArticleApi {
     }
 
     @Override
+    public ResponseEntity<ArticleDto> findByDesignation(String designation) {
+        return ResponseEntity.ok(articleService.findByDesignation(designation));
+    }
+
+    @Override
     public ResponseEntity<List<ArticleDto>> findAll() {
         return ResponseEntity.ok(articleService.findAll());
         //return ResponseEntity.status(HttpStatus.OK).body(articleService.findAll());

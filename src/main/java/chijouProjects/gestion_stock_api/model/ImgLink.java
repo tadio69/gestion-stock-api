@@ -1,8 +1,7 @@
 package chijouProjects.gestion_stock_api.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +26,8 @@ public class ImgLink extends AbstractEntity {
     @Column(name = "uploaded_at")
     private Instant uploadedat;
 
-    @Column(name = "identreprise")
-    private Integer identreprise;
+    @ManyToOne
+    @JoinColumn(name = "identreprise", nullable = false)
+    @NotNull(message = "L'entreprise est obligatoire")
+    private Entreprise entreprise;
 }

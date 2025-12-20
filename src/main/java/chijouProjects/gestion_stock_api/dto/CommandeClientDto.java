@@ -1,6 +1,7 @@
 package chijouProjects.gestion_stock_api.dto;
 
 import chijouProjects.gestion_stock_api.model.Client;
+import chijouProjects.gestion_stock_api.model.Entreprise;
 import chijouProjects.gestion_stock_api.model.LigneCdeClt;
 import chijouProjects.gestion_stock_api.model.CommandeClient;
 
@@ -28,7 +29,7 @@ public class CommandeClientDto {
                 .id(commandeclient.getId())
                 .code(commandeclient.getCode())
                 .datecommande(commandeclient.getDatecommande())
-                .identreprise(commandeclient.getIdentreprise())
+                .identreprise(commandeclient.getEntreprise().getId())
                 .idclient(commandeclient.getClient().getId())
                 .lignecdecltsdto(
                         commandeclient.getLignecdeclts() != null ?
@@ -46,7 +47,12 @@ public class CommandeClientDto {
         commandeclient.setId(commandeclientdto.getId());
         commandeclient.setCode(commandeclientdto.getCode());
         commandeclient.setDatecommande(commandeclientdto.getDatecommande());
-        commandeclient.setIdentreprise(commandeclientdto.getIdentreprise());
+
+        if(commandeclientdto.getIdentreprise() != null){
+            Entreprise entreprise = new Entreprise();
+            entreprise.setId(commandeclientdto.getIdentreprise());
+            commandeclient.setEntreprise(entreprise);
+        }
 
         if (commandeclientdto.getLignecdecltsdto() != null) {
             List<LigneCdeClt> lignes = commandeclientdto.getLignecdecltsdto().stream()

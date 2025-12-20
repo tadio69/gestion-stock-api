@@ -1,6 +1,7 @@
 package chijouProjects.gestion_stock_api.controller.api;
 
 import chijouProjects.gestion_stock_api.dto.ImgLinkDto;
+import chijouProjects.gestion_stock_api.model.Entreprise;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -28,7 +29,7 @@ public interface ImgLinkApi {
     })
     ResponseEntity<ImgLinkDto> uploadImage(
             @RequestParam("file") MultipartFile file,
-            @RequestParam(value = "identreprise") Integer identreprise
+            @RequestParam(value = "identreprise") Entreprise entreprise
     );
 
     @GetMapping(value = PHOTOS_ENDPOINT + "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

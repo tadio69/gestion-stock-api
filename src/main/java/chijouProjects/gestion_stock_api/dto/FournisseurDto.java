@@ -92,7 +92,7 @@ public class FournisseurDto {
                 .numtel(fournisseur.getNumtel())
                 .idimglink(fournisseur.getImglink().getId())
                 .adressedto(AdresseDto.fromEntity(fournisseur.getAdresse()))
-                .identreprise(fournisseur.getIdentreprise())
+                .identreprise(fournisseur.getEntreprise().getId())
                 .commandefournisseursdto(
                         fournisseur.getCommandefournisseurs() != null ?
                                 fournisseur.getCommandefournisseurs().stream()
@@ -117,7 +117,12 @@ public class FournisseurDto {
             fournisseur.setImglink(imgLink);
         }
         fournisseur.setAdresse(AdresseDto.toEntity(fournisseurdto.getAdressedto()));
-        fournisseur.setIdentreprise(fournisseurdto.getIdentreprise());
+
+        if(fournisseurdto.getIdentreprise() != null){
+            Entreprise entreprise = new Entreprise();
+            entreprise.setId(fournisseurdto.getIdentreprise());
+            fournisseur.setEntreprise(entreprise);
+        }
 
         if (fournisseurdto.getCommandefournisseursdto() != null) {
             List<CommandeFournisseur> commandes = fournisseurdto.getCommandefournisseursdto().stream()

@@ -1,6 +1,7 @@
 package chijouProjects.gestion_stock_api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,8 +36,10 @@ public class Fournisseur extends AbstractEntity {
     @OneToMany(mappedBy = "fournisseur")
     private List<CommandeFournisseur> commandefournisseurs;
 
-    @Column(name = "identreprise")
-    private Integer identreprise;
+    @ManyToOne
+    @JoinColumn(name = "identreprise", nullable = false)
+    @NotNull(message = "L'entrprise est obligatoire")
+    private Entreprise entreprise;
 
     @OneToOne
     @JoinColumn(name = "idimglink")

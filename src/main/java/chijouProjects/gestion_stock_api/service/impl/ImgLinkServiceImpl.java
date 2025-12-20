@@ -1,6 +1,7 @@
 package chijouProjects.gestion_stock_api.service.impl;
 
 import chijouProjects.gestion_stock_api.dto.ImgLinkDto;
+import chijouProjects.gestion_stock_api.model.Entreprise;
 import chijouProjects.gestion_stock_api.model.ImgLink;
 import chijouProjects.gestion_stock_api.utils.MultipartInputStreamFileResource;
 import chijouProjects.gestion_stock_api.repository.ImgLinkRepository;
@@ -31,7 +32,7 @@ public class ImgLinkServiceImpl implements ImgLinkService {
     }
 
     @Override
-    public ImgLinkDto uploadImage(MultipartFile file, Integer identreprise) {
+    public ImgLinkDto uploadImage(MultipartFile file, Entreprise entreprise) {
 
         // ⚠️ 1. Définir RestTemplate comme Bean ou champ privé (pour la performance)
         RestTemplate restTemplate = new RestTemplate();
@@ -84,7 +85,8 @@ public class ImgLinkServiceImpl implements ImgLinkService {
             entity.setUrl(directUrl);
             entity.setFilename(file.getOriginalFilename());
             entity.setUploadedat(Instant.now());
-            entity.setIdentreprise(identreprise);
+
+            entity.setEntreprise(entreprise);
 
             ImgLink savedEntity = imgLinkRepository.save(entity);
 

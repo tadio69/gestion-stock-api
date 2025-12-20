@@ -1,9 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
-import chijouProjects.gestion_stock_api.model.CommandeClient;
-import chijouProjects.gestion_stock_api.model.CommandeFournisseur;
-import chijouProjects.gestion_stock_api.model.Fournisseur;
-import chijouProjects.gestion_stock_api.model.LigneCdeFournisseur;
+import chijouProjects.gestion_stock_api.model.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
@@ -69,7 +66,7 @@ public class CommandeFournisseurDto {
                 .code(commandefournisseur.getCode())
                 .datecommande(commandefournisseur.getDatecommande())
                 .idfournisseur(commandefournisseur.getFournisseur().getId())
-                .identreprise(commandefournisseur.getIdentreprise())
+                .identreprise(commandefournisseur.getEntreprise().getId())
                 .lignecdefournisseursdto(
                         commandefournisseur.getLignecdefournisseurs() != null ?
                                 commandefournisseur.getLignecdefournisseurs().stream()
@@ -91,7 +88,12 @@ public class CommandeFournisseurDto {
             fournisseur.setId(commandefournisseurdto.getIdfournisseur());
             commandefournisseur.setFournisseur(fournisseur);
         }
-        commandefournisseur.setIdentreprise(commandefournisseurdto.getIdentreprise());
+
+        if(commandefournisseurdto.getIdentreprise() != null){
+            Entreprise entreprise = new Entreprise();
+            entreprise.setId(commandefournisseurdto.getIdentreprise());
+            commandefournisseur.setEntreprise(entreprise);
+        }
 
         if (commandefournisseurdto.getLignecdefournisseursdto() != null) {
             List<LigneCdeFournisseur> lignes = commandefournisseurdto.getLignecdefournisseursdto().stream()
