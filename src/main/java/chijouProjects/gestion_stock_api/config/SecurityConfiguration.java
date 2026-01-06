@@ -39,14 +39,20 @@ public class SecurityConfiguration {
 
    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
        http
                .csrf(csrf -> csrf.disable())
                .sessionManagement(session ->
                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                )
-               //1- Gestion des authorisations
                .authorizeHttpRequests(auth -> auth
-                       .requestMatchers("/public/**", "/auth/login").permitAll() //Accès libre
+                       .requestMatchers(
+                               "/v3/api-docs/**",
+                               "/swagger-ui/**",
+                               "/swagger-ui.html",
+                               "/auth/login",
+                               "/public/**"
+                       ).permitAll()
                        .requestMatchers("/admin/**").hasRole("ADMIN") //Réservé aux admins
                        .anyRequest().authenticated() //Tout le reste nécessite un login
                )
