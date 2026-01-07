@@ -9,5 +9,5 @@ public class AuthenticationRequest {
 
     private String login;//ou email
 
-    private String motpass;
+    private String motdepasse;
 }

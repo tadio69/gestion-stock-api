@@ -21,22 +21,23 @@ public class AuthenticationService {
     private final ApplicationUserDetailsService userDetailsService;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        System.out.println("Tentative de login pour : " + request.getLogin());
 
-        // 1️⃣ Vérification login / mot de passe
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getLogin(),
-                        request.getMotpass()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getLogin(),
+                            request.getMotdepasse()
+                    )
+            );
+            System.out.println("Authentification réussie !");
+        } catch (Exception e) {
+            System.out.println("ÉCHEC AUTH : " + e.getMessage());
+            throw e;
+        }
 
-        UserDetails userDetails =
-                userDetailsService.loadUserByUsername(request.getLogin());
-
+        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getLogin());
         String jwt = jwtService.generateToken(userDetails);
-
-        return AuthenticationResponse.builder()
-                .accessToken(jwt)
-                .build();
+        return AuthenticationResponse.builder().accessToken(jwt).build();
     }
 }

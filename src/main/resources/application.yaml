@@ -29,19 +29,14 @@ spring:
 
 server:
   port: 8081
+  servlet:
+    context-path: /gestion-stock-api
 
 springdoc:
   swagger-ui:
-    # Your custom UI path
-    path: /gestion-stock-api/swagger-ui
-
-    # 🔑 NEW: Tell the UI where to find its configuration data
-    urls-primary-name: GestionStock
-    url: /gestion-stock-api/v3/api-docs # Explicitly points to the JSON endpoint
-
+    path: /swagger-ui.html
   api-docs:
-    # Your custom JSON path
-    path: /gestion-stock-api/v3/api-docs
+    path: /v3/api-docs
 
 
 

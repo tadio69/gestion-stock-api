@@ -26,28 +26,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-
-        String path = request.getRequestURI();
-        if (path.startsWith("/v3/api-docs") ||
-                path.startsWith("/swagger-ui") ||
-                path.equals("/swagger-ui.html") ||
-                path.startsWith("/auth/login") ||
-                path.startsWith("/public")) {
-
-            filterChain.doFilter(request, response);
-            return;
-        }
+        System.out.println("Requête reçue : " + request.getRequestURI());
 
         String authHeader = request.getHeader("Authorization");
 
-        /*if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
-        }*/
-
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return; // bloque seulement les routes sécurisées
         }
 
         String token = authHeader.substring(7);
@@ -72,8 +57,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .setAuthentication(authToken);
             }
         }
-
-        System.out.println("JwtAuthenticationFilter - URI: " + path);
 
         filterChain.doFilter(request, response);
     }
