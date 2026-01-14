@@ -1,13 +1,17 @@
 package chijouProjects.gestion_stock_api.handlers;
 
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
+import chijouProjects.gestion_stock_api.exception.ErrorCodes;
 import chijouProjects.gestion_stock_api.exception.InvalidEntityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.util.Collections;
 
 @RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -32,5 +36,17 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 .errors(exception.getErrors())
                 .build();
         return new ResponseEntity <>(errorDto, badRequest);
+    }
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorDto> handleException(BadCredentialsException exception, WebRequest webRequest){
+        final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+
+        final ErrorDto errorDto = ErrorDto.builder()
+                .code(ErrorCodes.BAD_CREDENTIALS)
+                .httpCode(badRequest.value())
+                .message(exception.getMessage())
+                .errors(Collections.singletonList("Login et / ou mot de passe incorrects"))
+                .build();
+        return new ResponseEntity<>(errorDto, badRequest);
     }
 }

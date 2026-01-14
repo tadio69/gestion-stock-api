@@ -27,8 +27,9 @@ public class Entreprise extends AbstractEntity {
     @Column(name = "codefiscal")
     private String codefiscal;
 
-    @Column(name = "photo")
-    private String photo;
+    @OneToOne
+    @JoinColumn(name = "idimglink")
+    private ImgLink imglink;
 
     @Column(name = "email")
     private String email;
@@ -38,4 +39,7 @@ public class Entreprise extends AbstractEntity {
 
     @Column(name = "siteweb")
     private String siteweb;
+
+    @OneToMany(mappedBy = "entreprise")
+    private List<Utilisateur> utilisateurs;
 }

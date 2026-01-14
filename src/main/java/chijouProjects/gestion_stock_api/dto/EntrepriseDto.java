@@ -1,9 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
-import chijouProjects.gestion_stock_api.model.CommandeClient;
-import chijouProjects.gestion_stock_api.model.CommandeFournisseur;
-import chijouProjects.gestion_stock_api.model.Entreprise;
-import chijouProjects.gestion_stock_api.model.Utilisateur;
+import chijouProjects.gestion_stock_api.model.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
@@ -75,7 +72,7 @@ public class EntrepriseDto {
     private String description;
     private AdresseDto adressedto;
     private String codefiscal;
-    private String photo;
+    private Integer idimglink;
     private String email;
     private String numtel;
     private String siteweb;
@@ -91,7 +88,7 @@ public class EntrepriseDto {
                 .nom(entreprise.getNom())
                 .description(entreprise.getDescription())
                 .codefiscal(entreprise.getCodefiscal())
-                .photo(entreprise.getPhoto())
+                .idimglink(entreprise.getImglink().getId())
                 .email(entreprise.getEmail())
                 .adressedto(AdresseDto.fromEntity(entreprise.getAdresse()))
                 .numtel(entreprise.getNumtel())
@@ -107,7 +104,11 @@ public class EntrepriseDto {
         entreprise.setNom(entreprisedto.getNom());
         entreprise.setDescription(entreprisedto.getDescription());
         entreprise.setCodefiscal(entreprisedto.getCodefiscal());
-        entreprise.setPhoto(entreprisedto.getPhoto());
+        if(entreprisedto.getIdimglink() != null){
+            ImgLink imgLink = new ImgLink();
+            imgLink.setId(entreprisedto.getIdimglink());
+            entreprise.setImglink(imgLink);
+        }
         entreprise.setEmail(entreprisedto.getEmail());
         entreprise.setAdresse(AdresseDto.toEntity(entreprisedto.getAdressedto()));
         entreprise.setNumtel(entreprisedto.getNumtel());

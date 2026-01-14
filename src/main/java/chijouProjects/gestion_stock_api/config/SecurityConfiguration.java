@@ -59,7 +59,6 @@ public class SecurityConfiguration {
                                "/swagger-ui.html",
                                "/webjars/**"
                        ).permitAll()
-                       .requestMatchers("/admin/**").hasRole("ADMIN") //Réservé aux admins
                        .anyRequest().authenticated() //Tout le reste nécessite un login
                )
                .sessionManagement(session ->

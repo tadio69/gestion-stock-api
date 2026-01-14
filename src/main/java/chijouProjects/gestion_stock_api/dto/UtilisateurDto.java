@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
+import chijouProjects.gestion_stock_api.model.Entreprise;
 import chijouProjects.gestion_stock_api.model.ImgLink;
 import chijouProjects.gestion_stock_api.model.Role;
 import chijouProjects.gestion_stock_api.model.Utilisateur;
@@ -26,6 +27,8 @@ public class UtilisateurDto {
 
     private String motdepasse;
 
+    private Integer identreprise;
+
     private AdresseDto adressedto;
 
     private Integer idimglink;
@@ -42,6 +45,7 @@ public class UtilisateurDto {
                 .prenom(utilisateur.getPrenom())
                 .email(utilisateur.getEmail())
                 .datenaissance(utilisateur.getDatenaissance())
+                .identreprise(utilisateur.getEntreprise().getId())
                 .motdepasse(utilisateur.getMotdepasse())
                 .adressedto(AdresseDto.fromEntity(utilisateur.getAdresse()))
                 .idimglink(utilisateur.getImglink().getId())
@@ -62,6 +66,11 @@ public class UtilisateurDto {
         utilisateur.setPrenom(utilisateurdto.getPrenom());
         utilisateur.setEmail(utilisateurdto.getEmail());
         utilisateur.setDatenaissance(utilisateurdto.getDatenaissance());
+        if(utilisateurdto.getIdentreprise() != null){
+            Entreprise entreprise = new Entreprise();
+            entreprise.setId(utilisateurdto.getIdentreprise());
+            utilisateur.setEntreprise(entreprise);
+        }
         utilisateur.setMotdepasse(utilisateurdto.getMotdepasse());
         utilisateur.setAdresse(AdresseDto.toEntity(utilisateurdto.getAdressedto()));
         if (utilisateurdto.getIdimglink() != null) {

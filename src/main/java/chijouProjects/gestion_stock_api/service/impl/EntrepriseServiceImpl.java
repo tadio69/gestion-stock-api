@@ -2,19 +2,25 @@ package chijouProjects.gestion_stock_api.service.impl;
 
 import chijouProjects.gestion_stock_api.dto.ClientDto;
 import chijouProjects.gestion_stock_api.dto.EntrepriseDto;
+import chijouProjects.gestion_stock_api.dto.RoleDto;
+import chijouProjects.gestion_stock_api.dto.UtilisateurDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.exception.ErrorCodes;
 import chijouProjects.gestion_stock_api.exception.InvalidEntityException;
 import chijouProjects.gestion_stock_api.model.Client;
 import chijouProjects.gestion_stock_api.model.Entreprise;
+import chijouProjects.gestion_stock_api.model.Utilisateur;
 import chijouProjects.gestion_stock_api.repository.EntrepriseRepository;
+import chijouProjects.gestion_stock_api.repository.RoleRepository;
 import chijouProjects.gestion_stock_api.service.EntrepriseService;
+import chijouProjects.gestion_stock_api.service.UtilisateurService;
 import chijouProjects.gestion_stock_api.validator.EntrepriseValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +29,8 @@ import java.util.stream.Collectors;
 public class EntrepriseServiceImpl implements EntrepriseService {
 
     private EntrepriseRepository entrepriseRepository;
+    private UtilisateurService utilisateurService;
+    private RoleRepository roleRepository;
 
     @Autowired
     public EntrepriseServiceImpl(EntrepriseRepository entrepriseRepository) {
@@ -36,11 +44,43 @@ public class EntrepriseServiceImpl implements EntrepriseService {
             log.error("Entreprise is not valid: {}", entrepriseDto);
             throw new InvalidEntityException("L'Entreprise n'est pas valide", ErrorCodes.ENTREPRISE_NOT_VALID, errors);
         }
-        return EntrepriseDto.fromEntity(
+
+        EntrepriseDto savedEntreprise = EntrepriseDto.fromEntity(
                 entrepriseRepository.save(
                         EntrepriseDto.toEntity(entrepriseDto)
                 )
         );
+
+        UtilisateurDto utilisateurDto = fromEntreprise(savedEntreprise);
+
+        UtilisateurDto savedUser = utilisateurService.save(utilisateurDto);
+
+        RoleDto roleDto = RoleDto.builder()
+                .rolename("ADMIN")
+                .idutilisateur(savedUser.getId())
+                .build();
+        roleRepository.save(RoleDto.toEntity(roleDto));
+
+        return savedEntreprise;
+    }
+
+    private UtilisateurDto fromEntreprise(EntrepriseDto entrepriseDto){
+        //permet de créer automatiquement un utilisateur lié à une entreprise au
+        //moment de la création de cette entreprise
+        return UtilisateurDto.builder()
+                .adressedto(entrepriseDto.getAdressedto())
+                .nom(entrepriseDto.getNom())
+                .prenom(entrepriseDto.getCodefiscal())
+                .email(entrepriseDto.getEmail())
+                .motdepasse(generateRandomPassword())
+                .identreprise(entrepriseDto.getId())
+                .datenaissance(Instant.now())
+                .idimglink(entrepriseDto.getIdimglink())
+                .build();
+    }
+
+    private String generateRandomPassword(){
+        return "mdp_à_générer_automatiquement_fonction_à_définir";//pour l'instant on le fixe à cette chaîne en attendant créer le générateur de mots de passe
     }
 
     @Override

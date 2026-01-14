@@ -31,6 +31,7 @@ public enum ErrorCodes {
     VENTE_NOT_VALID(13001),
     IMGLINK_NOT_FOUND(14000),
     IMGLINK_NOT_VALID(14001),
+    BAD_CREDENTIALS(15000),
     ;
 
 
