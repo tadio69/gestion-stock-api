@@ -12,7 +12,7 @@ public class ApiGestionStockApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(ApiGestionStockApplication.class, args);
-		System.out.println("HASH POUR ADMIN : " + new BCryptPasswordEncoder().encode("admin"));
+		//System.out.println("HASH POUR ADMIN : " + new BCryptPasswordEncoder().encode("admin"));
 	}
 
 }
