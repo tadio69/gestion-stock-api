@@ -73,7 +73,7 @@ public class CategorieDto {
                 .id(categorie.getId())
                 .code(categorie.getCode())
                 .designation(categorie.getDesignation())
-                .identreprise(categorie.getId())
+                .identreprise(categorie.getEntreprise().getId())
                 .articlesdto(
                         categorie.getArticles() != null ?
                                 categorie.getArticles().stream()
