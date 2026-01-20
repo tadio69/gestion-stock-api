@@ -184,12 +184,18 @@ public class CategorieServiceImpl implements CategorieService {
     public void delete(Integer id) {
         if (id == null) {
             log.error("Catégorie ID is null");
-            return;
+            throw new InvalidEntityException(
+                    "L'ID de la catégorie ne peut pas être null",
+                    ErrorCodes.CATEGORIE_NOT_VALID
+            );
         }
 
         if (!categorieRepository.existsById(id)) {
             log.warn("Attempted to delete non-existent Catégorie with ID: {}", id);
-            return;
+            throw new EntityNotFoundException(
+                    "Aucune catégorie avec l'ID = " + id + " n'a été trouvée",
+                    ErrorCodes.CATEGORIE_NOT_FOUND
+            );
         }
 
         categorieRepository.deleteById(id);

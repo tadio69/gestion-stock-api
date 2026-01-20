@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "entreprise")
 public class Entreprise extends AbstractEntity {
     @Column(name = "nom")

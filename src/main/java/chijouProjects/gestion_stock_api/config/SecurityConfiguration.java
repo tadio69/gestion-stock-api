@@ -2,6 +2,7 @@ package chijouProjects.gestion_stock_api.config;
 import chijouProjects.gestion_stock_api.service.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -59,6 +60,13 @@ public class SecurityConfiguration {
                                "/swagger-ui.html",
                                "/webjars/**"
                        ).permitAll()
+                       // --- AJOUTEZ VOS RÈGLES DE RÔLES ICI ---
+                       // Seul l'ADMIN peut créer ou supprimer
+                       .requestMatchers(HttpMethod.POST, "/gestionstock/v1/categories/create").hasRole("ADMIN")
+                       .requestMatchers(HttpMethod.DELETE, "/gestionstock/v1/categories/delete/**").hasRole("ADMIN")
+
+                       // Les USER peuvent lire (GET)
+                       .requestMatchers(HttpMethod.GET, "/gestionstock/v1/categories/**").hasAnyRole("USER", "ADMIN")
                        .anyRequest().authenticated() //Tout le reste nécessite un login
                )
                .sessionManagement(session ->
@@ -90,16 +98,4 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
-    /*@Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        // 2. On utilise l'encodeur manuellement ici pour hacher le mot de passe
-        String motDePasseHache = passwordEncoder().encode("tadio6919");
-        UserDetails user = User.builder()
-                .username("chijou")
-                .password(motDePasseHache)
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user);
-    }*/
 }
