@@ -2,15 +2,20 @@ package chijouProjects.gestion_stock_api.service.auth;
 
 import chijouProjects.gestion_stock_api.dto.auth.AuthenticationRequest;
 import chijouProjects.gestion_stock_api.dto.auth.AuthenticationResponse;
-import chijouProjects.gestion_stock_api.model.Utilisateur;
+import chijouProjects.gestion_stock_api.exception.ErrorCodes;
+import chijouProjects.gestion_stock_api.exception.InvalidEntityException;
 import chijouProjects.gestion_stock_api.repository.UtilisateurRepository;
 import chijouProjects.gestion_stock_api.service.security.JwtService;
+import chijouProjects.gestion_stock_api.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +26,6 @@ public class AuthenticationService {
     private final ApplicationUserDetailsService userDetailsService;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        System.out.println("Tentative de login pour : " + request.getLogin());
 
         try {
             authenticationManager.authenticate(
@@ -30,10 +34,14 @@ public class AuthenticationService {
                             request.getMotdepasse()
                     )
             );
-            System.out.println("Authentification réussie !");
-        } catch (Exception e) {
-            System.out.println("ÉCHEC AUTH : " + e.getMessage());
-            throw e;
+        } catch (BadCredentialsException ex) {
+            throw new InvalidEntityException(
+                    Constants.AUTH_INCORRECT, // message principal
+                    ErrorCodes.BAD_CREDENTIALS,// code d'erreur 15000
+                    new ArrayList<>(List.of(
+                            "L'email ou le mot de passe fourni n'est pas correct" // détails
+                    ))
+            );
         }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getLogin());

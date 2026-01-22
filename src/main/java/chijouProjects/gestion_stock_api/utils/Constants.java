@@ -14,4 +14,5 @@ public interface Constants {
     public static String UTILISATEUR_ENDPOINT = APP_ROOT + "/utilisateurs";
     public static String VENTE_ENDPOINT = APP_ROOT + "/ventes";
 
+    String AUTH_INCORRECT = "Email ou mot de passe incorrect";
 }
