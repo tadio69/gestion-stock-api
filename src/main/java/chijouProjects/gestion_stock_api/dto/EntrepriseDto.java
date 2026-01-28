@@ -88,7 +88,11 @@ public class EntrepriseDto {
                 .nom(entreprise.getNom())
                 .description(entreprise.getDescription())
                 .codefiscal(entreprise.getCodefiscal())
-                .idimglink(entreprise.getImglink().getId())
+                .idimglink(
+                        entreprise.getImglink() != null
+                                ? entreprise.getImglink().getId()
+                                : null
+                )
                 .email(entreprise.getEmail())
                 .adressedto(AdresseDto.fromEntity(entreprise.getAdresse()))
                 .numtel(entreprise.getNumtel())

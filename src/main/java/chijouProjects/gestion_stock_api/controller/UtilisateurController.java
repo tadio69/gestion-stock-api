@@ -4,6 +4,7 @@ import chijouProjects.gestion_stock_api.controller.api.UtilisateurApi;
 import chijouProjects.gestion_stock_api.dto.UtilisateurDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.service.UtilisateurService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

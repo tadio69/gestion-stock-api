@@ -2,6 +2,7 @@ package chijouProjects.gestion_stock_api.controller.api;
 
 
 import chijouProjects.gestion_stock_api.dto.UtilisateurDto;
+import chijouProjects.gestion_stock_api.service.UtilisateurService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
