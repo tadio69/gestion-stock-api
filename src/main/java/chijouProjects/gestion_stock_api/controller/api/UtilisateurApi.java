@@ -23,7 +23,7 @@ public interface UtilisateurApi {
             @ApiResponse(responseCode = "200", description = "Utilisateur créé ou modifié avec succès"),
             @ApiResponse(responseCode = "400", description = "Utilisateur non valide")
     })
-    ResponseEntity<UtilisateurDto> save(@RequestBody UtilisateurDto fournisseurDto);
+    ResponseEntity<UtilisateurDto> save(@RequestBody UtilisateurDto fournisseurDto, boolean creationAuto);
 
     @GetMapping(value = UTILISATEUR_ENDPOINT + "/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Rechercher un utilisateur par son ID", description = "Cette méthode permet de chercher un utilisateur par son identifiant")

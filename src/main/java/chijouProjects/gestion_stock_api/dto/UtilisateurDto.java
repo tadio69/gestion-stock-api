@@ -45,10 +45,16 @@ public class UtilisateurDto {
                 .prenom(utilisateur.getPrenom())
                 .email(utilisateur.getEmail())
                 .datenaissance(utilisateur.getDatenaissance())
-                .identreprise(utilisateur.getEntreprise().getId())
+                .identreprise( utilisateur.getEntreprise() != null
+                        ? utilisateur.getEntreprise().getId()
+                        : null)
                 .motdepasse(utilisateur.getMotdepasse())
-                .adressedto(AdresseDto.fromEntity(utilisateur.getAdresse()))
-                .idimglink(utilisateur.getImglink().getId())
+                .adressedto(utilisateur.getAdresse() != null
+                        ? AdresseDto.fromEntity(utilisateur.getAdresse())
+                        : null)
+                .idimglink(utilisateur.getImglink() != null
+                        ? utilisateur.getImglink().getId()
+                        : null)
                 .rolesdto(
                         utilisateur.getRoles() != null?
                                 utilisateur.getRoles().stream()

@@ -33,8 +33,10 @@ public class EntrepriseServiceImpl implements EntrepriseService {
     private RoleRepository roleRepository;
 
     @Autowired
-    public EntrepriseServiceImpl(EntrepriseRepository entrepriseRepository) {
+    public EntrepriseServiceImpl(EntrepriseRepository entrepriseRepository, RoleRepository roleRepository, UtilisateurService utilisateurService) {
         this.entrepriseRepository = entrepriseRepository;
+        this.roleRepository = roleRepository;
+        this.utilisateurService = utilisateurService;
     }
 
     @Override
@@ -53,11 +55,12 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 
         UtilisateurDto utilisateurDto = fromEntreprise(savedEntreprise);
 
-        UtilisateurDto savedUser = utilisateurService.save(utilisateurDto);
+        UtilisateurDto savedUser = utilisateurService.save(utilisateurDto, true);
 
         RoleDto roleDto = RoleDto.builder()
                 .rolename("ADMIN")
                 .idutilisateur(savedUser.getId())
+                .identreprise(savedEntreprise.getId())
                 .build();
         roleRepository.save(RoleDto.toEntity(roleDto));
 

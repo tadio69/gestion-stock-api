@@ -23,8 +23,8 @@ public class UtilisateurController implements UtilisateurApi {
     }
 
     @Override
-    public ResponseEntity<UtilisateurDto> save(UtilisateurDto fournisseurDto) {
-        return ResponseEntity.ok(utilisateurService.save(fournisseurDto));
+    public ResponseEntity<UtilisateurDto> save(UtilisateurDto fournisseurDto, boolean creationAuto) {
+        return ResponseEntity.ok(utilisateurService.save(fournisseurDto, creationAuto));
     }
 
     @Override

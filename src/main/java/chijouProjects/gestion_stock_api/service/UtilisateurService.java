@@ -5,7 +5,7 @@ import chijouProjects.gestion_stock_api.dto.UtilisateurDto;
 import java.util.List;
 
 public interface UtilisateurService {
-    UtilisateurDto save(UtilisateurDto UtilisateurDto);
+    UtilisateurDto save(UtilisateurDto UtilisateurDto, boolean creationAuto);
 
     UtilisateurDto findById(Integer id);
 

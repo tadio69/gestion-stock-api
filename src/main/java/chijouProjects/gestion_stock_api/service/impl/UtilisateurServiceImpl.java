@@ -32,8 +32,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     @Transactional // Assurez-vous que c'est transactionnel pour l'opération multiple
-    public UtilisateurDto save(UtilisateurDto utilisateurDto) {
-        List<String> errors = UtilisateurValidator.validate(utilisateurDto);
+    public UtilisateurDto save(UtilisateurDto utilisateurDto, boolean creationAuto) {
+        List<String> errors = UtilisateurValidator.validate(utilisateurDto,creationAuto);
         if (!errors.isEmpty()) {
             log.error("Utilisateur is not valid: {}", utilisateurDto);
             throw new InvalidEntityException("L'utilisateur n'est pas valide", ErrorCodes.UTILISATEUR_NOT_VALID, errors);
