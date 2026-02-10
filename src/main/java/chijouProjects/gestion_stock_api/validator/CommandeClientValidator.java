@@ -24,7 +24,7 @@ public class CommandeClientValidator {
             errors.add("Veuillez renseigner la date de la commande du client");
         }
 
-        if(commandeclientdto.getIdclient() == null) {
+        if(commandeclientdto.getClientdto() == null) {
             errors.add("Veuillez sélectionner le client");
         }
 

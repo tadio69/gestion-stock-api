@@ -1,9 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
-import chijouProjects.gestion_stock_api.model.Client;
-import chijouProjects.gestion_stock_api.model.Entreprise;
-import chijouProjects.gestion_stock_api.model.LigneCdeClt;
-import chijouProjects.gestion_stock_api.model.CommandeClient;
+import chijouProjects.gestion_stock_api.model.*;
 
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +15,8 @@ public class CommandeClientDto {
     private Integer id;
     private String code;
     private Instant datecommande;
-    private Integer  idclient;
+    private EtatCommande etatCommande;
+    private ClientDto  clientdto;
     private Integer identreprise;
     private List<LigneCdeCltDto> lignecdecltsdto;
 
@@ -29,8 +27,9 @@ public class CommandeClientDto {
                 .id(commandeclient.getId())
                 .code(commandeclient.getCode())
                 .datecommande(commandeclient.getDatecommande())
+                .etatCommande(commandeclient.getEtatcommande())
                 .identreprise(commandeclient.getEntreprise().getId())
-                .idclient(commandeclient.getClient().getId())
+                .clientdto(ClientDto.fromEntity(commandeclient.getClient()))
                 .lignecdecltsdto(
                         commandeclient.getLignecdeclts() != null ?
                                 commandeclient.getLignecdeclts().stream()
@@ -46,6 +45,7 @@ public class CommandeClientDto {
         CommandeClient commandeclient = new CommandeClient();
         commandeclient.setId(commandeclientdto.getId());
         commandeclient.setCode(commandeclientdto.getCode());
+        commandeclient.setEtatcommande(commandeclientdto.getEtatCommande());
         commandeclient.setDatecommande(commandeclientdto.getDatecommande());
 
         if(commandeclientdto.getIdentreprise() != null){
@@ -62,12 +62,16 @@ public class CommandeClientDto {
             commandeclient.setLignecdeclts(lignes);
         }
 
-        if(commandeclientdto.getIdclient() != null) {
+        if(commandeclientdto.clientdto != null) {
             Client client = new Client();
-            client.setId(commandeclientdto.getIdclient());
+            client.setId(commandeclientdto.getClientdto().getId());
             commandeclient.setClient(client);
         }
 
         return commandeclient;
+    }
+
+    public boolean isCommandeLivree(){
+        return EtatCommande.LIVREE.equals(this.etatCommande);
     }
 }

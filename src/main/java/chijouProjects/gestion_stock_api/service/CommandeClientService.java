@@ -2,12 +2,15 @@ package chijouProjects.gestion_stock_api.service;
 
 import chijouProjects.gestion_stock_api.dto.ClientDto;
 import chijouProjects.gestion_stock_api.dto.CommandeClientDto;
+import chijouProjects.gestion_stock_api.model.EtatCommande;
 
 import java.util.List;
 
 public interface CommandeClientService {
 
     CommandeClientDto save(CommandeClientDto commandeClientDto);
+
+    CommandeClientDto updateEtatCommande (Integer idCommande, EtatCommande etatCommande);
 
     CommandeClientDto findById(Integer id);
 

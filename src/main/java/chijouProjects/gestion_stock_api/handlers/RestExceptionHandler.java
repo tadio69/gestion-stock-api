@@ -26,6 +26,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity <>(errorDto, notFound);
     }
 
+    //TODO handle InvalidOperationException
+
     @ExceptionHandler(InvalidEntityException.class)
     public ResponseEntity<ErrorDto> handleException(InvalidEntityException exception, WebRequest webRequest){
         final HttpStatus badRequest = HttpStatus.BAD_REQUEST;

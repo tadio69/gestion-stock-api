@@ -1,6 +1,7 @@
 package chijouProjects.gestion_stock_api.controller.api;
 
 import chijouProjects.gestion_stock_api.dto.CommandeClientDto;
+import chijouProjects.gestion_stock_api.model.EtatCommande;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -31,6 +32,22 @@ public interface CommandeClientApi {
             @ApiResponse(responseCode = "400", description = "Commande client non valide")
     })
     ResponseEntity<CommandeClientDto> save(@RequestBody CommandeClientDto commandeClientDto);
+
+    @PatchMapping(
+            value = COMMANDES_CLIENT_ENDPOINT + "/update/{idCommande}/{etatCommande}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(
+            summary = "Modifier l'état d'une commande client",
+            description = "Cette méthode permet de modifier l'état d'une commande client"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "État de la commande modifié avec succès"),
+            @ApiResponse(responseCode = "400", description = "Requête invalide ou état non autorisé"),
+            @ApiResponse(responseCode = "404", description = "Commande client introuvable"),
+            @ApiResponse(responseCode = "409", description = "Conflit : transition d'état impossible")
+    })
+    ResponseEntity<CommandeClientDto> updateEtatCommande(@PathVariable("idCommande") Integer idCommande, @PathVariable("etatCommande") EtatCommande etatCommande);
 
     @GetMapping(
             value = COMMANDES_CLIENT_ENDPOINT + "/{id}",

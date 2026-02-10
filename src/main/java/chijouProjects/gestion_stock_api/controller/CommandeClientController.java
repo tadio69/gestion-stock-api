@@ -3,6 +3,7 @@ package chijouProjects.gestion_stock_api.controller;
 import chijouProjects.gestion_stock_api.controller.api.CommandeClientApi;
 import chijouProjects.gestion_stock_api.dto.CommandeClientDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
+import chijouProjects.gestion_stock_api.model.EtatCommande;
 import chijouProjects.gestion_stock_api.service.CommandeClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,11 @@ public class CommandeClientController implements CommandeClientApi {
     @Override
     public ResponseEntity<CommandeClientDto> save(CommandeClientDto commandeClientDto) {
         return ResponseEntity.ok(commandeClientService.save(commandeClientDto));
+    }
+
+    @Override
+    public ResponseEntity<CommandeClientDto> updateEtatCommande(Integer idCommande, EtatCommande etatCommande) {
+        return ResponseEntity.ok(commandeClientService.updateEtatCommande(idCommande,etatCommande));
     }
 
     @Override
