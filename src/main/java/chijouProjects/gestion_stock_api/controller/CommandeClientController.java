@@ -8,8 +8,10 @@ import chijouProjects.gestion_stock_api.service.CommandeClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -29,6 +31,16 @@ public class CommandeClientController implements CommandeClientApi {
     @Override
     public ResponseEntity<CommandeClientDto> updateEtatCommande(Integer idCommande, EtatCommande etatCommande) {
         return ResponseEntity.ok(commandeClientService.updateEtatCommande(idCommande,etatCommande));
+    }
+
+    @Override
+    public ResponseEntity<CommandeClientDto> updateQuantiteCommande(Integer idCommande, Integer idLigneCommande, BigDecimal quantite) {
+        return ResponseEntity.ok(commandeClientService.updateQuantiteCommande(idCommande, idLigneCommande, quantite));
+    }
+
+    @Override
+    public ResponseEntity<CommandeClientDto> updateClient(Integer idCommande, Integer idClient) {
+        return ResponseEntity.ok(commandeClientService.updateClient(idCommande, idClient));
     }
 
     @Override

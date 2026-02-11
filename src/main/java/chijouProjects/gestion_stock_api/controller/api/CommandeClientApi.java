@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static chijouProjects.gestion_stock_api.utils.Constants.COMMANDES_CLIENT_ENDPOINT;
@@ -34,7 +35,7 @@ public interface CommandeClientApi {
     ResponseEntity<CommandeClientDto> save(@RequestBody CommandeClientDto commandeClientDto);
 
     @PatchMapping(
-            value = COMMANDES_CLIENT_ENDPOINT + "/update/{idCommande}/{etatCommande}",
+            value = COMMANDES_CLIENT_ENDPOINT + "/update/etat/{idCommande}/{etatCommande}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(
@@ -48,6 +49,36 @@ public interface CommandeClientApi {
             @ApiResponse(responseCode = "409", description = "Conflit : transition d'état impossible")
     })
     ResponseEntity<CommandeClientDto> updateEtatCommande(@PathVariable("idCommande") Integer idCommande, @PathVariable("etatCommande") EtatCommande etatCommande);
+
+    @PatchMapping(
+            value = COMMANDES_CLIENT_ENDPOINT + "/update/quantite/{idCommande}/{idLigneCommande}/{quantite}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(
+            summary = "Modifier la quantité d'articles d'une ligne de commande client",
+            description = "Cette méthode permet de modifier la quantité d'articles d'une ligne de commande client"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Quantité d'articles d'une ligne de commande client modifiée avec succès"),
+            @ApiResponse(responseCode = "400", description = "Requête invalide ou quantité non acceptée"),
+            @ApiResponse(responseCode = "404", description = "Commande ou ligne de commande client introuvable")
+    })
+    ResponseEntity<CommandeClientDto> updateQuantiteCommande(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("quantite") BigDecimal quantite);
+
+    @PatchMapping(
+            value = COMMANDES_CLIENT_ENDPOINT + "/update/client/{idCommande}/{idClient}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(
+            summary = "Modifier le client d'une commande",
+            description = "Cette méthode permet de modifier le client d'une commande"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Client de la commande modifié avec succès"),
+            @ApiResponse(responseCode = "400", description = "Requête invalide ou client inexistant"),
+            @ApiResponse(responseCode = "404", description = "Commande ou client introuvable")
+    })
+    ResponseEntity<CommandeClientDto> updateClient(@PathVariable("idCommande") Integer idCommande, @PathVariable("idClient") Integer idClient);
 
     @GetMapping(
             value = COMMANDES_CLIENT_ENDPOINT + "/{id}",

@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.service.impl;
 
+import chijouProjects.gestion_stock_api.dto.ClientDto;
 import chijouProjects.gestion_stock_api.dto.CommandeClientDto;
 import chijouProjects.gestion_stock_api.dto.LigneCdeCltDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
@@ -7,10 +8,7 @@ import chijouProjects.gestion_stock_api.exception.ErrorCodes;
 import chijouProjects.gestion_stock_api.exception.InvalidEntityException;
 import chijouProjects.gestion_stock_api.exception.InvalidOperationException;
 import chijouProjects.gestion_stock_api.model.*;
-import chijouProjects.gestion_stock_api.repository.ArticleRepository;
-import chijouProjects.gestion_stock_api.repository.ClientRepository;
-import chijouProjects.gestion_stock_api.repository.CommandeClientRepository;
-import chijouProjects.gestion_stock_api.repository.LigneCdeCltRepository;
+import chijouProjects.gestion_stock_api.repository.*;
 import chijouProjects.gestion_stock_api.service.CommandeClientService;
 import chijouProjects.gestion_stock_api.validator.CommandeClientValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.awt.dnd.InvalidDnDOperationException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,17 +28,19 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CommandeClientServiceImpl implements CommandeClientService {
 
+    private final LigneCdeFournisseurRepository ligneCdeFournisseurRepository;
     private CommandeClientRepository commandeClientRepository;
     private LigneCdeCltRepository ligneCdeCltRepository;
     private ClientRepository clientRepository;
     private ArticleRepository articleRepository;
 
     @Autowired
-    public CommandeClientServiceImpl(CommandeClientRepository commandeClientRepository, ClientRepository clientRepository, ArticleRepository articleRepository, LigneCdeCltRepository ligneCdeCltRepository) {
+    public CommandeClientServiceImpl(CommandeClientRepository commandeClientRepository, ClientRepository clientRepository, ArticleRepository articleRepository, LigneCdeCltRepository ligneCdeCltRepository, LigneCdeFournisseurRepository ligneCdeFournisseurRepository) {
         this.commandeClientRepository = commandeClientRepository;
         this.clientRepository = clientRepository;
         this.articleRepository = articleRepository;
         this.ligneCdeCltRepository = ligneCdeCltRepository;
+        this.ligneCdeFournisseurRepository = ligneCdeFournisseurRepository;
     }
 
     @Override
@@ -113,6 +114,64 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         return CommandeClientDto.fromEntity(commandeClientRepository.save(CommandeClientDto.toEntity(
            commandeClientDto
         )));
+    }
+
+    @Override
+    public CommandeClientDto updateQuantiteCommande(Integer idCommande, Integer idLigneCommande, BigDecimal quantite) {
+        if (idCommande == null) {
+            log.error("Commande client ID is null");
+            throw new InvalidOperationException("Impossible de modifier l'état d'une commande avec un ID null.", ErrorCodes.COMMANDE_CLIENT_NOT_EDITABLE);
+        }
+        if (idLigneCommande == null) {
+            log.error("L'ID de la ligne de commande client is null");
+            throw new InvalidOperationException("Impossible de modifier l'état d'une commande avec une ligne de commande null.", ErrorCodes.COMMANDE_CLIENT_NOT_EDITABLE);
+        }
+
+        if (quantite == null || quantite.compareTo(BigDecimal.ZERO) <= 0) {
+            log.error("La quantité fournie est invalide");
+            throw new InvalidOperationException("Impossible de modifier une commande avec une quantité null ou inférieure ou égale à zéro.", ErrorCodes.COMMANDE_CLIENT_NOT_EDITABLE);
+        }
+
+        CommandeClientDto commandeClientDto = findById(idCommande);
+        if(commandeClientDto.isCommandeLivree()){
+            throw new InvalidOperationException("Impossible de modifier la commande lorsqu'elle est livrée.", ErrorCodes.COMMANDE_CLIENT_NOT_EDITABLE);
+        }
+
+        Optional<LigneCdeClt> ligneCdeCltOptional = ligneCdeCltRepository.findById(idLigneCommande);
+        if(ligneCdeCltOptional.isEmpty()){
+            throw new EntityNotFoundException("Aucune ligne de commande client n'a été trouvée avec l'ID " + idLigneCommande, ErrorCodes.LIGNE_COMMANDE_CLIENT_NOT_FOUND);
+        }
+
+        LigneCdeClt ligneCdeClt = ligneCdeCltOptional.get();
+        ligneCdeClt.setQuantite(quantite);
+        ligneCdeCltRepository.save(ligneCdeClt);
+        return commandeClientDto;
+    }
+
+    @Override
+    public CommandeClientDto updateClient(Integer idCommande, Integer idClient) {
+        if (idCommande == null) {
+            log.error("Commande client ID is null");
+            throw new InvalidOperationException("Impossible de modifier l'état d'une commande avec un ID null.", ErrorCodes.COMMANDE_CLIENT_NOT_EDITABLE);
+        }
+        if (idClient == null) {
+            log.error("L'ID du client is null");
+            throw new InvalidOperationException("Impossible de modifier une commande avec un ID client null.", ErrorCodes.COMMANDE_CLIENT_NOT_EDITABLE);
+        }
+
+        CommandeClientDto commandeClientDto = findById(idCommande);
+        if(commandeClientDto.isCommandeLivree()){
+            throw new InvalidOperationException("Impossible de modifier la commande lorsqu'elle est livrée.", ErrorCodes.COMMANDE_CLIENT_NOT_EDITABLE);
+        }
+
+        Optional<Client> clientOptional = clientRepository.findById(idClient);
+        if(clientOptional.isEmpty()){
+            throw new EntityNotFoundException("Aucun client n'a été trouvé avec l'ID " + idClient, ErrorCodes.CLIENT_NOT_FOUND);
+        }
+        commandeClientDto.setClientdto(ClientDto.fromEntity(clientOptional.get()));
+        return CommandeClientDto.fromEntity(
+                commandeClientRepository.save(CommandeClientDto.toEntity(commandeClientDto))
+        );
     }
 
     @Override
