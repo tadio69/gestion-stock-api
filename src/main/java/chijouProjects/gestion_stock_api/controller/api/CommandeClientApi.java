@@ -80,6 +80,21 @@ public interface CommandeClientApi {
     })
     ResponseEntity<CommandeClientDto> updateClient(@PathVariable("idCommande") Integer idCommande, @PathVariable("idClient") Integer idClient);
 
+    @PatchMapping(
+            value = COMMANDES_CLIENT_ENDPOINT + "/update/article/{idCommande}/{idLigneCommande}/{idArticle}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(
+            summary = "Modifier l'article d'une ligne de commande",
+            description = "Cette méthode permet de modifier l'article d'une ligne de commande"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Article de la ligne de commande modifié avec succès"),
+            @ApiResponse(responseCode = "400", description = "Requête invalide ou article inexistant"),
+            @ApiResponse(responseCode = "404", description = "Ligne de commande ou article introuvable")
+    })
+    ResponseEntity<CommandeClientDto> updateArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("idArticle") Integer idArticle);
+
     @GetMapping(
             value = COMMANDES_CLIENT_ENDPOINT + "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE

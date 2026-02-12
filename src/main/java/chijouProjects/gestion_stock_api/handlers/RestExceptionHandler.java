@@ -3,6 +3,7 @@ package chijouProjects.gestion_stock_api.handlers;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.exception.ErrorCodes;
 import chijouProjects.gestion_stock_api.exception.InvalidEntityException;
+import chijouProjects.gestion_stock_api.exception.InvalidOperationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,7 +27,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity <>(errorDto, notFound);
     }
 
-    //TODO handle InvalidOperationException
+    @ExceptionHandler(InvalidOperationException.class)
+    public ResponseEntity<ErrorDto> handleException(InvalidOperationException exception, WebRequest webRequest){
+        final HttpStatus notFound = HttpStatus.BAD_REQUEST;
+        final ErrorDto errorDto = ErrorDto.builder()
+                .code(exception.getErrorCode())
+                .httpCode(notFound.value())
+                .message(exception.getMessage())
+                .build();
+        return new ResponseEntity <>(errorDto, notFound);
+    }
 
     @ExceptionHandler(InvalidEntityException.class)
     public ResponseEntity<ErrorDto> handleException(InvalidEntityException exception, WebRequest webRequest){
