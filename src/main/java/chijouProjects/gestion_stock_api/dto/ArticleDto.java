@@ -2,6 +2,7 @@ package chijouProjects.gestion_stock_api.dto;
 import chijouProjects.gestion_stock_api.model.Article;
 import chijouProjects.gestion_stock_api.model.Categorie;
 import chijouProjects.gestion_stock_api.model.Entreprise;
+import chijouProjects.gestion_stock_api.model.ImgLink;
 import lombok.Builder;
 import lombok.Data;
 
@@ -22,7 +23,7 @@ public class ArticleDto {
 
     private BigDecimal prixunitairettc;
 
-    private String photo;
+    private Integer idimglink;
 
     private Integer  idcategorie;
 
@@ -39,7 +40,7 @@ public class ArticleDto {
                 .prixunitaireht(article.getPrixunitaireht())
                 .tauxtva(article.getTauxtva())
                 .prixunitairettc(article.getPrixunitairettc())
-                .photo(article.getPhoto())
+                .idimglink(article.getImglink().getId())
                 .identreprise(article.getEntreprise().getId())
                 .build();
     }
@@ -53,7 +54,11 @@ public class ArticleDto {
         article.setPrixunitaireht(articledto.getPrixunitaireht());
         article.setTauxtva(articledto.getTauxtva());
         article.setPrixunitairettc(articledto.getPrixunitairettc());
-        article.setPhoto(articledto.getPhoto());
+        if (articledto.getIdimglink() != null) {
+            ImgLink imglink = new ImgLink();
+            imglink.setId(articledto.getIdimglink());
+            article.setImglink(imglink);
+        }
         if (articledto.getIdentreprise() != null) {
             Entreprise entreprise = new Entreprise();
             entreprise.setId(articledto.getIdentreprise());

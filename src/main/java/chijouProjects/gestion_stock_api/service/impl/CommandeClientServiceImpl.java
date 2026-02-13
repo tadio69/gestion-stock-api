@@ -179,6 +179,17 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     }
 
     @Override
+    public CommandeClientDto deleteArticle(Integer idCommande, Integer idLigneCommande) {
+        checkIdCommande(idCommande);
+        checkIdLigneCommande(idLigneCommande);
+        CommandeClientDto commandeClientDto = checkEtatCommande(idCommande);
+        // Juste pour vérifier l'existence de ligne commande et informer le client an cas d'absence
+        findLigneCommandeClient(idLigneCommande);
+        ligneCdeCltRepository.deleteById(idLigneCommande);
+        return commandeClientDto;
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public CommandeClientDto findById(Integer id) {
         if (id == null) {
@@ -222,6 +233,13 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     public List<CommandeClientDto> findAll() {
         return commandeClientRepository.findAll().stream()
                 .map(CommandeClientDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LigneCdeCltDto> findAllLignesCommandesClientsByCommandeClient(Integer idCommande) {
+        return ligneCdeCltRepository.findAllByCommandeclientId(idCommande).stream()
+                .map(LigneCdeCltDto::fromEntity)
                 .collect(Collectors.toList());
     }
 

@@ -1,6 +1,7 @@
 package chijouProjects.gestion_stock_api.controller.api;
 
 import chijouProjects.gestion_stock_api.dto.CommandeClientDto;
+import chijouProjects.gestion_stock_api.dto.LigneCdeCltDto;
 import chijouProjects.gestion_stock_api.model.EtatCommande;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -95,6 +96,16 @@ public interface CommandeClientApi {
     })
     ResponseEntity<CommandeClientDto> updateArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("idArticle") Integer idArticle);
 
+    @DeleteMapping(
+            value = COMMANDES_CLIENT_ENDPOINT + "/delete/article/{idCommande}/{idLigneCommande}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(summary = "Supprimer une ligne de commande client", description = "Cette méthode permet de supprimer une ligne de commande client")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ligne de commande client supprimée avec succès")
+    })
+    ResponseEntity<CommandeClientDto> deleteArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande);
+
     @GetMapping(
             value = COMMANDES_CLIENT_ENDPOINT + "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -138,6 +149,21 @@ public interface CommandeClientApi {
             @ApiResponse(responseCode = "200", description = "Liste des commandes client retournée avec succès")
     })
     ResponseEntity<List<CommandeClientDto>> findAll();
+
+    @GetMapping(
+            value = COMMANDES_CLIENT_ENDPOINT + "/lignesCommande/{idCommande}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(summary = "Renvoyer les lignes d'une commande client",
+            description = "Cette méthode permet de retourner les lignes d'une commande client enregistrées",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lignes de commande client retournées avec succès")
+    })
+    ResponseEntity<List<LigneCdeCltDto>> findAllLignesCommandesByCommandeClientId(@PathVariable("idCommande") Integer idCommande);
 
     @DeleteMapping(
             value = COMMANDES_CLIENT_ENDPOINT + "/delete/{id}",

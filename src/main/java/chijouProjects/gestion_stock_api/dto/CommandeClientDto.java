@@ -2,6 +2,7 @@ package chijouProjects.gestion_stock_api.dto;
 
 import chijouProjects.gestion_stock_api.model.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ public class CommandeClientDto {
     private EtatCommande etatCommande;
     private ClientDto  clientdto;
     private Integer identreprise;
+    @JsonIgnore
     private List<LigneCdeCltDto> lignecdecltsdto;
 
     public static CommandeClientDto fromEntity(CommandeClient commandeclient) {

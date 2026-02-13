@@ -56,6 +56,7 @@ public class CommandeFournisseurDto {
     private Instant datecommande;
     private Integer idfournisseur;
     private Integer identreprise;
+    @JsonIgnore
     private List<LigneCdeFournisseurDto> lignecdefournisseursdto;
 
     public static CommandeFournisseurDto fromEntity(CommandeFournisseur commandefournisseur) {

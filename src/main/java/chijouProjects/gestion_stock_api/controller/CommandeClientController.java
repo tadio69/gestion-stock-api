@@ -2,6 +2,7 @@ package chijouProjects.gestion_stock_api.controller;
 
 import chijouProjects.gestion_stock_api.controller.api.CommandeClientApi;
 import chijouProjects.gestion_stock_api.dto.CommandeClientDto;
+import chijouProjects.gestion_stock_api.dto.LigneCdeCltDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.model.EtatCommande;
 import chijouProjects.gestion_stock_api.service.CommandeClientService;
@@ -49,6 +50,11 @@ public class CommandeClientController implements CommandeClientApi {
     }
 
     @Override
+    public ResponseEntity<CommandeClientDto> deleteArticle(Integer idCommande, Integer idLigneCommande) {
+        return ResponseEntity.ok(commandeClientService.deleteArticle(idCommande, idLigneCommande));
+    }
+
+    @Override
     public ResponseEntity<CommandeClientDto> findById(Integer id) {
         return ResponseEntity.ok(commandeClientService.findById(id));
     }
@@ -61,6 +67,11 @@ public class CommandeClientController implements CommandeClientApi {
     @Override
     public ResponseEntity<List<CommandeClientDto>> findAll() {
         return ResponseEntity.ok(commandeClientService.findAll());
+    }
+
+    @Override
+    public ResponseEntity<List<LigneCdeCltDto>> findAllLignesCommandesByCommandeClientId(Integer idCommande) {
+        return ResponseEntity.ok(commandeClientService.findAllLignesCommandesClientsByCommandeClient(idCommande));
     }
 
     @Override

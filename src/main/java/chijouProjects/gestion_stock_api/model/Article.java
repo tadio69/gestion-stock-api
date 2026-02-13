@@ -34,8 +34,9 @@ public class Article extends AbstractEntity {
     @Column(name = "prixunitairettc")
     private BigDecimal prixunitairettc;
 
-    @Column(name = "photo")
-    private String photo;
+    @OneToOne
+    @JoinColumn(name = "idimglink")
+    private ImgLink imglink;
 
     @ManyToOne
     @JoinColumn(name = "idcategorie", nullable = false)
