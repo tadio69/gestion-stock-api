@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,7 @@ public class CommandeClient extends AbstractEntity {
     @NotNull(message = "Le client est obligatoire")
     private Client client;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "commandeclient")
     private List<LigneCdeClt> lignecdeclts;
 

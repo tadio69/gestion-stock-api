@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,11 +26,15 @@ public class CommandeFournisseur extends AbstractEntity {
     @Column(name = "datecommande")
     private Instant datecommande;
 
+    @Column(name = "etatcommande")
+    private EtatCommande etatcommande;
+
     @ManyToOne
     @JoinColumn(name = "idfournisseur", nullable = false)
     @NotNull(message = "Le fournisseur est obligatoire")
     private Fournisseur fournisseur;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "commandefournisseur")
     private List<LigneCdeFournisseur> lignecdefournisseurs;
 

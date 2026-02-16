@@ -30,11 +30,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CommandeClientServiceImpl implements CommandeClientService {
 
-    private final LigneCdeFournisseurRepository ligneCdeFournisseurRepository;
-    private CommandeClientRepository commandeClientRepository;
-    private LigneCdeCltRepository ligneCdeCltRepository;
-    private ClientRepository clientRepository;
-    private ArticleRepository articleRepository;
+    private final CommandeClientRepository commandeClientRepository;
+    private final LigneCdeCltRepository ligneCdeCltRepository;
+    private final ClientRepository clientRepository;
+    private final ArticleRepository articleRepository;
 
     @Autowired
     public CommandeClientServiceImpl(CommandeClientRepository commandeClientRepository, ClientRepository clientRepository, ArticleRepository articleRepository, LigneCdeCltRepository ligneCdeCltRepository, LigneCdeFournisseurRepository ligneCdeFournisseurRepository) {
@@ -42,7 +41,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         this.clientRepository = clientRepository;
         this.articleRepository = articleRepository;
         this.ligneCdeCltRepository = ligneCdeCltRepository;
-        this.ligneCdeFournisseurRepository = ligneCdeFournisseurRepository;
     }
 
     @Override
@@ -57,7 +55,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
            throw new InvalidOperationException("Impossible de modifier la commande lorsqu'elle est livrée.", ErrorCodes.COMMANDE_CLIENT_NOT_EDITABLE);
         }
 
-        Optional<Client> client = clientRepository.findById(commandeClientDto.getId());
+        Optional<Client> client = clientRepository.findById(commandeClientDto.getClientdto().getId());
 
         if(client.isEmpty()) {
             log.warn("Client with ID {} was not found in the DBB", commandeClientDto.getId());
@@ -126,7 +124,12 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         CommandeClientDto commandeClientDto = checkEtatCommande(idCommande);
 
         Optional<LigneCdeClt> ligneCdeCltOptional = findLigneCommandeClient(idLigneCommande);
-        LigneCdeClt ligneCdeClt = ligneCdeCltOptional.get();
+        LigneCdeClt ligneCdeClt;
+        if (ligneCdeCltOptional.isPresent()) {
+            ligneCdeClt = ligneCdeCltOptional.get();
+        } else {
+            throw new EntityNotFoundException("Ligne de commande non trouvée");
+        }
         ligneCdeClt.setQuantite(quantite);
         ligneCdeCltRepository.save(ligneCdeClt);
         return commandeClientDto;
@@ -156,10 +159,10 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     public CommandeClientDto updateArticle(Integer idCommande, Integer idLigneCommande, Integer idArticle) {
         checkIdCommande(idCommande);
         checkIdLigneCommande(idLigneCommande);
-        checkIdArticle(idArticle, "nouvel");
+        checkIdArticle(idArticle);
         CommandeClientDto commandeClientDto = checkEtatCommande(idCommande);
 
-        Optional<LigneCdeClt> ligneCdeClt = findLigneCommandeClient(idLigneCommande);
+        Optional<LigneCdeClt> ligneCdeCltOptional = findLigneCommandeClient(idLigneCommande);
 
         Optional<Article> articleOptional = articleRepository.findById(idArticle);
 
@@ -171,7 +174,14 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         if(!errors.isEmpty()){
             throw new InvalidEntityException("Article invalide", ErrorCodes.ARTICLE_NOT_VALID, errors);
         }
-        LigneCdeClt ligneCdeCltToSave = ligneCdeClt.get();
+        LigneCdeClt ligneCdeCltToSave;
+
+        if (ligneCdeCltOptional.isPresent()) {
+            ligneCdeCltToSave = ligneCdeCltOptional.get();
+        } else {
+            throw new EntityNotFoundException("Ligne de commande non trouvée");
+        }
+
         ligneCdeCltToSave.setArticle(articleOptional.get());
         ligneCdeCltRepository.save(ligneCdeCltToSave);
 
@@ -203,9 +213,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
                         ErrorCodes.COMMANDE_CLIENT_NOT_FOUND
                 ));
 
-        if(commandeClient.getLignecdeclts() != null){
-            commandeClient.getLignecdeclts().size();
-        }
         return CommandeClientDto.fromEntity(commandeClient);
     }
 
@@ -223,9 +230,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
                         ErrorCodes.COMMANDE_CLIENT_NOT_FOUND
                 ));
 
-        if(commandeClient.getLignecdeclts() != null){
-            commandeClient.getLignecdeclts().size();
-        }
         return CommandeClientDto.fromEntity(commandeClient);
     }
 
@@ -273,10 +277,10 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         }
     }
 
-    private void checkIdArticle(Integer idArticle, String msg) {
+    private void checkIdArticle(Integer idArticle) {
         if (idArticle == null) {
-            log.error("L'ID " + msg + " is null");
-            throw new InvalidOperationException("Impossible de modifier la commande client avec un " + msg + "ID article null.", ErrorCodes.COMMANDE_CLIENT_NOT_EDITABLE);
+            log.error("L'ID article is null");
+            throw new InvalidOperationException("Impossible de modifier la commande client avec un ID article null.", ErrorCodes.COMMANDE_CLIENT_NOT_EDITABLE);
         }
     }
 

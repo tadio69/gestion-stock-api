@@ -9,52 +9,14 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/*@Data
-@Builder
-public class CommandeFournisseurDto {
-    private Integer id;
-
-    private String code;
-
-    private Instant datecommande;
-
-    private FournisseurDto fournisseurdto;
-
-    private Integer identreprise;
-
-    private List<LigneCdeFournisseurDto> lignecdefournisseursdto;
-
-    public static CommandeFournisseurDto fromEntity(CommandeFournisseur commandefournissur) {
-        if (commandefournissur == null) return null;
-
-        return CommandeFournisseurDto.builder()
-                .id(commandefournissur.getId())
-                .code(commandefournissur.getCode())
-                .datecommande(commandefournissur.getDatecommande())
-                .fournisseurdto(FournisseurDto.fromEntity(commandefournissur.getFournisseur()))
-                .identreprise(commandefournissur.getIdentreprise())
-                .build();
-    }
-
-    public static CommandeFournisseur toEntity(CommandeFournisseurDto Commandefournisseurdto) {
-        if (Commandefournisseurdto == null) return null;
-        CommandeFournisseur commandefournisseur = new CommandeFournisseur();
-        commandefournisseur.setId(Commandefournisseurdto.getId());
-        commandefournisseur.setCode(Commandefournisseurdto.getCode());
-        commandefournisseur.setDatecommande(Commandefournisseurdto.getDatecommande());
-        commandefournisseur.setFournisseur(FournisseurDto.toEntity(Commandefournisseurdto.getFournisseurdto()));
-        commandefournisseur.setIdentreprise(Commandefournisseurdto.getIdentreprise());
-        return commandefournisseur;
-    }
-}*/
-
 @Data
 @Builder
 public class CommandeFournisseurDto {
     private Integer id;
     private String code;
     private Instant datecommande;
-    private Integer idfournisseur;
+    private EtatCommande etatCommande;
+    private FournisseurDto  fournisseurdto;
     private Integer identreprise;
     @JsonIgnore
     private List<LigneCdeFournisseurDto> lignecdefournisseursdto;
@@ -66,7 +28,7 @@ public class CommandeFournisseurDto {
                 .id(commandefournisseur.getId())
                 .code(commandefournisseur.getCode())
                 .datecommande(commandefournisseur.getDatecommande())
-                .idfournisseur(commandefournisseur.getFournisseur().getId())
+                .fournisseurdto(FournisseurDto.fromEntity(commandefournisseur.getFournisseur()))
                 .identreprise(commandefournisseur.getEntreprise().getId())
                 .lignecdefournisseursdto(
                         commandefournisseur.getLignecdefournisseurs() != null ?
@@ -84,9 +46,10 @@ public class CommandeFournisseurDto {
         commandefournisseur.setId(commandefournisseurdto.getId());
         commandefournisseur.setCode(commandefournisseurdto.getCode());
         commandefournisseur.setDatecommande(commandefournisseurdto.getDatecommande());
-        if(commandefournisseurdto.getIdfournisseur() != null) {
+
+        if(commandefournisseurdto.fournisseurdto != null) {
             Fournisseur fournisseur = new Fournisseur();
-            fournisseur.setId(commandefournisseurdto.getIdfournisseur());
+            fournisseur.setId(commandefournisseurdto.getFournisseurdto().getId());
             commandefournisseur.setFournisseur(fournisseur);
         }
 
@@ -105,5 +68,9 @@ public class CommandeFournisseurDto {
         }
 
         return commandefournisseur;
+    }
+
+    public boolean isCommandeLivree(){
+        return EtatCommande.LIVREE.equals(this.etatCommande);
     }
 }

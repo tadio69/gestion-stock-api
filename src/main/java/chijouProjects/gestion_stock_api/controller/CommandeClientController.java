@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 public class CommandeClientController implements CommandeClientApi {
-    private CommandeClientService commandeClientService;
+    private final CommandeClientService commandeClientService;
 
     @Autowired
     public CommandeClientController(CommandeClientService commandeClientService) {

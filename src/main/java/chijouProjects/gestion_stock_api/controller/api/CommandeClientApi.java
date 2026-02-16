@@ -86,8 +86,8 @@ public interface CommandeClientApi {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(
-            summary = "Modifier l'article d'une ligne de commande",
-            description = "Cette méthode permet de modifier l'article d'une ligne de commande"
+            summary = "Modifier l'article d'une ligne de commande client",
+            description = "Cette méthode permet de modifier l'article d'une ligne de commande client"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Article de la ligne de commande modifié avec succès"),
