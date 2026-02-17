@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "fournisseur")
-public class Fournisseur extends AbstractEntity {
+public class Fournisseur extends AbstractEntity implements ImageOwner {
     @Column(name = "nom")
     private String nom;
 
@@ -41,7 +41,22 @@ public class Fournisseur extends AbstractEntity {
     @NotNull(message = "L'entrprise est obligatoire")
     private Entreprise entreprise;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idimglink")
     private ImgLink imglink;
+
+    @Override
+    public void setImglink(ImgLink img) {
+        this.imglink = img;
+    }
+
+    @Override
+    public ImgLink getImglink() {
+        return this.imglink;
+    }
+
+    @Override
+    public Entreprise getEntreprise() {
+        return this.entreprise;
+    }
 }

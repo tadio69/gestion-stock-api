@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "utilisateur")
-public class Utilisateur extends AbstractEntity {
+public class Utilisateur extends AbstractEntity implements ImageOwner {
     @Column(name = "nom")
     private String nom;
 
@@ -39,11 +39,25 @@ public class Utilisateur extends AbstractEntity {
     @Embedded
     private Adresse adresse;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idimglink")
     private ImgLink imglink;
 
     @OneToMany(mappedBy = "utilisateur")
     private List<Role> roles;
 
+    @Override
+    public void setImglink(ImgLink img) {
+        this.imglink = img;
+    }
+
+    @Override
+    public ImgLink getImglink() {
+        return this.imglink;
+    }
+
+    @Override
+    public Entreprise getEntreprise() {
+        return this.entreprise;
+    }
 }

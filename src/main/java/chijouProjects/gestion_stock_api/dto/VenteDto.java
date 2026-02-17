@@ -1,5 +1,6 @@
 package chijouProjects.gestion_stock_api.dto;
 
+import chijouProjects.gestion_stock_api.model.Entreprise;
 import chijouProjects.gestion_stock_api.model.Vente;
 import chijouProjects.gestion_stock_api.model.LigneVente;
 import lombok.Builder;
@@ -29,7 +30,7 @@ public class VenteDto {
                 .code(vente.getCode())
                 .datevente(vente.getDatevente())
                 .commentaire(vente.getCommentaire())
-                .identreprise(vente.getIdentreprise())
+                .identreprise(vente.getEntreprise().getId())
                 .ligneventesdto(
                         vente.getLigneventes() != null
                                 ? vente.getLigneventes().stream()
@@ -49,7 +50,11 @@ public class VenteDto {
         vente.setCode(ventedto.getCode());
         vente.setDatevente(ventedto.getDatevente());
         vente.setCommentaire(ventedto.getCommentaire());
-        vente.setIdentreprise(ventedto.getIdentreprise());
+        if(ventedto.getIdentreprise() != null){
+            Entreprise entreprise = new Entreprise();
+            entreprise.setId(ventedto.getIdentreprise());
+            vente.setEntreprise(entreprise);
+        }
 
         if (ventedto.getLigneventesdto() != null) {
             List<LigneVente> lignes = ventedto.getLigneventesdto().stream()

@@ -1,8 +1,6 @@
 package chijouProjects.gestion_stock_api.controller.api;
 
-import chijouProjects.gestion_stock_api.dto.CommandeClientDto;
 import chijouProjects.gestion_stock_api.dto.CommandeFournisseurDto;
-import chijouProjects.gestion_stock_api.dto.LigneCdeCltDto;
 import chijouProjects.gestion_stock_api.dto.LigneCdeFournisseurDto;
 import chijouProjects.gestion_stock_api.model.EtatCommande;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static chijouProjects.gestion_stock_api.utils.Constants.COMMANDES_CLIENT_ENDPOINT;
 import static chijouProjects.gestion_stock_api.utils.Constants.COMMANDES_FOURNISSEUR_ENDPOINT;
 
 @Tag(name = "Commandes fournisseur", description = "Gestion des commandes fournisseur")

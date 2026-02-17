@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "article")
-public class Article extends AbstractEntity {
+public class Article extends AbstractEntity implements ImageOwner {
     @Column(name = "code", nullable = false)
     private String code;
 
@@ -34,7 +34,7 @@ public class Article extends AbstractEntity {
     @Column(name = "prixunitairettc")
     private BigDecimal prixunitairettc;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idimglink")
     private ImgLink imglink;
 
@@ -59,4 +59,19 @@ public class Article extends AbstractEntity {
 
     @OneToMany(mappedBy = "article")
     private List<MvtStock> mvtstocks;
+
+    @Override
+    public void setImglink(ImgLink img) {
+        this.imglink = img;
+    }
+
+    @Override
+    public ImgLink getImglink() {
+        return this.imglink;
+    }
+
+    @Override
+    public Entreprise getEntreprise() {
+        return this.entreprise;
+    }
 }

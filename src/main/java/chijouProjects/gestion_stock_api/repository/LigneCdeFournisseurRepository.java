@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface LigneCdeFournisseurRepository extends JpaRepository<LigneCdeFournisseur, Integer> {
     List<LigneCdeFournisseur> findAllByCommandefournisseurId(Integer idCommande);
+    List<LigneCdeFournisseur> findAllByArticleId(Integer idArticle);
 }

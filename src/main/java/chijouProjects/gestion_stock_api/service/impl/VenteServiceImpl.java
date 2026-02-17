@@ -1,17 +1,15 @@
 package chijouProjects.gestion_stock_api.service.impl;
 
-import chijouProjects.gestion_stock_api.dto.CommandeClientDto;
 import chijouProjects.gestion_stock_api.dto.LigneVenteDto;
 import chijouProjects.gestion_stock_api.dto.VenteDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.exception.ErrorCodes;
 import chijouProjects.gestion_stock_api.exception.InvalidEntityException;
 import chijouProjects.gestion_stock_api.model.Article;
-import chijouProjects.gestion_stock_api.model.CommandeClient;
 import chijouProjects.gestion_stock_api.model.LigneVente;
 import chijouProjects.gestion_stock_api.model.Vente;
 import chijouProjects.gestion_stock_api.repository.ArticleRepository;
-import chijouProjects.gestion_stock_api.repository.LIgneVenteRepository;
+import chijouProjects.gestion_stock_api.repository.LigneVenteRepository;
 import chijouProjects.gestion_stock_api.repository.VenteRepository;
 import chijouProjects.gestion_stock_api.service.VenteService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,10 +28,10 @@ import java.util.stream.Collectors;
 public class VenteServiceImpl implements VenteService {
     private ArticleRepository articleRepository;
     private VenteRepository venteRepository;
-    private LIgneVenteRepository ligneVenteRepository;
+    private LigneVenteRepository ligneVenteRepository;
 
     @Autowired
-    public VenteServiceImpl(ArticleRepository articleRepository, LIgneVenteRepository lIgneVenteRepository, VenteRepository venteRepository) {
+    public VenteServiceImpl(ArticleRepository articleRepository, LigneVenteRepository lIgneVenteRepository, VenteRepository venteRepository) {
         this.venteRepository = venteRepository;
         this.articleRepository = articleRepository;
         this.ligneVenteRepository = lIgneVenteRepository;

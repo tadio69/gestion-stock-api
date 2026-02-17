@@ -28,6 +28,7 @@ public class CommandeFournisseurDto {
                 .id(commandefournisseur.getId())
                 .code(commandefournisseur.getCode())
                 .datecommande(commandefournisseur.getDatecommande())
+                .etatCommande(commandefournisseur.getEtatcommande())
                 .fournisseurdto(FournisseurDto.fromEntity(commandefournisseur.getFournisseur()))
                 .identreprise(commandefournisseur.getEntreprise().getId())
                 .lignecdefournisseursdto(
@@ -46,7 +47,7 @@ public class CommandeFournisseurDto {
         commandefournisseur.setId(commandefournisseurdto.getId());
         commandefournisseur.setCode(commandefournisseurdto.getCode());
         commandefournisseur.setDatecommande(commandefournisseurdto.getDatecommande());
-
+        commandefournisseur.setEtatcommande(commandefournisseurdto.getEtatCommande());
         if(commandefournisseurdto.fournisseurdto != null) {
             Fournisseur fournisseur = new Fournisseur();
             fournisseur.setId(commandefournisseurdto.getFournisseurdto().getId());

@@ -1,13 +1,19 @@
 package chijouProjects.gestion_stock_api.service.impl;
 
 import chijouProjects.gestion_stock_api.dto.ArticleDto;
+import chijouProjects.gestion_stock_api.dto.LigneCdeCltDto;
+import chijouProjects.gestion_stock_api.dto.LigneCdeFournisseurDto;
+import chijouProjects.gestion_stock_api.dto.LigneVenteDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.exception.ErrorCodes;
 import chijouProjects.gestion_stock_api.exception.InvalidEntityException;
 import chijouProjects.gestion_stock_api.interceptor.Interceptor;
 import chijouProjects.gestion_stock_api.model.Article;
-import chijouProjects.gestion_stock_api.model.Categorie;
+import chijouProjects.gestion_stock_api.model.Entreprise;
 import chijouProjects.gestion_stock_api.repository.ArticleRepository;
+import chijouProjects.gestion_stock_api.repository.LigneCdeCltRepository;
+import chijouProjects.gestion_stock_api.repository.LigneCdeFournisseurRepository;
+import chijouProjects.gestion_stock_api.repository.LigneVenteRepository;
 import chijouProjects.gestion_stock_api.service.ArticleService;
 import chijouProjects.gestion_stock_api.validator.ArticleValidator;
 import jakarta.persistence.EntityManager;
@@ -19,20 +25,25 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class ArticleServiceImpl implements ArticleService {
 
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
     private final EntityManager entityManager;
+    private final LigneVenteRepository ligneVenteRepository;
+    private final LigneCdeCltRepository ligneCdeCltRepository;
+    private final LigneCdeFournisseurRepository ligneCdeFournisseurRepository;
 
     @Autowired
-    public ArticleServiceImpl(ArticleRepository articleRepository, EntityManager entityManager) {
+    public ArticleServiceImpl(ArticleRepository articleRepository, EntityManager entityManager, LigneVenteRepository ligneVenteRepository, LigneCdeCltRepository ligneCdeCltRepository, LigneCdeFournisseurRepository ligneCdeFournisseurRepository) {
         this.articleRepository = articleRepository;
         this.entityManager = entityManager;
+        this.ligneVenteRepository = ligneVenteRepository;
+        this.ligneCdeCltRepository = ligneCdeCltRepository;
+        this.ligneCdeFournisseurRepository = ligneCdeFournisseurRepository;
     }
 
     @Override
@@ -63,15 +74,6 @@ public class ArticleServiceImpl implements ArticleService {
                 ErrorCodes.ARTICLE_NOT_FOUND
         ));
 
-        if (article.getLignecdeclts() != null) {
-            article.getLignecdeclts().size();
-        }
-        if (article.getLignecdefournisseurs() != null) {
-            article.getLignecdefournisseurs().size();
-        }
-        if (article.getMvtstocks() != null) {
-            article.getMvtstocks().size();
-        }
         return ArticleDto.fromEntity(article);
     }
 
@@ -103,9 +105,12 @@ public class ArticleServiceImpl implements ArticleService {
                         ErrorCodes.CATEGORIE_NOT_FOUND
                 ));
 
-        if (article.getEntreprise() == null || !article.getEntreprise().getId().equals(entrepriseId)) {
+        Entreprise entreprise = article.getEntreprise();
+        Integer foundId = (entreprise != null) ? entreprise.getId() : null;
+
+        if (entreprise == null || !foundId.equals(entrepriseId)) {
             log.warn("Article de CODE {} trouvée mais l'ID d'entreprise {} ne correspond pas à l'ID de session {}",
-                    code, article.getEntreprise().getId(), entrepriseId);
+                    code, foundId, entrepriseId);
 
             throw new EntityNotFoundException(
                     "Aucun article avec le code = " + code + " n'a été trouvée dans la BDD concernant l'entreprise d'ID = " + entrepriseId + ".",
@@ -118,15 +123,6 @@ public class ArticleServiceImpl implements ArticleService {
             throw new IllegalArgumentException("Le code de l'article ne peut pas être vide");
         }
 
-        if (article.getLignecdeclts() != null) {
-            article.getLignecdeclts().size();
-        }
-        if (article.getLignecdefournisseurs() != null) {
-            article.getLignecdefournisseurs().size();
-        }
-        if (article.getMvtstocks() != null) {
-            article.getMvtstocks().size();
-        }
         return ArticleDto.fromEntity(article);
     }
 
@@ -157,9 +153,11 @@ public class ArticleServiceImpl implements ArticleService {
                         ErrorCodes.CATEGORIE_NOT_FOUND
                 ));
 
-        if (article.getEntreprise() == null || !article.getEntreprise().getId().equals(entrepriseId)) {
+        Entreprise entreprise = article.getEntreprise();
+        Integer foundId = (entreprise != null) ? entreprise.getId() : null;
+        if (entreprise == null || !foundId.equals(entrepriseId)) {
             log.warn("Article de désignation {} trouvée mais l'ID d'entreprise {} ne correspond pas à l'ID de session {}",
-                    designation, article.getEntreprise().getId(), entrepriseId);
+                    designation, foundId, entrepriseId);
 
             throw new EntityNotFoundException(
                     "Aucun article avec la désignation = " + designation + " n'a été trouvée dans la BDD concernant l'entreprise d'ID = " + entrepriseId + ".",
@@ -172,15 +170,6 @@ public class ArticleServiceImpl implements ArticleService {
             throw new IllegalArgumentException("La désination de l'article ne peut pas être vide");
         }
 
-        if (article.getLignecdeclts() != null) {
-            article.getLignecdeclts().size();
-        }
-        if (article.getLignecdefournisseurs() != null) {
-            article.getLignecdefournisseurs().size();
-        }
-        if (article.getMvtstocks() != null) {
-            article.getMvtstocks().size();
-        }
         return ArticleDto.fromEntity(article);
     }
 
@@ -194,6 +183,34 @@ public class ArticleServiceImpl implements ArticleService {
                     .setParameter("entrepriseId", entrepriseId);
         }
         return articleRepository.findAll().stream()
+                .map(ArticleDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LigneVenteDto> findHistoriqueVentes(Integer idArticle) {
+        return ligneVenteRepository.findAllByArticleId(idArticle).stream()
+                .map(LigneVenteDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LigneCdeCltDto> findHistoriqueCommandeClient(Integer idArticle) {
+        return ligneCdeCltRepository.findAllByArticleId(idArticle).stream()
+                .map(LigneCdeCltDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LigneCdeFournisseurDto> findHistoriqueCommandeFournisseur(Integer idArticle) {
+        return ligneCdeFournisseurRepository.findAllByArticleId(idArticle).stream()
+                .map(LigneCdeFournisseurDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ArticleDto> findAllArticlesByCategorieId(Integer idCategorie) {
+        return articleRepository.findAllArticlesByCategorieId(idCategorie).stream()
                 .map(ArticleDto::fromEntity)
                 .collect(Collectors.toList());
     }

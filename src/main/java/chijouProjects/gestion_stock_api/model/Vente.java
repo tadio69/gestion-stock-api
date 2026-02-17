@@ -1,9 +1,7 @@
 package chijouProjects.gestion_stock_api.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,8 +28,10 @@ public class Vente extends AbstractEntity {
     @Column(name = "commentaire")
     private String commentaire;
 
-    @Column(name = "identreprise")
-    private Integer identreprise;
+    @ManyToOne
+    @JoinColumn(name = "identreprise", nullable = false)
+    @NotNull(message = "L'entreprise est obligatoire")
+    private Entreprise entreprise;
 
     @OneToMany(mappedBy = "vente")
     private List<LigneVente> ligneventes;

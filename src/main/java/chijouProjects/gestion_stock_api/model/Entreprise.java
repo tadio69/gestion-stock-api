@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Builder
 @Table(name = "entreprise")
-public class Entreprise extends AbstractEntity {
+public class Entreprise extends AbstractEntity implements ImageOwner {
     @Column(name = "nom")
     private String nom;
 
@@ -28,7 +28,7 @@ public class Entreprise extends AbstractEntity {
     @Column(name = "codefiscal")
     private String codefiscal;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idimglink")
     private ImgLink imglink;
 
@@ -43,4 +43,19 @@ public class Entreprise extends AbstractEntity {
 
     @OneToMany(mappedBy = "entreprise")
     private List<Utilisateur> utilisateurs;
+
+    @Override
+    public void setImglink(ImgLink img) {
+        this.imglink = img;
+    }
+
+    @Override
+    public ImgLink getImglink() {
+        return this.imglink;
+    }
+
+    @Override
+    public Entreprise getEntreprise() {
+        return this;
+    }
 }

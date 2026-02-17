@@ -2,6 +2,9 @@ package chijouProjects.gestion_stock_api.controller;
 
 import chijouProjects.gestion_stock_api.controller.api.ArticleApi;
 import chijouProjects.gestion_stock_api.dto.ArticleDto;
+import chijouProjects.gestion_stock_api.dto.LigneCdeCltDto;
+import chijouProjects.gestion_stock_api.dto.LigneCdeFournisseurDto;
+import chijouProjects.gestion_stock_api.dto.LigneVenteDto;
 import chijouProjects.gestion_stock_api.exception.EntityNotFoundException;
 import chijouProjects.gestion_stock_api.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +50,26 @@ public class ArticleController implements ArticleApi {
     public ResponseEntity<List<ArticleDto>> findAll() {
         return ResponseEntity.ok(articleService.findAll());
         //return ResponseEntity.status(HttpStatus.OK).body(articleService.findAll());
+    }
+
+    @Override
+    public ResponseEntity<List<LigneVenteDto>> findHistoriqueVentes(Integer idArticle) {
+        return ResponseEntity.ok(articleService.findHistoriqueVentes(idArticle));
+    }
+
+    @Override
+    public ResponseEntity<List<LigneCdeCltDto>> findHistoriqueCommandeClient(Integer idArticle) {
+        return ResponseEntity.ok(articleService.findHistoriqueCommandeClient(idArticle));
+    }
+
+    @Override
+    public ResponseEntity<List<LigneCdeFournisseurDto>> findHistoriqueCommandeFournisseur(Integer idArticle) {
+        return ResponseEntity.ok(articleService.findHistoriqueCommandeFournisseur(idArticle));
+    }
+
+    @Override
+    public ResponseEntity<List<ArticleDto>> findAllArticlesByCategorieId(Integer idCategorie) {
+        return ResponseEntity.ok(articleService.findAllArticlesByCategorieId(idCategorie));
     }
 
     @Override

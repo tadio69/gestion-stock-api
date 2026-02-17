@@ -1,7 +1,6 @@
 package chijouProjects.gestion_stock_api.controller.api;
 
-import chijouProjects.gestion_stock_api.dto.ArticleDto;
-import chijouProjects.gestion_stock_api.dto.CategorieDto;
+import chijouProjects.gestion_stock_api.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -93,6 +92,70 @@ public interface ArticleApi {
             @ApiResponse(responseCode = "200", description = "Liste des articles retournée avec succès")
     })
     ResponseEntity<List<ArticleDto>> findAll();
+
+    @GetMapping(
+            value = ARTICLE_ENDPOINT + "/historique/ventes/{idArticle}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(
+            summary = "Renvoyer l'horistique des ventes d'un article",
+            description = "Cette méthode retourne l'historique des ventes d'un article",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Historique des ventes de l'article retournée avec succès")
+    })
+    ResponseEntity<List<LigneVenteDto>> findHistoriqueVentes(@PathVariable("idArticle") Integer idArticle);
+
+    @GetMapping(
+            value = ARTICLE_ENDPOINT + "/historique/commandesclient/{idArticle}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(
+            summary = "Renvoyer l'horistique des commandes client d'un article",
+            description = "Cette méthode retourne l'historique des commandes client d'un article",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Historique des commandes client d'un article retourné avec succès")
+    })
+    ResponseEntity<List<LigneCdeCltDto>> findHistoriqueCommandeClient(@PathVariable("idArticle") Integer idArticle);
+
+    @GetMapping(
+            value = ARTICLE_ENDPOINT + "/historique/commandesfournisseur/{idArticle}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(
+            summary = "Renvoyer l'horistique des commandes fournisseur d'un article",
+            description = "Cette méthode retourne l'historique des commandes fournisseur d'un article",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Historique des commandes fournisseur d'un article retourné avec succès")
+    })
+    ResponseEntity<List<LigneCdeFournisseurDto>> findHistoriqueCommandeFournisseur(@PathVariable("idArticle") Integer idArticle);
+
+    @GetMapping(
+            value = ARTICLE_ENDPOINT + "/filtrer/categorie/{idCategorie}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(
+            summary = "Renvoyer la liste des articles d'une catégorie",
+            description = "Cette méthode retourne la liste des articles d'une catégorie",
+            parameters = {
+                    @Parameter(name= "X-Entreprise-Id", in = ParameterIn.HEADER, description = "ID de l'entreprise", required = false)
+            }
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Liste des articles de la catégorie retournée avec succès")
+    })
+    ResponseEntity<List<ArticleDto>> findAllArticlesByCategorieId(@PathVariable("idCategorie") Integer idCategorie);
 
     @DeleteMapping(
             value = ARTICLE_ENDPOINT + "/delete/{id}",
