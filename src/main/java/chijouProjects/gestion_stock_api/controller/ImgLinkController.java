@@ -8,6 +8,7 @@ import chijouProjects.gestion_stock_api.model.Entreprise;
 import chijouProjects.gestion_stock_api.model.ImageOwner;
 import chijouProjects.gestion_stock_api.model.ImgLink;
 import chijouProjects.gestion_stock_api.repository.*;
+import chijouProjects.gestion_stock_api.resolver.ImageOwnerResolverRegistry;
 import chijouProjects.gestion_stock_api.service.ImgLinkService;
 import chijouProjects.gestion_stock_api.service.impl.ImageManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,30 +66,16 @@ public class ImgLinkController implements ImgLinkApi {
 public class ImgLinkController implements ImgLinkApi {
 
     private final ImageManagerService imageManagerService;
-    private final UtilisateurRepository utilisateurRepository;
-    private final ClientRepository clientRepository;
-    private final FournisseurRepository fournisseurRepository;
-    private final ArticleRepository articleRepository;
-    private final EntrepriseRepository entrepriseRepository;
+    private final ImageOwnerResolverRegistry resolverRegistry;
 
-    @Autowired
-    public ImgLinkController(ImageManagerService imageManagerService,
-                             UtilisateurRepository utilisateurRepository,
-                             ClientRepository clientRepository,
-                             FournisseurRepository fournisseurRepository,
-                             ArticleRepository articleRepository,
-                             EntrepriseRepository entrepriseRepository) {
+    public ImgLinkController(ImageManagerService imageManagerService, ImageOwnerResolverRegistry resolverRegistry) {
         this.imageManagerService = imageManagerService;
-        this.utilisateurRepository = utilisateurRepository;
-        this.clientRepository = clientRepository;
-        this.fournisseurRepository = fournisseurRepository;
-        this.articleRepository = articleRepository;
-        this.entrepriseRepository = entrepriseRepository;
+        this.resolverRegistry = resolverRegistry;
     }
 
     @Override
     public ResponseEntity<ImgLinkDto> uploadImage(ImageUploadRequest request) {
-        ImageOwner owner = getEntityByTypeAndId(request.getEntityType(), request.getEntityId());
+        ImageOwner owner = resolverRegistry.resolve(request.getEntityType(), request.getEntityId());
         ImgLink img = imageManagerService.uploadImage(owner, request.getFile());
         return ResponseEntity.ok(ImgLinkDto.fromEntity(img));
     }
@@ -108,22 +95,8 @@ public class ImgLinkController implements ImgLinkApi {
         try {
             imageManagerService.delete(id);
             return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
         } catch (Exception e){
             return ResponseEntity.status(500).build();
-        }
-    }
-
-    // Méthode générique pour retrouver l’entité cible
-    private ImageOwner getEntityByTypeAndId(String type, Integer id) {
-        switch (type.toLowerCase()) {
-            case "utilisateur": return utilisateurRepository.findById(id).orElseThrow();
-            case "client": return clientRepository.findById(id).orElseThrow();
-            case "fournisseur": return fournisseurRepository.findById(id).orElseThrow();
-            case "article": return articleRepository.findById(id).orElseThrow();
-            case "entreprise": return entrepriseRepository.findById(id).orElseThrow();
-            default: throw new RuntimeException("Type d'entité inconnu : " + type);
         }
     }
 }

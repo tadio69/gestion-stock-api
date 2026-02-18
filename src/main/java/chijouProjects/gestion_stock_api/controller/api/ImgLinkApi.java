@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static chijouProjects.gestion_stock_api.utils.Constants.PHOTOS_ENDPOINT;
+import static chijouProjects.gestion_stock_api.utils.Constants.PHOTO_ENDPOINT;
 
 /*@Tag(name = "Imglink", description = "Gestion des Imglinks (données relatives aux photos)")
 public interface ImgLinkApi {
@@ -67,7 +68,7 @@ public interface ImgLinkApi {
 @Tag(name = "Imglink", description = "Gestion des Imglinks (données relatives aux photos)")
 public interface ImgLinkApi {
 
-    @PostMapping(value = "/api/photos/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value =  PHOTO_ENDPOINT + "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Téléverser une photo",
             description = "Cette méthode permet de téléverser une photo vers ImgLink")
     @ApiResponses(value = {
@@ -76,7 +77,7 @@ public interface ImgLinkApi {
     })
     ResponseEntity<ImgLinkDto> uploadImage(@Valid @ModelAttribute ImageUploadRequest request);
 
-    @GetMapping(value = "/api/photos/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = PHOTO_ENDPOINT + "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Rechercher un Imglink par son ID",
             description = "Cette méthode permet de chercher un Imglink par son identifiant")
     @ApiResponses(value = {
@@ -85,7 +86,7 @@ public interface ImgLinkApi {
     })
     ResponseEntity<ImgLinkDto> findById(@PathVariable("id") Integer id);
 
-    @GetMapping(value = "/api/photos/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = PHOTO_ENDPOINT + "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Lister tous les Imglinks",
             description = "Cette méthode permet de retourner la liste des imglinks",
             parameters = {
@@ -96,7 +97,7 @@ public interface ImgLinkApi {
     })
     ResponseEntity<List<ImgLinkDto>> findAll();
 
-    @DeleteMapping(value = "/api/photos/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = PHOTO_ENDPOINT + "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Supprimer un Imglink par son ID",
             description = "Cette méthode permet de supprimer un Imglink par son identifiant")
     @ApiResponses(value = {

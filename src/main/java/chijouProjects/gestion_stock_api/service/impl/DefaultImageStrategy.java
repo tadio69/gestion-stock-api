@@ -28,4 +28,9 @@ public class DefaultImageStrategy implements ImageUploadStrategy<ImageOwner> {
 
         return img;
     }
+
+    @Override
+    public Class<ImageOwner> getOwnerClass() {
+        return ImageOwner.class;
+    }
 }

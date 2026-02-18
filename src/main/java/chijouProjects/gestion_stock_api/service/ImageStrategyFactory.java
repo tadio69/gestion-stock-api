@@ -1,25 +1,18 @@
 package chijouProjects.gestion_stock_api.service;
 
 import chijouProjects.gestion_stock_api.model.ImageOwner;
-import chijouProjects.gestion_stock_api.service.impl.DefaultImageStrategy;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class ImageStrategyFactory {
     private final Map<Class<? extends ImageOwner>, ImageUploadStrategy<?>> strategies = new HashMap<>();
 
-    // Méthode existante
-    public <T extends ImageOwner> Optional<ImageUploadStrategy<T>> getStrategy(Class<T> clazz) {
-        ImageUploadStrategy<?> strategy = strategies.get(clazz);
-        if (strategy == null) {
-            return Optional.empty();
+    public ImageStrategyFactory(List<ImageUploadStrategy<?>> strategyList) {
+        for (ImageUploadStrategy<?> strategy : strategyList) {
+            strategies.put(strategy.getOwnerClass(), strategy);
         }
-        return Optional.of((ImageUploadStrategy<T>) strategy); // toujours un cast, mais optionnel
     }
 
     // Nouvelle méthode pour récupérer toutes les stratégies
@@ -30,5 +23,13 @@ public class ImageStrategyFactory {
     // Permet d'enregistrer les stratégies (à faire dans la configuration)
     public <T extends ImageOwner> void registerStrategy(Class<T> clazz, ImageUploadStrategy<T> strategy) {
         strategies.put(clazz, strategy);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends ImageOwner> Optional<ImageUploadStrategy<T>> getStrategyFor(Class<T> clazz){
+        return strategies.values().stream()
+                .filter(s -> s.getOwnerClass().isAssignableFrom(clazz))
+                .map(s -> (ImageUploadStrategy<T>) s)
+                .findFirst();
     }
 }

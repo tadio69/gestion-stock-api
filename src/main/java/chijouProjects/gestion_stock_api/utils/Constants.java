@@ -13,6 +13,7 @@ public interface Constants {
     public static String MVTSTOCK_ENDPOINT = APP_ROOT + "/mvtstocks";
     public static String UTILISATEUR_ENDPOINT = APP_ROOT + "/utilisateurs";
     public static String VENTE_ENDPOINT = APP_ROOT + "/ventes";
+    public static String PHOTO_ENDPOINT = APP_ROOT + "/photos";
 
     String AUTH_INCORRECT = "Email ou mot de passe incorrect";
 }
